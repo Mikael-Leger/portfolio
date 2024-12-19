@@ -1,19 +1,20 @@
-"use client";
-
 import { useContext, useEffect, useState } from "react";
 import gsap from "gsap";
 
 import IPContext from "@/app/contexts/ip-context";
+import PreferencesContext from "@/app/contexts/preferences-context";
 import CommandLine from "@/app/interfaces/command-line.interface";
 
 import "./command-prompt.scss";
 
-type SectionProps = {
+type CommandPromptProps = {
     lines: CommandLine[];
+    onFinish?: () => void;
 };
 
-export default function CommandPrompt({lines}: SectionProps) {
+export default function CommandPrompt({ lines, onFinish }: CommandPromptProps) {
     const ip = useContext(IPContext);
+    const preferences = useContext(PreferencesContext);
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
     const [currentPath, setCurrentPath] = useState<string>("~");
 
@@ -34,7 +35,7 @@ export default function CommandPrompt({lines}: SectionProps) {
     }, [ip]);
 
     if (ip == null) {
-      return <div>...</div>;
+        return <div>...</div>;
     }
 
     const ipFormatted = ip.replaceAll('.', '-');
@@ -57,7 +58,7 @@ export default function CommandPrompt({lines}: SectionProps) {
         const loginText = "dev-user\n";
         const authText = "Authenticating with public key \"portfolio-key\"\n";
         const imgAsciiText =
-                " ,     #_\n"
+            " ,     #_\n"
             + " ~\\_  ####_        Full-Stack Developer\n"
             + "~~  \\_#####\\\n"
             + "~~     \\###|\n"
@@ -76,12 +77,16 @@ export default function CommandPrompt({lines}: SectionProps) {
             + " " + date.getFullYear();
         const lastLogintext = `Last login: ${formattedDate} from ${ip}\n`;
 
-        await waitFor(1000);
+        let path = '~';
 
-        await simulateDisplay(<><img className="command-prompt-logo" src="/linux.png"/>{loginOutput}</>);
+        if (process.env.NODE_ENV == 'production') {
+            await waitFor(1000);
+        }
+
+        await simulateDisplay(<><img className="logo-icon" src="/linux.png" />{loginOutput}</>);
         await simulateWriting(loginText);
 
-        await simulateDisplay(<><img className="command-prompt-logo" src="/linux.png"/>{authText}</>);
+        await simulateDisplay(<><img className="logo-icon" src="/linux.png" />{authText}</>);
 
         await simulateDisplay(imgAsciiText);
 
@@ -89,7 +94,7 @@ export default function CommandPrompt({lines}: SectionProps) {
 
         for (const line of lines) {
             if (line.command != null) {
-                const userAndPath = `[dev-user@${ipFormatted} ${currentPath}]$ `;
+                const userAndPath = `[dev-user@${ipFormatted} ${path}]$ `;
                 await simulateDisplay(userAndPath);
                 await simulateWriting(`${line.command}\n`);
             }
@@ -97,18 +102,26 @@ export default function CommandPrompt({lines}: SectionProps) {
                 const nodeToDisplay = line.doNotBackToLine ? line.result : (
                     <>
                         {line.result}
-                        <br/>
+                        <br />
                     </>
                 );
                 await simulateDisplay(nodeToDisplay);
             }
             if (line.newPath) {
+                path = line.newPath;
                 setCurrentPath(line.newPath);
             }
+        }
+
+        if (onFinish != null) {
+            onFinish();
         }
     }
 
     const simulateDisplay = async (node: React.ReactNode) => {
+        if (process.env.NODE_ENV == 'production') {
+            await waitFor(200);
+        }
         setContentNodes(prevContentNodes => {
             const updatedContent = [...prevContentNodes, node];
             return updatedContent;
@@ -116,7 +129,9 @@ export default function CommandPrompt({lines}: SectionProps) {
     }
 
     const simulateWriting = async (text: string) => {
-        await waitRandom(600);
+        if (process.env.NODE_ENV == 'production') {
+            await waitFor(600);
+        }
         for (let i = 0; i < text.length; i++) {
             setContentNodes(prevContentNodes => {
                 const updatedContent = [...prevContentNodes, text.charAt(i) as string];
@@ -126,19 +141,23 @@ export default function CommandPrompt({lines}: SectionProps) {
         }
     }
 
+    if (preferences == null || preferences.color == null) {
+        return <div>Loading...</div>
+    }
+
     return (
-        <div className="command-prompt">
-            <div className="command-prompt-window">
+        <div className="command-prompt" style={{ "borderColor": preferences?.color.backgroundColor }}>
+            <div className="command-prompt-window" style={{ "backgroundColor": preferences?.color.backgroundColor }}>
                 <div className="command-prompt-window-header">
-                    <img className="command-prompt-window-header-logo command-prompt-logo" src="/linux.png"/>
+                    <img className="command-prompt-window-header-logo logo-icon" src="/linux.png" />
                     <div className="command-prompt-window-header-text">
                         dev-user@ip-{ipFormatted}:{currentPath}
                     </div>
                 </div>
                 <div className="command-prompt-window-actions">
-                    <img className="command-prompt-window-actions-reduce command-prompt-logo" src="/reduce.png"/>
-                    <img className="command-prompt-window-actions-maximize command-prompt-logo" src="/maximize.png"/>
-                    <img className="command-prompt-window-actions-close command-prompt-logo" src="/close.png"/>
+                    <img className="command-prompt-window-actions-reduce logo-icon" src="/reduce.png" />
+                    <img className="command-prompt-window-actions-maximize logo-icon" src="/maximize.png" />
+                    <img className="command-prompt-window-actions-close logo-icon" src="/close.png" />
                 </div>
             </div>
             <div className="command-prompt-content">

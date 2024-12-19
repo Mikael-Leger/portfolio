@@ -4,7 +4,7 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 
 type IPContextType = string | null;
 
-const IPContext = createContext<IPContextType | undefined>(undefined); // undefined pour signifier qu'il peut être vide avant l'initialisation
+const IPContext = createContext<IPContextType | undefined>(undefined);
 
 interface IPProviderProps {
   children: ReactNode;

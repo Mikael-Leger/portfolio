@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { IPProvider } from "@/app/contexts/ip-context";
 
 import "./globals.scss";
+import { PreferencesProvider } from "./contexts/preferences-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <IPProvider>
-          {children}
+          <PreferencesProvider>
+            {children}
+          </PreferencesProvider>
         </IPProvider>
       </body>
     </html>

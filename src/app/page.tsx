@@ -5,14 +5,16 @@ import gsap from "gsap";
 
 import Title from "./components/title/title";
 import PageLayout from "./layouts/page-layout";
+import CommandPrompt from "./components/command-prompt/command-prompt";
+import CommandLine from "./interfaces/command-line.interface";
+import Browser from "./components/browser/browser";
 
 import "./home.scss";
-import CommandPrompt from "./components/section/command-prompt";
-import CommandLine from "./interfaces/command-line.interface";
 
 export default function Home() {
     const timeline = useRef(gsap.timeline({ paused: true }));
-    const [currentLocation, setCurrentLocation] = useState(""); 
+    const [currentLocation, setCurrentLocation] = useState("");
+    const [showBrowser, setShowBrowser] = useState(false);
 
     useEffect(() => {
         animateOnPageLoad();
@@ -23,7 +25,6 @@ export default function Home() {
         const firstDuration = .6;
 
         gsap.from(".title", { duration: firstDuration, y: -50, opacity: 0, ease: "bounce.out" });
-
     }
 
     if (currentLocation == null) {
@@ -37,16 +38,16 @@ export default function Home() {
                 <>
                     <span className="command-blue">.              </span>
                     <span>.bashrc</span>
-                    <br/>
+                    <br />
                     <span className="command-blue">..             </span>
                     <span className="command-blue">.ssh</span>
-                    <br/>
+                    <br />
                     <span>.bash_history  </span>
                     <span>exit</span>
-                    <br/>
+                    <br />
                     <span>.bash_logout   </span>
                     <span>portfolio</span>
-                    <br/>
+                    <br />
                     <span>.bash_profile  </span>
                     <span className="command-red">never-open-this.rpm</span>
                 </>
@@ -83,11 +84,18 @@ export default function Home() {
         },
     ]
 
+    const openBrowser = () => {
+        setShowBrowser(true);
+    }
+
     return (
         <PageLayout>
             <div className="home">
-                <Title timeline={timeline.current}/>
-                <CommandPrompt lines={linesSection1}/>
+                {/* <Title timeline={timeline.current}/> */}
+                <CommandPrompt lines={linesSection1} onFinish={openBrowser} />
+                {showBrowser && (
+                    <Browser content={<></>} />
+                )}
             </div>
         </PageLayout>
     );
