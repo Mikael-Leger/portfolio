@@ -1,0 +1,22 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    height: 50px;
+    width: 50px;
+
+    &-bar {
+        height: 75%;
+        width: 75%;
+        position: absolute;
+
+        &-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #3498db;
+        }
+    }
+}

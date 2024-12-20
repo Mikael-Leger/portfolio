@@ -12,6 +12,7 @@ import IPContext from "@/app/contexts/ip-context";
 import Bar from "../bar/bar";
 import TabInterface from "@/app/interfaces/tab.interface";
 import WindowDetails from "@/app/interfaces/window-details.interface";
+import Loading from "../loading/loading";
 
 import "./window.scss";
 
@@ -244,7 +245,7 @@ export default function Window({ type, tabs, lines, onFinish, hide = false }: Wi
 	}, [commandLogic]);
 
 	if ((commandLogic && !commandLogic.startSimulation) || !windowIconPath || hide) {
-		return <div>Loading</div>;
+		return <Loading />;
 	}
 
 	const increaseWindow = () => {

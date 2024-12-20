@@ -6,11 +6,11 @@ import gsap from "gsap";
 import PageLayout from "./layouts/page-layout";
 import CommandLine from "./interfaces/command-line.interface";
 import Window, { WindowProps } from "./components/window/window";
+import Loading from "./components/loading/loading";
 
 import "./home.scss";
 
 export default function Home() {
-    const timeline = useRef(gsap.timeline({ paused: true }));
     const [currentLocation, setCurrentLocation] = useState("");
     const [showBrowser, setShowBrowser] = useState(false);
 
@@ -21,12 +21,11 @@ export default function Home() {
 
     const animateOnPageLoad = () => {
         const firstDuration = .6;
-
         gsap.from(".title", { duration: firstDuration, y: -50, opacity: 0, ease: "bounce.out" });
     }
 
     if (currentLocation == null) {
-        return <div>. . .</div>
+        return <Loading />;
     }
 
     const linesSection1: CommandLine[] = [
@@ -83,7 +82,7 @@ export default function Home() {
     ]
 
     if (typeof window === "undefined") {
-        return <div>Loading</div>
+        return <Loading />;
     }
 
     const tabs = [
