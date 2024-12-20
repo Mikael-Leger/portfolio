@@ -1,27 +1,18 @@
 "use client"
 
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-
-export interface CustomColor {
-    backgroundColor: string;
-    textColor: string;
-    backgroundShadedColor: string;
-}
-
-export interface Preferences {
-    theme: string;
-    color: CustomColor | undefined;
-}
+import Preferences from '../interfaces/preferences.interface';
+import CustomColor from '../interfaces/custom-color.interface';
 
 type PreferencesContextType = Preferences | null;
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
 
-interface PreferencesProps {
+interface PreferencesProviderProps {
     children: ReactNode;
 }
 
-export const PreferencesProvider: React.FC<PreferencesProps> = ({ children }) => {
+export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ children }) => {
     const [theme, setTheme] = useState("no-preference");
     const [customColor, setCustomColor] = useState<CustomColor>();
 

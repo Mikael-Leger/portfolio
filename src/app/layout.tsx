@@ -6,31 +6,31 @@ import "./globals.scss";
 import { PreferencesProvider } from "./contexts/preferences-context";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+	variable: "--font-geist-mono",
+	subsets: ["latin"],
 });
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <IPProvider>
-          <PreferencesProvider>
-            {children}
-          </PreferencesProvider>
-        </IPProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+			>
+				<IPProvider>
+					<PreferencesProvider>
+						{children}
+					</PreferencesProvider>
+				</IPProvider>
+			</body>
+		</html>
+	);
 }

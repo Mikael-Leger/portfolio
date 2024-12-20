@@ -1,25 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import gsap from "gsap";
 
-import IPContext from "@/app/contexts/ip-context";
-import PreferencesContext from "@/app/contexts/preferences-context";
-import CommandLine from "@/app/interfaces/command-line.interface";
+import CommandLine from "../interfaces/command-line.interface";
+import Preferences from "../interfaces/preferences.interface";
 
-import "./command-prompt.scss";
-
-type CommandPromptProps = {
-    lines: CommandLine[];
-    onFinish?: () => void;
-};
-
-export default function CommandPrompt({ lines, onFinish }: CommandPromptProps) {
-    const ip = useContext(IPContext);
-    const preferences = useContext(PreferencesContext);
+export default function useCommand(lines: CommandLine[], onFinish?: () => void, preferences?: Preferences, ip?: string) {
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
     const [currentPath, setCurrentPath] = useState<string>("~");
+    const [ipFormatted, setIpFormatted] = useState<string>();
+    const [isSimulationStarted, setIsSimulationStarted] = useState(false);
 
     useEffect(() => {
         if (ip != null) {
+            const ipFormatted = ip.replaceAll('.', '-');
+            setIpFormatted(ipFormatted);
             const timeline = gsap.timeline();
             timeline.from(document.querySelector(".command-prompt"), {
                 duration: .7,
@@ -33,12 +27,6 @@ export default function CommandPrompt({ lines, onFinish }: CommandPromptProps) {
             startSimulation();
         }
     }, [ip]);
-
-    if (ip == null) {
-        return <div>...</div>;
-    }
-
-    const ipFormatted = ip.replaceAll('.', '-');
 
     const waitFor = async (ms: number) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -54,6 +42,10 @@ export default function CommandPrompt({ lines, onFinish }: CommandPromptProps) {
     }
 
     const startSimulation = async () => {
+        if (!ipFormatted) {
+            return null;
+        }
+
         const loginOutput = "Login as: "
         const loginText = "dev-user\n";
         const authText = "Authenticating with public key \"portfolio-key\"\n";
@@ -141,30 +133,9 @@ export default function CommandPrompt({ lines, onFinish }: CommandPromptProps) {
         }
     }
 
-    if (preferences == null || preferences.color == null) {
-        return <div>Loading...</div>
-    }
+    // if (preferences == null || preferences.color == null) {
+    //     return <div>Loading...</div>
+    // }
 
-    return (
-        <div className="command-prompt" style={{ "borderColor": preferences?.color.backgroundColor }}>
-            <div className="command-prompt-window" style={{ "backgroundColor": preferences?.color.backgroundColor }}>
-                <div className="command-prompt-window-header">
-                    <img className="command-prompt-window-header-logo logo-icon" src="/linux.png" />
-                    <div className="command-prompt-window-header-text">
-                        dev-user@ip-{ipFormatted}:{currentPath}
-                    </div>
-                </div>
-                <div className="command-prompt-window-actions">
-                    <img className="command-prompt-window-actions-reduce logo-icon" src="/reduce.png" />
-                    <img className="command-prompt-window-actions-maximize logo-icon" src="/maximize.png" />
-                    <img className="command-prompt-window-actions-close logo-icon" src="/close.png" />
-                </div>
-            </div>
-            <div className="command-prompt-content">
-                {contentNodes.map((node, idx) => (
-                    <span key={idx}>{node}</span>
-                ))}
-            </div>
-        </div>
-    );
+    return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation };
 }

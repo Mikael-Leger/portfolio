@@ -3,11 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-import Title from "./components/title/title";
 import PageLayout from "./layouts/page-layout";
-import CommandPrompt from "./components/command-prompt/command-prompt";
 import CommandLine from "./interfaces/command-line.interface";
-import Browser from "./components/browser/browser";
+import Window, { WindowProps } from "./components/window/window";
 
 import "./home.scss";
 
@@ -84,18 +82,54 @@ export default function Home() {
         },
     ]
 
-    const openBrowser = () => {
-        setShowBrowser(true);
+    if (typeof window === "undefined") {
+        return <div>Loading</div>
     }
+
+    const tabs = [
+        {
+            logoPath: "/vercel.svg",
+            title: "Portfolio - Mikaël Léger",
+            url: `${window.location.href}home`,
+            content: (
+                <>
+                    Portfolio
+                </>
+            )
+        },
+        {
+            logoPath: "/vercel.svg",
+            title: "CV",
+            url: `${window.location.href}curriculum-vitae`,
+            content: (
+                <>
+                    CV
+                </>
+            )
+        }
+    ];
+
+    const windows: WindowProps[] = [
+        {
+            type: "command",
+            lines: linesSection1,
+            onFinish: () => setShowBrowser(true)
+        },
+        {
+            type: "browser",
+            tabs: tabs,
+            hide: !showBrowser
+        },
+    ]
 
     return (
         <PageLayout>
             <div className="home">
-                {/* <Title timeline={timeline.current}/> */}
-                <CommandPrompt lines={linesSection1} onFinish={openBrowser} />
-                {showBrowser && (
-                    <Browser content={<></>} />
-                )}
+                {windows.map((window, idx) => (
+                    <Window
+                        key={idx}
+                        {...window} />
+                ))}
             </div>
         </PageLayout>
     );

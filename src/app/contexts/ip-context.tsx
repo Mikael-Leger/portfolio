@@ -7,27 +7,27 @@ type IPContextType = string | null;
 const IPContext = createContext<IPContextType | undefined>(undefined);
 
 interface IPProviderProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export const IPProvider: React.FC<IPProviderProps> = ({ children }) => {
-  const [ip, setIp] = useState<IPContextType>(null);
+	const [ip, setIp] = useState<IPContextType>(null);
 
-  useEffect(() => {
-    const fetchIP = async () => {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      setIp(data.ip);
-    };
+	useEffect(() => {
+		const fetchIP = async () => {
+			const response = await fetch('https://api.ipify.org?format=json');
+			const data = await response.json();
+			setIp(data.ip);
+		};
 
-    fetchIP();
-  }, []);
+		fetchIP();
+	}, []);
 
-  return (
-    <IPContext.Provider value={ip}>
-      {children}
-    </IPContext.Provider>
-  );
+	return (
+		<IPContext.Provider value={ip}>
+			{children}
+		</IPContext.Provider>
+	);
 };
 
 export default IPContext;
