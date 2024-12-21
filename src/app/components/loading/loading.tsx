@@ -26,7 +26,7 @@ export default function Loading({ }: LoadingProps) {
         const bars = [];
         for (let i = 0; i <= 6; i++) {
             const bar = (
-                <div className="loading-bar" >
+                <div className="loading-bar" key={i}>
                     <div className="loading-bar-dot" />
                 </div>
             )

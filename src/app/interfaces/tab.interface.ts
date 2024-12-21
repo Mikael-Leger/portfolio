@@ -1,6 +1,6 @@
 export default interface TabInterface {
-    logoPath: string;
     title: string;
     url: string;
+    logoPath: string;
     content?: React.ReactNode;
 }

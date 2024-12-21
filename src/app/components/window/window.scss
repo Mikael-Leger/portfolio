@@ -11,6 +11,9 @@
     width: 100vw;
     border: 1px solid black;
 
+    &-browser {
+        height: 69vh;
+    }
 
     &-header {
         display: flex;
@@ -137,9 +140,7 @@
         width: 100%;
         background-color: white;
 
-        padding: 0 4px;
         white-space: pre-wrap;
-        font-family: 'Courier New', Courier, monospace;
 
         .section-logo {
             margin-right: 10px;
@@ -147,6 +148,14 @@
 
         &.command-content {
             background-color: black;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        &.browser-content {
+            iframe {
+                height: 100%;
+                width: 100%;
+            }
         }
     }
 

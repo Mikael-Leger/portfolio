@@ -1,4 +1,4 @@
-import { Preferences } from "@/app/contexts/preferences-context";
+import Preferences from "@/app/interfaces/preferences.interface";
 import styled from "styled-components";
 
 interface Tabprops {
@@ -8,6 +8,7 @@ interface Tabprops {
     active: boolean;
     index: number;
     onclick: (index: number) => void;
+    removeTab: (index: number) => void;
 }
 
 interface TabDivProps extends React.HTMLProps<HTMLDivElement> {
@@ -20,7 +21,12 @@ const TabDiv = styled.div<TabDivProps>`
     transition: background-color 0.3s ease;
 `;
 
-export default function Tab({ preferences, logoPath, title, active, index, onclick }: Tabprops) {
+export default function Tab({ preferences, logoPath, title, active, index, onclick, removeTab }: Tabprops) {
+    const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
+        event.stopPropagation();
+        removeTab(index);
+    }
+
     return (
         <TabDiv $active={active} $preferences={preferences} className={`window-header-left-tabs-tab ${active ? 'active' : ''}`} onClick={() => onclick(index)}>
             <div className="window-header-left-tabs-tab-header">
@@ -29,7 +35,11 @@ export default function Tab({ preferences, logoPath, title, active, index, oncli
                     {title}
                 </div>
             </div>
-            <img className="window-header-left-tabs-tab-close logo-icon" src="/close_small.png" style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }} />
+            <img
+                className="window-header-left-tabs-tab-close logo-icon"
+                src="/close_small.png"
+                style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }}
+                onClick={(e) => removeTabWithoutPropagation(e, index)} />
             {active && (
                 <div className="window-header-left-tabs-tab-neck" style={{ "backgroundColor": preferences?.color?.backgroundShadedColor }} />
             )}

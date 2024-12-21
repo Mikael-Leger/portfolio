@@ -1,31 +1,95 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import PageLayout from "./layouts/page-layout";
 import CommandLine from "./interfaces/command-line.interface";
-import Window, { WindowProps } from "./components/window/window";
+import { Window, WindowProps } from "./components/window/window";
 import Loading from "./components/loading/loading";
+import Portfolio from "./components/portfolio/portfolio";
+import TabInterface from "./interfaces/tab.interface";
+import WindowRef from "./interfaces/window-ref.interface";
 
 import "./home.scss";
 
 export default function Home() {
-    const [currentLocation, setCurrentLocation] = useState("");
-    const [showBrowser, setShowBrowser] = useState(false);
+    const [currentLocation, setCurrentLocation] = useState<string>("");
+    const [showBrowser, setShowBrowser] = useState<boolean>(false);
+    const [tabs, setTabs] = useState<TabInterface[]>([]);
+
+    const [newTab, setNewTab] = useState<TabInterface>();
+
+    const windowRef = useRef<WindowRef>(null);
 
     useEffect(() => {
-        animateOnPageLoad();
         setCurrentLocation(window.location.href);
     }, []);
 
-    const animateOnPageLoad = () => {
-        const firstDuration = .6;
-        gsap.from(".title", { duration: firstDuration, y: -50, opacity: 0, ease: "bounce.out" });
-    }
+    useEffect(() => {
+        if (currentLocation) {
+            initializeTabs();
+        }
+    }, [currentLocation]);
+
+    useEffect(() => {
+        if (newTab) {
+            const tabFound = tabs.findIndex(tab => tab.title == newTab.title);
+            if (tabFound == -1) {
+                setTabs(prevTabs => {
+                    const updatedTabs = [...prevTabs, newTab];
+                    return updatedTabs;
+                });
+            }
+
+            const newActiveTab = (tabFound == -1) ? tabs.length : tabFound;
+
+            if (windowRef.current && windowRef.current.switchTab) {
+                windowRef.current.switchTab(newActiveTab);
+            }
+        }
+    }, [newTab]);
 
     if (currentLocation == null) {
         return <Loading />;
+    }
+
+    const initializeTabs = () => {
+        const defaultTabs = [
+            {
+                logoPath: "/vercel.svg",
+                title: "Portfolio - Mikaël Léger",
+                url: `${currentLocation}home`,
+                content: (
+                    <Portfolio addTab={addTab} />
+                )
+            },
+            {
+                logoPath: "/vercel.svg",
+                title: "CV",
+                url: `${currentLocation}curriculum-vitae`,
+                content: (
+                    <>
+                        CV
+                    </>
+                )
+            }
+        ];
+        setTabs(defaultTabs);
+    }
+
+    const addTab = (title: string, url: string, imgPath: string) => {
+        const openTab = {
+            logoPath: imgPath,
+            title,
+            url,
+            content: (
+                <iframe
+                    src={url}>
+                </iframe>
+            )
+        };
+        setNewTab(openTab);
     }
 
     const linesSection1: CommandLine[] = [
@@ -79,34 +143,15 @@ export default function Home() {
         {
             command: '',
         },
-    ]
-
-    if (typeof window === "undefined") {
-        return <Loading />;
-    }
-
-    const tabs = [
-        {
-            logoPath: "/vercel.svg",
-            title: "Portfolio - Mikaël Léger",
-            url: `${window.location.href}home`,
-            content: (
-                <>
-                    Portfolio
-                </>
-            )
-        },
-        {
-            logoPath: "/vercel.svg",
-            title: "CV",
-            url: `${window.location.href}curriculum-vitae`,
-            content: (
-                <>
-                    CV
-                </>
-            )
-        }
     ];
+
+    const removeTab = (index: number) => {
+        setTabs(prevTabs => {
+            const updatedTabs = [...prevTabs];
+            updatedTabs.splice(index, 1);
+            return updatedTabs;
+        });
+    }
 
     const windows: WindowProps[] = [
         {
@@ -117,9 +162,11 @@ export default function Home() {
         {
             type: "browser",
             tabs: tabs,
-            hide: !showBrowser
+            removeTab: removeTab,
+            hide: !showBrowser,
+            ref: windowRef as RefObject<WindowRef>
         },
-    ]
+    ];
 
     return (
         <PageLayout>

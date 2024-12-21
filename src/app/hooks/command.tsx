@@ -4,7 +4,7 @@ import gsap from "gsap";
 import CommandLine from "../interfaces/command-line.interface";
 import Preferences from "../interfaces/preferences.interface";
 
-export default function useCommand(lines: CommandLine[], onFinish?: () => void, preferences?: Preferences, ip?: string) {
+export default function useCommand(lines: CommandLine[], id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
     const [currentPath, setCurrentPath] = useState<string>("~");
     const [ipFormatted, setIpFormatted] = useState<string>();
@@ -15,7 +15,7 @@ export default function useCommand(lines: CommandLine[], onFinish?: () => void, 
             const ipFormatted = ip.replaceAll('.', '-');
             setIpFormatted(ipFormatted);
             const timeline = gsap.timeline();
-            timeline.from(document.querySelector(".command-prompt"), {
+            timeline.from(document.querySelector(`.window-command-${id}`), {
                 duration: .7,
                 opacity: 0,
                 scale: 0.2,

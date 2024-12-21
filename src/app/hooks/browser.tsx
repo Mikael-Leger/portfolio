@@ -31,5 +31,5 @@ export default function useBrowser(preferences?: Preferences) {
         return "Unknown Browser";
     };
 
-    return { activeTab, browserIconPath, switchTab };
+    return { activeTab, setActiveTab, browserIconPath, switchTab };
 }
