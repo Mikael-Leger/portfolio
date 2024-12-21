@@ -11,10 +11,11 @@ export default function Stack({ groupsOfItems }: StackProps) {
     return (
         <div className="stack">
             {groupsOfItems.map(groupOfItems => {
+                const { groupName } = groupOfItems[0];
                 return (
-                    <div className="stack-group">
+                    <div className={`stack-group group-${groupName}`} key={groupName}>
                         <div className="stack-group-name">
-                            {groupOfItems[0].groupName}
+                            {groupName}
                         </div>
                         <div className="stack-group-content">
                             {groupOfItems.map(item => {

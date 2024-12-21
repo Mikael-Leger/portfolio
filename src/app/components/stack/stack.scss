@@ -6,9 +6,6 @@
     flex: 1;
 
     width: 100%;
-    height: 100%;
-    padding: 10px;
-    background-color: #3a3a3a;
     border-radius: 10px;
 
     &-group {
@@ -19,15 +16,17 @@
         flex: 1;
 
         height: 150px;
+        min-width: 150px;
         padding: 10px 25px;
         border-radius: 5px;
-        background-color: #505050;
+        background-color: #373737;
         text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 
         &-name {
-            font-size: 1.2em;
+            font-size: 1.1em;
+            font-weight: 700;
             text-transform: uppercase;
-            text-decoration: underline;
         }
 
         &-content {
@@ -54,7 +53,56 @@
                 }
             }
         }
+
+        &.group {
+            &-frontend {
+                // background-color: #4e75a3;
+            }
+
+            &-backend {
+                background-color: #6e3aa9;
+            }
+
+            &-database {
+                background-color: #377926;
+            }
+
+            &-deploy {
+                background-color: #6a7179;
+            }
+
+            &-api {
+                background-color: #a37c37;
+            }
+        }
     }
 }
 
-.browser-dark {}
+.browser-dark {
+    .stack {
+        &-group {
+            &.group {
+                &-frontend {
+                    background-image: radial-gradient(ellipse at top right, #627fa1 33%, #25466d);
+                }
+
+                &-backend {
+                    background-image: radial-gradient(ellipse at top right, #613494 33%, #3e1c65);
+                }
+
+                &-database {
+                    background-image: radial-gradient(ellipse at top right, #387526 33%, #1e4713);
+                }
+
+                &-deploy {
+                    background-image: radial-gradient(ellipse at top right, #676e75 33%, #43494f);
+                }
+
+                &-api {
+                    background-image: radial-gradient(ellipse at top right, #a17d3e 33%, #5e451c);
+                }
+
+            }
+        }
+    }
+}

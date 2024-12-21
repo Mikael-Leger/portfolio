@@ -7,12 +7,12 @@ import "./project.scss";
 
 type ProjectProps = {
     item: ProjectInterface;
-    showProjectModal: (project: ProjectInterface) => void;
+    showProjectInModal: (project: ProjectInterface) => void;
 };
 
-export default function Project({ item, showProjectModal }: ProjectProps) {
+export default function Project({ item, showProjectInModal }: ProjectProps) {
     return (
-        <div className="project" onClick={() => showProjectModal(item)}>
+        <div className="project" onClick={() => showProjectInModal(item)}>
             <img className="project-img" src={item.img} />
             <div className="project-title">
                 {item.name}
