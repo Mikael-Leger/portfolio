@@ -379,7 +379,7 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 					<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
 				)}
 				{isBrowser && browserLogic && (
-					<div className={`window-content browser-content`}>
+					<div className={`window-content browser-content browser-${preferences.theme}`}>
 						{tabs[browserLogic.activeTab].content}
 					</div>
 				)}

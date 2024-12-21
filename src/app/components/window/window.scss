@@ -135,8 +135,9 @@
 
     &-content {
         align-self: start;
-
         flex: 1;
+
+        position: relative;
         width: 100%;
         background-color: white;
 
@@ -152,10 +153,19 @@
         }
 
         &.browser-content {
+            color: black;
+
+            overflow: hidden;
+
             iframe {
                 height: 100%;
                 width: 100%;
             }
+        }
+
+        &.browser-dark {
+            background-color: #212121;
+            color: white;
         }
     }
 
