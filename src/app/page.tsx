@@ -24,6 +24,7 @@ export default function Home() {
 
     useEffect(() => {
         setCurrentLocation(window.location.href);
+        setShowBrowser(true);
     }, []);
 
     useEffect(() => {
@@ -154,11 +155,11 @@ export default function Home() {
     }
 
     const windows: WindowProps[] = [
-        {
-            type: "command",
-            lines: linesSection1,
-            onFinish: () => setShowBrowser(true)
-        },
+        // {
+        //     type: "command",
+        //     lines: linesSection1,
+        //     onFinish: () => setShowBrowser(true)
+        // },
         {
             type: "browser",
             tabs: tabs,

@@ -14,6 +14,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
         if (ip != null) {
             const ipFormatted = ip.replaceAll('.', '-');
             setIpFormatted(ipFormatted);
+
             const timeline = gsap.timeline();
             timeline.from(document.querySelector(`.window-command-${id}`), {
                 duration: .7,

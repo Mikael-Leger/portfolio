@@ -5,6 +5,7 @@ import Project from "../project/project";
 import ProjectInterface from "@/app/interfaces/project.interface";
 import ProjectModal from "@/app/interfaces/modal.interface";
 import Modal from "../modal/modal";
+import Title from "../title/title";
 
 import "./portfolio.scss";
 
@@ -97,11 +98,11 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         });
     };
 
-    const projects: ProjectInterface[] = [
+    const projectsPerso: ProjectInterface[] = [
         {
             name: "EX-Change",
             status: {
-                title: "online",
+                title: "Online",
                 type: "success"
             },
             img: "/projects/exchange.png",
@@ -149,7 +150,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         {
             name: "ScrimCheck",
             status: {
-                title: "online",
+                title: "Online",
                 type: "warning",
                 details: "API key not valid. Only using mocks as data."
             },
@@ -171,6 +172,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
                 {
                     name: "AWS RDS",
                     groupName: "database",
+                    version: "MySQL",
                     url: "https://aws.amazon.com/fr/rds/"
                 },
                 {
@@ -193,7 +195,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         {
             name: "Portfolio",
             status: {
-                title: "online",
+                title: "Online",
                 type: "success"
             },
             img: "/projects/portfolio.png",
@@ -234,14 +236,110 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         }
     ];
 
+    const projectsPro = [
+        {
+            name: "CCIP",
+            status: {
+                title: "Not available",
+                type: "error",
+                detail: "Website is not accessible"
+            },
+            img: "/projects/ccip.png",
+            logo: "/projects/logo_ccip.png",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
+            stack: [
+                {
+                    name: "React",
+                    groupName: "frontend"
+                },
+                {
+                    name: "Nest.js",
+                    groupName: "backend"
+                },
+                {
+                    name: "Serveur interne",
+                    groupName: "database",
+                    version: "PostgreSQL"
+                },
+                {
+                    name: "Serveur interne",
+                    groupName: "deploy"
+                },
+                {
+                    name: "Extracteur interne",
+                    groupName: "api"
+                },
+                {
+                    name: "Microsoft Graph",
+                    groupName: "api",
+                    url: "https://learn.microsoft.com/en-us/graph/use-the-api/"
+                }
+            ]
+        }
+    ]
+
+    const projectsSchool = [
+        {
+            name: "MFC",
+            status: {
+                title: "Offline",
+                type: "error",
+                detail: "Website is offline"
+            },
+            img: "/projects/mfc.png",
+            logo: "/projects/logo_mfc.png",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
+            stack: [
+                {
+                    name: "JavaScript",
+                    groupName: "frontend"
+                },
+                {
+                    name: "PHP",
+                    groupName: "backend"
+                },
+                {
+                    name: "Serveur local",
+                    groupName: "database",
+                    version: "MySQL"
+                },
+            ]
+        }
+    ]
+
+    const groupsOfProjects = [
+        {
+            title: "Projets personnels",
+            projects: projectsPerso
+        },
+        {
+            title: "Projets professionnels",
+            projects: projectsPro
+        },
+        {
+            title: "Projets scolaires",
+            projects: projectsSchool
+        },
+    ]
+
     return (
         <div className="portfolio" ref={portfolioRef}>
-            <div className="portfolio-title">
-                Développeur Full-Stack
+            <div className="portfolio-name">
+                <Title text="Mikaël Léger" size="big" />
             </div>
-            <div className="portfolio-projects">
-                {projects.map(project => (
-                    <Project item={project} showProjectInModal={showProjectInModal} key={project.name} />
+            <div className="portfolio-container">
+                {groupsOfProjects.map(groupOfProjects => (
+                    <div className="portfolio-container-group" key={groupOfProjects.title}>
+                        <div className="portfolio-container-group-title">
+                            <Title text={groupOfProjects.title} />
+                        </div>
+                        <div className="portfolio-container-group-projects">
+                            {groupOfProjects.projects.map(project => (
+                                <Project item={project} showProjectInModal={showProjectInModal} key={project.name} />
+                            ))}
+                        </div>
+                        <div className="portfolio-container-group-neck" />
+                    </div>
                 ))}
             </div>
             <Modal modalData={modalData} addTab={addTab} showModal={showModal} ref={modalRef} />

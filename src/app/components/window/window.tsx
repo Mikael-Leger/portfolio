@@ -231,7 +231,7 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 		}, [isDragging]);
 
 		const isBrowser = (type === 'browser');
-		const browserLogic = isBrowser ? useBrowser(preferences) : null;
+		const browserLogic = isBrowser ? useBrowser(id, preferences) : null;
 
 		useImperativeHandle(ref, () => ({
 			switchTab: browserLogic?.switchTab,

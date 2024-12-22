@@ -34,7 +34,7 @@
             justify-content: space-around;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 25px;
 
             height: 100%;
 
@@ -56,7 +56,7 @@
 
         &.group {
             &-frontend {
-                // background-color: #4e75a3;
+                background-color: #4e75a3;
             }
 
             &-backend {

@@ -43,7 +43,9 @@
                     border: 1px solid black;
                     position: relative;
 
-                    cursor: pointer;
+                    &.link-working {
+                        cursor: pointer;
+                    }
 
                     &-open {
                         position: absolute;
