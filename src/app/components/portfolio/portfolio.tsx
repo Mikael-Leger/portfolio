@@ -6,6 +6,8 @@ import ProjectInterface from "@/app/interfaces/project.interface";
 import ProjectModal from "@/app/interfaces/modal.interface";
 import Modal from "../modal/modal";
 import Title from "../title/title";
+import WindowRef from "@/app/interfaces/window-ref.interface";
+import { useIsReduced } from "@/app/contexts/is-reduced";
 
 import "./portfolio.scss";
 
@@ -17,6 +19,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     const [modalData, setModalData] = useState<ProjectModal>({
         isVisible: false
     });
+    const { isReduced } = useIsReduced();
 
     const portfolioRef = useRef(null);
     const modalRef = useRef(null);
@@ -73,6 +76,9 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     });
 
     const showModal = async (show: boolean) => {
+        if (isReduced) {
+            return;
+        }
         if (!show) {
             gsap.to(".modal", {
                 duration: .4,
@@ -92,6 +98,10 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     }
 
     const showProjectInModal = (project: ProjectInterface) => {
+        if (isReduced) {
+            return;
+        }
+
         setModalData({
             isVisible: true,
             item: project
@@ -320,25 +330,24 @@ export default function Portfolio({ addTab }: PortfolioProps) {
             title: "Projets scolaires",
             projects: projectsSchool
         },
-    ]
+    ];
 
     return (
         <div className="portfolio" ref={portfolioRef}>
             <div className="portfolio-name">
-                <Title text="Mikaël Léger" size="big" />
+                <Title text="Mikaël Léger - Développeur Full-Stack" size="big" />
             </div>
             <div className="portfolio-container">
                 {groupsOfProjects.map(groupOfProjects => (
                     <div className="portfolio-container-group" key={groupOfProjects.title}>
                         <div className="portfolio-container-group-title">
-                            <Title text={groupOfProjects.title} />
+                            <Title text={groupOfProjects.title} effect="shadow" />
                         </div>
                         <div className="portfolio-container-group-projects">
                             {groupOfProjects.projects.map(project => (
                                 <Project item={project} showProjectInModal={showProjectInModal} key={project.name} />
                             ))}
                         </div>
-                        <div className="portfolio-container-group-neck" />
                     </div>
                 ))}
             </div>

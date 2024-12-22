@@ -37,7 +37,7 @@ export default function Tab({ preferences, logoPath, title, active, index, oncli
             </div>
             <img
                 className="window-header-left-tabs-tab-close logo-icon"
-                src="/close_small.png"
+                src="/icons/close_small.png"
                 style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }}
                 onClick={(e) => removeTabWithoutPropagation(e, index)} />
             {active && (

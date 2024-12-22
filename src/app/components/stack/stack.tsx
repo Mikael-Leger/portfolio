@@ -1,13 +1,23 @@
 import { useEffect } from "react";
 
-import "./stack.scss";
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
+import { useIsReduced } from "@/app/contexts/is-reduced";
+
+import "./stack.scss";
 
 type StackProps = {
     groupsOfItems: ProjectTechno[][];
 };
 
 export default function Stack({ groupsOfItems }: StackProps) {
+    const { isReduced } = useIsReduced();
+
+    const openTab = (url: string) => {
+        if (isReduced) {
+            return;
+        }
+        window.open(url, '_blank');
+    }
     return (
         <div className="stack">
             {groupsOfItems.map(groupOfItems => {
@@ -22,7 +32,7 @@ export default function Stack({ groupsOfItems }: StackProps) {
                                 return (
                                     <div className="stack-group-content-item" key={item.name}>
                                         {item.url ? (
-                                            <div className="stack-group-content-item-url" onClick={() => window.open(item.url, '_blank')}>
+                                            <div className="stack-group-content-item-url" onClick={() => openTab(item.url as string)}>
                                                 {item.name}
                                             </div>
                                         ) : (

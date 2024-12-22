@@ -156,7 +156,22 @@
         &.browser-content {
             color: black;
 
+            position: relative;
             overflow: hidden;
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: url('/backgrounds/bg_browser.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                opacity: .25;
+            }
 
             iframe {
                 height: 100%;
@@ -184,6 +199,7 @@
         &-logo {
             width: 35%;
             opacity: 0;
+            z-index: 30;
         }
     }
 }

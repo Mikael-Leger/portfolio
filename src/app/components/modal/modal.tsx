@@ -4,6 +4,7 @@ import ProjectInterface from "@/app/interfaces/project.interface";
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
 import Stack from "../stack/stack";
 import Status from "@/app/interfaces/status.interface";
+import { useIsReduced } from "@/app/contexts/is-reduced";
 
 import "./modal.scss";
 
@@ -15,6 +16,8 @@ type ModalProps = {
 };
 
 export default function Modal({ modalData, addTab, showModal, ref }: ModalProps) {
+    const { isReduced } = useIsReduced();
+
     if (!modalData.isVisible) return;
 
     const stackTemplate = () => {
@@ -36,9 +39,10 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
     }
 
     const addTabFromitem = (item: ProjectInterface) => {
-        if (item.url) {
-            addTab(item.name, item.url, item.logo);
+        if (!item.url || isReduced) {
+            return;
         }
+        addTab(item.name, item.url, item.logo);
     }
 
     const statusTemplate = (status: Status) => {
@@ -70,7 +74,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                                 <img src={modalData.item.img} />
                                 {modalData.item.url && (
                                     <div className="modal-container-content-details-img-open">
-                                        <img className="modal-container-content-details-img-open-logo" src="/open.png" />
+                                        <img className="modal-container-content-details-img-open-logo" src="/icons/open.png" />
                                     </div>
                                 )}
                             </div>
@@ -82,7 +86,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                     </div>
                     <div className="modal-container-actions">
                         <div className="modal-container-actions-close" onClick={() => showModal(false)}>
-                            <img src="/close.png" />
+                            <img src="/icons/close.png" />
                         </div>
                     </div>
                 </div>

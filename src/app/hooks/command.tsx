@@ -76,10 +76,10 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
             await waitFor(1000);
         }
 
-        await simulateDisplay(<><img className="logo-icon" src="/linux.png" />{loginOutput}</>);
+        await simulateDisplay(<><img className="logo-icon" src="/icons/linux.png" />{loginOutput}</>);
         await simulateWriting(loginText);
 
-        await simulateDisplay(<><img className="logo-icon" src="/linux.png" />{authText}</>);
+        await simulateDisplay(<><img className="logo-icon" src="/icons/linux.png" />{authText}</>);
 
         await simulateDisplay(imgAsciiText);
 

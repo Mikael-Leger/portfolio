@@ -10,6 +10,7 @@ import Loading from "./components/loading/loading";
 import Portfolio from "./components/portfolio/portfolio";
 import TabInterface from "./interfaces/tab.interface";
 import WindowRef from "./interfaces/window-ref.interface";
+import { IsReducedProvider } from "./contexts/is-reduced";
 
 import "./home.scss";
 
@@ -171,13 +172,15 @@ export default function Home() {
 
     return (
         <PageLayout>
-            <div className="home">
-                {windows.map((window, idx) => (
-                    <Window
-                        key={idx}
-                        {...window} />
-                ))}
-            </div>
+            <IsReducedProvider>
+                <div className="home">
+                    {windows.map((window, idx) => (
+                        <Window
+                            key={idx}
+                            {...window} />
+                    ))}
+                </div>
+            </IsReducedProvider>
         </PageLayout>
     );
 }

@@ -14,6 +14,7 @@ import TabInterface from "@/app/interfaces/tab.interface";
 import WindowDetails from "@/app/interfaces/window-details.interface";
 import Loading from "../loading/loading";
 import WindowRef from "@/app/interfaces/window-ref.interface";
+import { useIsReduced } from "@/app/contexts/is-reduced";
 
 import "./window.scss";
 
@@ -59,10 +60,10 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 		const [id, setId] = useState<number>();
 		const [windowIconPath, setWindowIconPath] = useState<string>("");
 		const [isMaximized, setIsMaximized] = useState<boolean>(true);
-		const [isReduced, setIsReduced] = useState<boolean>(false);
 		const [isReducing, setIsReducing] = useState<boolean>(false);
 		const [isIncreasing, setIsIncreasing] = useState<boolean>(false);
 		const [isDragging, setIsDragging] = useState<boolean>(false);
+		const { isReduced, setIsReduced } = useIsReduced();
 		const [windowDetails, setWindowDetails] = useState<WindowDetails>({
 			width: '60vw',
 			height: '60vh',
@@ -267,7 +268,7 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 			if (browserLogic) {
 				setWindowIconPath(browserLogic.browserIconPath);
 			} else if (isCommand) {
-				setWindowIconPath("/linux.png");
+				setWindowIconPath("/icons/linux.png");
 			}
 		}, [browserLogic]);
 
@@ -367,7 +368,7 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 										onClick={() => action.onClick()}>
 										<img
 											className={`window-header-actions-action-${action.name} logo-icon`}
-											src={`/${action.name}.png`}
+											src={`/icons/${action.name}.png`}
 											style={{ filter: preferences.color?.textColor == 'white' ? 'invert(100%)' : '' }} />
 									</div>
 								);

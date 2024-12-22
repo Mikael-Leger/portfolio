@@ -41,11 +41,7 @@ export default function useBrowser(id?: number, preferences?: Preferences) {
             duration: 1.2,
             opacity: 0,
             x: 600,
-            stagger: 1.7,
-        });
-        gsap.to(".portfolio-container-group-neck", {
-            delay: currentDuration,
-            display: "none"
+            stagger: 1.9,
         });
 
         timeline.from(".project", {
