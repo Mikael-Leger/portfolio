@@ -4,6 +4,8 @@ import gsap from "gsap";
 import CommandLine from "../interfaces/command-line.interface";
 import Preferences from "../interfaces/preferences.interface";
 
+const BASE_TIME_WAIT = 50;
+
 export default function useCommand(lines: CommandLine[], id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
     const [currentPath, setCurrentPath] = useState<string>("~");
@@ -35,8 +37,8 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
         if (process.env.NODE_ENV == 'development' && process.env.HIDE_ANIMATION) {
             return waitFor(0);
         }
-        const min = 50 + baseMs;
-        const max = 200 + baseMs;
+        const min = (BASE_TIME_WAIT / 4) + baseMs;
+        const max = BASE_TIME_WAIT + baseMs;
         return waitFor((Math.random() * (max - min) + min));
     }
 
@@ -71,7 +73,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
         let path = '~';
 
         if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
-            await waitFor(1000);
+            await waitFor(BASE_TIME_WAIT * 5);
         }
 
         await simulateDisplay(<><img className="logo-icon" src="/icons/linux.png" />{loginOutput}</>);
@@ -111,7 +113,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
 
     const simulateDisplay = async (node: React.ReactNode) => {
         if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
-            await waitFor(200);
+            await waitFor(BASE_TIME_WAIT);
         }
         setContentNodes(prevContentNodes => {
             const updatedContent = [...prevContentNodes, node];
@@ -121,7 +123,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
 
     const simulateWriting = async (text: string) => {
         if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
-            await waitFor(200);
+            await waitFor(BASE_TIME_WAIT);
         }
         for (let i = 0; i < text.length; i++) {
             setContentNodes(prevContentNodes => {

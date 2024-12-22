@@ -11,6 +11,7 @@ import Portfolio from "./components/portfolio/portfolio";
 import TabInterface from "./interfaces/tab.interface";
 import WindowRef from "./interfaces/window-ref.interface";
 import { IsReducedProvider } from "./contexts/is-reduced";
+import TaskBar from "./components/task-bar/task-bar";
 
 import "./home.scss";
 
@@ -193,8 +194,6 @@ export default function Home() {
     if (!windows) {
         return <Loading />;
     }
-    console.log(windows);
-
 
     return (
         <PageLayout>
@@ -205,6 +204,7 @@ export default function Home() {
                             key={idx}
                             {...window} />
                     ))}
+                    <TaskBar />
                 </div>
             </IsReducedProvider>
         </PageLayout>

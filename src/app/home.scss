@@ -1,11 +1,26 @@
 .home {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     flex-direction: column;
     gap: 20px;
 
     height: 100vh;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/backgrounds/bg_website.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        opacity: .5;
+        pointer-events: none;
+    }
 }
 
 .command-blue {
