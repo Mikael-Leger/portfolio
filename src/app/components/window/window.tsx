@@ -275,11 +275,13 @@ export const Window = forwardRef<WindowRef, WindowProps>(
 		useEffect(() => {
 			if (commandLogic && !commandLogic.isSimulationStarted && commandLogic.ipFormatted != null) {
 				commandLogic.setIsSimulationStarted(true);
-				const startedWithSuccess = commandLogic.startSimulation();
+				commandLogic.startSimulation();
 			}
 		}, [commandLogic]);
 
-		if ((commandLogic && !commandLogic.startSimulation) || !windowIconPath || hide) {
+		console.log(hide);
+
+		if (!windowIconPath || hide) {
 			return <Loading />;
 		}
 

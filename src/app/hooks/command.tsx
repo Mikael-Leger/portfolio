@@ -24,8 +24,6 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
                 x: '40vw',
                 ease: "sine.in"
             });
-
-            startSimulation();
         }
     }, [ip]);
 
@@ -34,7 +32,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const waitRandom = async (baseMs: number = 0) => {
-        if (process.env.NODE_ENV == 'development') {
+        if (process.env.NODE_ENV == 'development' && process.env.HIDE_ANIMATION) {
             return waitFor(0);
         }
         const min = 50 + baseMs;
@@ -72,7 +70,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
 
         let path = '~';
 
-        if (process.env.NODE_ENV == 'production') {
+        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
             await waitFor(1000);
         }
 
@@ -112,7 +110,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const simulateDisplay = async (node: React.ReactNode) => {
-        if (process.env.NODE_ENV == 'production') {
+        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
             await waitFor(200);
         }
         setContentNodes(prevContentNodes => {
@@ -122,8 +120,8 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const simulateWriting = async (text: string) => {
-        if (process.env.NODE_ENV == 'production') {
-            await waitFor(600);
+        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
+            await waitFor(200);
         }
         for (let i = 0; i < text.length; i++) {
             setContentNodes(prevContentNodes => {
@@ -133,10 +131,6 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
             await waitRandom();
         }
     }
-
-    // if (preferences == null || preferences.color == null) {
-    //     return <div>Loading...</div>
-    // }
 
     return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation };
 }

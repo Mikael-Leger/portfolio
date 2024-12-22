@@ -16,17 +16,47 @@ import "./home.scss";
 
 export default function Home() {
     const [currentLocation, setCurrentLocation] = useState<string>("");
-    const [showBrowser, setShowBrowser] = useState<boolean>(false);
     const [tabs, setTabs] = useState<TabInterface[]>([]);
-
+    const [windows, setWindows] = useState<WindowProps[]>([]);
     const [newTab, setNewTab] = useState<TabInterface>();
 
     const windowRef = useRef<WindowRef>(null);
 
     useEffect(() => {
         setCurrentLocation(window.location.href);
-        setShowBrowser(true);
     }, []);
+
+    useEffect(() => {
+        if (tabs) {
+            const firstAnimation = localStorage.getItem('first-animation');
+            const defaultWindows: WindowProps[] = [];
+            if (!firstAnimation) {
+                defaultWindows.push({
+                    type: "command",
+                    lines: linesSection1,
+                    onFinish: onFirstAnimationFinish
+                });
+            }
+            defaultWindows.push(
+                {
+                    type: "browser",
+                    tabs: tabs,
+                    removeTab: removeTab,
+                    hide: firstAnimation === null,
+                    ref: windowRef as RefObject<WindowRef>
+                });
+            setWindows(defaultWindows);
+        }
+    }, [tabs]);
+
+    const showBrowser = (value: boolean) => {
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const foundIndex = updatedWindows.findIndex(window => window.type == "browser");
+            updatedWindows[foundIndex].hide = !value;
+            return updatedWindows;
+        });
+    }
 
     useEffect(() => {
         if (currentLocation) {
@@ -155,20 +185,16 @@ export default function Home() {
         });
     }
 
-    const windows: WindowProps[] = [
-        // {
-        //     type: "command",
-        //     lines: linesSection1,
-        //     onFinish: () => setShowBrowser(true)
-        // },
-        {
-            type: "browser",
-            tabs: tabs,
-            removeTab: removeTab,
-            hide: !showBrowser,
-            ref: windowRef as RefObject<WindowRef>
-        },
-    ];
+    const onFirstAnimationFinish = () => {
+        localStorage.setItem('first-animation', 'true');
+        showBrowser(true);
+    }
+
+    if (!windows) {
+        return <Loading />;
+    }
+    console.log(windows);
+
 
     return (
         <PageLayout>
