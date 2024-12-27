@@ -307,7 +307,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		if (!isReduced) {
 			return;
 		}
-		e.stopPropagation();
+		// e.stopPropagation();
 		increaseWindow();
 	}
 

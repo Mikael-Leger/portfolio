@@ -43,37 +43,32 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         }
     }, [modalData.isVisible]);
 
-    const useOnClickOutside = <T extends HTMLElement>(
-        refOut: RefObject<T | null>,
-        refIn: RefObject<T | null>,
-        handler: (event: Event) => void
-    ) => {
-        useEffect(() => {
-            if (refOut && refIn) {
-                const listener = (event: Event) => {
-                    const targetNode = event.target as Node;
-                    if (!refOut.current
-                        || refOut.current.contains(targetNode)
-                        || !refIn.current?.contains(targetNode)) {
-                        return;
-                    }
-                    handler(event);
-                };
+    useEffect(() => {
+        if (!portfolioRef || !modalRef) {
+            return;
+        }
 
-                document.addEventListener("mousedown", listener);
-                document.addEventListener("touchstart", listener);
+        const listener = (event: Event) => {
+            {
+                const targetNode = event.target as Node | null;
 
-                return () => {
-                    document.removeEventListener("mousedown", listener);
-                    document.removeEventListener("touchstart", listener);
-                };
+                if (!targetNode) return;
+
+                const classNames = Array.from((targetNode as HTMLElement).classList);
+                if (modalData.isVisible && classNames[0] === "modal") {
+                    showModal(false);
+                }
             }
-        }, [refOut, handler]);
-    }
+        }
 
-    useOnClickOutside(modalRef, portfolioRef, () => {
-        if (modalData.isVisible) showModal(false);
-    });
+        document.addEventListener("mousedown", listener);
+        document.addEventListener("touchstart", listener);
+
+        return () => {
+            document.removeEventListener("mousedown", listener);
+            document.removeEventListener("touchstart", listener);
+        };
+    }, [portfolioRef, modalRef, modalData.isVisible])
 
     const showModal = async (show: boolean) => {
         if (isReduced) {
