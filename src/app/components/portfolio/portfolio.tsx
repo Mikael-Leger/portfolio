@@ -9,6 +9,8 @@ import Title from "../title/title";
 import WindowRef from "@/app/interfaces/window-ref.interface";
 import { useIsReduced } from "@/app/contexts/is-reduced";
 import personalProjects from "@/app/data/personal_projects.json";
+import professionalProjects from "@/app/data/professional_projects.json";
+import schoolProjects from "@/app/data/school_projects.json";
 import TabInterface from "@/app/interfaces/tab.interface";
 
 import "./portfolio.scss";
@@ -105,91 +107,18 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         });
     };
 
-    const projectsPerso: ProjectInterface[] = personalProjects;
-
-    const projectsPro = [
-        {
-            name: "CCIP",
-            status: {
-                title: "Not available",
-                type: "error",
-                detail: "Website is not accessible"
-            },
-            img: "/projects/ccip.png",
-            logo: "/projects/logo_ccip.png",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
-            stack: [
-                {
-                    name: "React",
-                    groupName: "frontend"
-                },
-                {
-                    name: "Nest.js",
-                    groupName: "backend"
-                },
-                {
-                    name: "Serveur interne",
-                    groupName: "database",
-                    version: "PostgreSQL"
-                },
-                {
-                    name: "Serveur interne",
-                    groupName: "deploy"
-                },
-                {
-                    name: "Extracteur interne",
-                    groupName: "api"
-                },
-                {
-                    name: "Microsoft Graph",
-                    groupName: "api",
-                    url: "https://learn.microsoft.com/en-us/graph/use-the-api/"
-                }
-            ]
-        }
-    ]
-
-    const projectsSchool = [
-        {
-            name: "MFC",
-            status: {
-                title: "Offline",
-                type: "error",
-                detail: "Website is offline"
-            },
-            img: "/projects/mfc.png",
-            logo: "/projects/logo_mfc.png",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
-            stack: [
-                {
-                    name: "JavaScript",
-                    groupName: "frontend"
-                },
-                {
-                    name: "PHP",
-                    groupName: "backend"
-                },
-                {
-                    name: "Serveur local",
-                    groupName: "database",
-                    version: "MySQL"
-                },
-            ]
-        }
-    ]
-
     const groupsOfProjects = [
         {
             title: "Projets personnels",
-            projects: projectsPerso
+            projects: personalProjects
         },
         {
             title: "Projets professionnels",
-            projects: projectsPro
+            projects: professionalProjects
         },
         {
             title: "Projets scolaires",
-            projects: projectsSchool
+            projects: schoolProjects
         },
     ];
 
