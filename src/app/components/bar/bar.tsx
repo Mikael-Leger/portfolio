@@ -9,7 +9,7 @@ type BarProps = {
     tabs: TabInterface[];
 };
 
-export default function Bar({ preferences, activeTab, tabs: tabsValue }: BarProps) {
+export default function Bar({ preferences, activeTab, tabs }: BarProps) {
     return (
         <div className="window-bar" style={{ "backgroundColor": preferences.color?.backgroundShadedColor }}>
             <div className="window-bar-actions">
@@ -18,7 +18,7 @@ export default function Bar({ preferences, activeTab, tabs: tabsValue }: BarProp
                 <img className="logo-icon-actions-refresh logo-icon" src="/icons/refresh.png" style={{ filter: preferences.color?.textColor == 'white' ? 'invert(100%)' : '' }} />
             </div>
             <div className="window-bar-url" style={{ "backgroundColor": preferences.color?.backgroundColor }}>
-                {tabsValue[activeTab].url}
+                {tabs[activeTab].url}
             </div>
         </div>
     );

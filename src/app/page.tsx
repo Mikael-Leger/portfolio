@@ -38,6 +38,7 @@ export default function Home() {
     const windowRefs = useRef<Record<number, WindowRef>>({});
     const lastUpdatedWindowRef = useRef<{ id: number } | null>(null);
     const newTabIndex = useRef<number>(-1);
+    const usedDefaultTabs = useRef<boolean>(false);
 
     const setWindowRef = (id: number, ref: WindowRef) => {
         windowRefs.current[id] = ref;
@@ -76,8 +77,17 @@ export default function Home() {
         )));
         localStorage.setItem("tabs", tabsLocalStr);
 
+        if (usedDefaultTabs.current) {
+            setWindows(prevWindows => {
+                let updatedWindows = [...prevWindows];
 
-        if (newTab == null) {
+                const windowIndex = updatedWindows.findIndex(window => window.window_id == 0);
+                updatedWindows[windowIndex].tabs = tabs;
+
+                return updatedWindows;
+            });
+
+        } else if (newTab == null) {
             const defaultWindows: WindowProps[] = [];
             defaultWindows.push(
                 {
@@ -91,6 +101,9 @@ export default function Home() {
                 });
             lastUpdatedWindowRef.current = { id: 0 };
             setWindows(defaultWindows);
+
+            usedDefaultTabs.current = true;
+
         } else {
             const newActiveTab = tabs.length - 1;
             newTabIndex.current = newActiveTab;
@@ -168,7 +181,7 @@ export default function Home() {
                     type: "browser",
                     zIndex: windowLogic.zIndex,
                     tabs: windowLogic.tabs as TabInterface[],
-                    removeTab: windowLogic.removeTab as (index: number) => void,
+                    removeTab: removeTab,
                     onAction: (action: string) => handleAction(id, action)
                 }
             }

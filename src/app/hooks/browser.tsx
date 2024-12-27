@@ -34,53 +34,6 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
         }
     }, []);
 
-    useEffect(() => {
-        if (browserIconPath == "" || activeTab == -1 || windowIconPath == "") {
-            return;
-        }
-
-        let openDuration = 0;
-        if (!isBrowserOpen.current) {
-            openDuration = animateOpenBrowser();
-            setTimeout(() => {
-                isBrowserOpen.current = true;
-            }, openDuration * 1000);
-        }
-
-        if (!tabs) {
-            return;
-        }
-
-        if (isCurrentTabPortfolio()) {
-            animatePortfolioPage(openDuration);
-        }
-
-    }, [browserIconPath, activeTab, windowIconPath]);
-
-    const isCurrentTabPortfolio = () => {
-        console.log("isCurrentTabPortfolio");
-
-        if (!tabs) return false;
-        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio - Mikaël Léger");
-        console.log({ tabFound, activeTab });
-        console.log(tabFound == activeTab);
-        return tabFound == activeTab;
-    }
-
-    useEffect(() => {
-        if (preferences == null || preferences.color == null || id == null || hide) {
-            return;
-        }
-
-        const iconPath = getBrowserIconPath();
-        setBrowserIconPath(iconPath);
-    }, [preferences, id, hide]);
-
-    const isBrowser = (type === 'browser');
-    if (!isBrowser) {
-        return { isNotBrowser: true };
-    }
-
     const animateOpenBrowser = () => {
         const timeline = gsap.timeline();
         timeline.fromTo(document.querySelector(`.window-browser-${id}`), {
@@ -126,6 +79,52 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
             stagger: .5,
             ease: "sine.in"
         });
+    }
+
+    useEffect(() => {
+        if (browserIconPath == "" || activeTab == -1 || windowIconPath == "") {
+            return;
+        }
+
+        const windowBrowser = document.getElementsByClassName("window-browser");
+
+        let openDuration = 0;
+        if (!isBrowserOpen.current && windowBrowser[0]) {
+            openDuration = animateOpenBrowser();
+            setTimeout(() => {
+                isBrowserOpen.current = true;
+            }, openDuration * 1000);
+        }
+
+        if (!tabs) {
+            return;
+        }
+
+        if (isCurrentTabPortfolio()) {
+            animatePortfolioPage(openDuration);
+        }
+
+    }, [browserIconPath, activeTab, windowIconPath]);
+
+    const isCurrentTabPortfolio = () => {
+        if (!tabs) return false;
+
+        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio - Mikaël Léger");
+        return tabFound == activeTab;
+    }
+
+    useEffect(() => {
+        if (preferences == null || preferences.color == null || id == null || hide) {
+            return;
+        }
+
+        const iconPath = getBrowserIconPath();
+        setBrowserIconPath(iconPath);
+    }, [preferences, id, hide]);
+
+    const isBrowser = (type === 'browser');
+    if (!isBrowser) {
+        return { isNotBrowser: true };
     }
 
     const switchTab = (index: number) => {

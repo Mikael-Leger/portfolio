@@ -35,11 +35,13 @@ export default function Tab({ preferences, logoPath, title, active, index, oncli
                     {title}
                 </div>
             </div>
-            <img
-                className="window-header-left-tabs-tab-close logo-icon"
-                src="/icons/close_small.png"
-                style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }}
-                onClick={(e) => removeTabWithoutPropagation(e, index)} />
+            {index != 0 && (
+                <img
+                    className="window-header-left-tabs-tab-close logo-icon"
+                    src="/icons/close_small.png"
+                    style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }}
+                    onClick={(e) => removeTabWithoutPropagation(e, index)} />
+            )}
             {active && (
                 <div className="window-header-left-tabs-tab-neck" style={{ "backgroundColor": preferences?.color?.backgroundShadedColor }} />
             )}

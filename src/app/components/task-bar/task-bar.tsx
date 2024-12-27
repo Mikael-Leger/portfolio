@@ -8,6 +8,8 @@ type TaskBarProps = {
 export default function TaskBar({ }: TaskBarProps) {
     const restartWebsiteAnimations = () => {
         localStorage.removeItem('first-animation');
+        localStorage.removeItem('active-tab');
+        localStorage.removeItem('tabs');
         window.location.reload();
     }
 

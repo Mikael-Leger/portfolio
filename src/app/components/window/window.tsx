@@ -262,10 +262,10 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 	useEffect(() => {
 		if (browserLogic && browserLogic.activeTab && activeTabTmp) {
 			const newActiveTab = (browserLogic.activeTab == activeTabTmp.index) ? 0 : browserLogic.activeTab - 1;
+			localStorage.setItem("active-tab", newActiveTab.toString());
 			browserLogic.setActiveTab?.(newActiveTab);
 
 			if (activeTabTmp.remove && removeTab) {
-				onAction("removeTab");
 				removeTab(activeTabTmp.index);
 			}
 
@@ -413,10 +413,10 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 					}
 				</div>
 			</div>
-			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && (
+			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && tabs[browserLogic.activeTab] && (
 				<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
 			)}
-			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && (
+			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && tabs[browserLogic.activeTab] && (
 				<div className={`window-content browser-content browser-${preferences.theme} ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
 					{tabs[browserLogic.activeTab].content}
 				</div>
