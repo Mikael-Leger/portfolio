@@ -8,11 +8,13 @@ import Modal from "../modal/modal";
 import Title from "../title/title";
 import WindowRef from "@/app/interfaces/window-ref.interface";
 import { useIsReduced } from "@/app/contexts/is-reduced";
+import personalProjects from "@/app/data/personal_projects.json";
+import TabInterface from "@/app/interfaces/tab.interface";
 
 import "./portfolio.scss";
 
 type PortfolioProps = {
-    addTab: (title: string, url: string, imgPath: string) => void;
+    addTab: (tabData: TabInterface) => void;
 };
 
 export default function Portfolio({ addTab }: PortfolioProps) {
@@ -103,143 +105,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
         });
     };
 
-    const projectsPerso: ProjectInterface[] = [
-        {
-            name: "EX-Change",
-            status: {
-                title: "Online",
-                type: "success"
-            },
-            img: "/projects/exchange.png",
-            url: "https://ex-change-currency.vercel.app/",
-            logo: "/projects/logo_exchange.png",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
-            stack: [
-                {
-                    name: "TypeScript",
-                    groupName: "frontend",
-                    version: "5.6.2"
-                },
-                {
-                    name: "React",
-                    groupName: "frontend",
-                    version: "18.3.12"
-                },
-                {
-                    name: "Vite",
-                    groupName: "frontend",
-                    version: "6.0.1"
-                },
-                {
-                    name: "Python",
-                    groupName: "backend",
-                    version: "3.12.0"
-                },
-                {
-                    name: "Flask",
-                    groupName: "backend",
-                    version: "3.1.0"
-                },
-                {
-                    name: "Vercel",
-                    groupName: "deploy",
-                    url: "https://vercel.com/"
-                },
-                {
-                    name: "Free Currency",
-                    groupName: "api",
-                    url: "https://freecurrencyapi.com/docs/"
-                }
-            ]
-        },
-        {
-            name: "ScrimCheck",
-            status: {
-                title: "Online",
-                type: "warning",
-                details: "API key not valid. Only using mocks as data."
-            },
-            img: "/projects/scrimcheck.png",
-            url: "https://scrim-check.vercel.app/",
-            logo: "/projects/logo_scrimcheck.png",
-            description: "ScrimCheck est un projet",
-            stack: [
-                {
-                    name: "React",
-                    groupName: "frontend",
-                    version: "18.2.0"
-                },
-                {
-                    name: "NestJS",
-                    groupName: "backend",
-                    version: "10.4.15"
-                },
-                {
-                    name: "AWS RDS",
-                    groupName: "database",
-                    version: "MySQL",
-                    url: "https://aws.amazon.com/fr/rds/"
-                },
-                {
-                    name: "Vercel",
-                    groupName: "deploy",
-                    url: "https://vercel.com/"
-                },
-                {
-                    name: "AWS EC2",
-                    groupName: "deploy",
-                    url: "https://aws.amazon.com/fr/ec2/"
-                },
-                {
-                    name: "Riot Games",
-                    groupName: "api",
-                    url: "https://developer.riotgames.com/"
-                }
-            ]
-        },
-        {
-            name: "Portfolio",
-            status: {
-                title: "Online",
-                type: "success"
-            },
-            img: "/projects/portfolio.png",
-            logo: "/logo_portfolio.png",
-            description: "Portfolio",
-            stack: [
-                {
-                    name: "TypeScript",
-                    groupName: "frontend",
-                    version: "5.0.0"
-                },
-                {
-                    name: "React",
-                    groupName: "frontend",
-                    version: "19.0.0"
-                },
-                {
-                    name: "Next.js",
-                    groupName: "frontend & backend",
-                    version: "15.1.0"
-                },
-                {
-                    name: "NestJS",
-                    groupName: "backend",
-                    version: "10.4.15"
-                },
-                // {
-                //     name: "Vercel",
-                //     groupName: "deploy",
-                //     url: "https://vercel.com/"
-                // },
-                // {
-                //     name: "AWS EC2",
-                //     groupName: "deploy",
-                //     url: "https://aws.amazon.com/fr/ec2/"
-                // },
-            ]
-        }
-    ];
+    const projectsPerso: ProjectInterface[] = personalProjects;
 
     const projectsPro = [
         {

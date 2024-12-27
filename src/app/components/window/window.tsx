@@ -255,7 +255,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		};
 	}, [isDragging]);
 
-	const browserLogic = useBrowser(type, id, preferences) as WindowRef["browserLogic"];
+	const browserLogic = useBrowser(type, hide, windowIconPath, tabs, id, preferences) as WindowRef["browserLogic"];
 
 	const [activeTabTmp, setActiveTabTmp] = useState<{ index: number, remove: boolean }>();
 
@@ -416,8 +416,8 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && (
 				<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
 			)}
-			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && (
-				<div className={`window-content browser-content browser-${preferences.theme}`}>
+			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && (
+				<div className={`window-content browser-content browser-${preferences.theme} ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
 					{tabs[browserLogic.activeTab].content}
 				</div>
 			)}

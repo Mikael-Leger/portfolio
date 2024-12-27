@@ -5,12 +5,13 @@ import ProjectTechno from "@/app/interfaces/project-techno.interface";
 import Stack from "../stack/stack";
 import Status from "@/app/interfaces/status.interface";
 import { useIsReduced } from "@/app/contexts/is-reduced";
+import TabInterface from "@/app/interfaces/tab.interface";
 
 import "./modal.scss";
 
 type ModalProps = {
     modalData: ProjectModal;
-    addTab: (title: string, url: string, imgPath: string) => void;
+    addTab: (tabData: TabInterface) => void;
     showModal: (show: boolean) => void;
     ref: RefObject<null>;
 };
@@ -42,7 +43,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
         if (!item.url || isReduced) {
             return;
         }
-        addTab(item.name, item.url, item.logo);
+        addTab({ title: item.name, url: item.url, logoPath: item.logo, defaultTab: false });
     }
 
     const statusTemplate = (status: Status) => {

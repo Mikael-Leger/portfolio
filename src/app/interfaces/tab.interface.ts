@@ -3,4 +3,5 @@ export default interface TabInterface {
     url: string;
     logoPath: string;
     content?: React.ReactNode;
+    defaultTab: boolean;
 }

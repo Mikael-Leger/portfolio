@@ -2,12 +2,13 @@ import { useContext, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import Preferences from "../interfaces/preferences.interface";
+import TabInterface from "../interfaces/tab.interface";
 
-export default function useBrowser(type: string, id?: number, preferences?: Preferences) {
-    const [activeTab, setActiveTab] = useState<number>(0);
+export default function useBrowser(type: string, hide: boolean, windowIconPath: string, tabs?: TabInterface[], id?: number, preferences?: Preferences) {
+    const [activeTab, setActiveTab] = useState<number>(-1);
     const [browserIconPath, setBrowserIconPath] = useState<string>("");
 
-    const isAnimating = useRef<boolean>(false);
+    const isBrowserOpen = useRef<boolean>(false);
 
     const getBrowserIconPath = () => {
         const userAgent = navigator.userAgent;
@@ -25,11 +26,55 @@ export default function useBrowser(type: string, id?: number, preferences?: Pref
     };
 
     useEffect(() => {
-        if (preferences != null && preferences.color != null && id != null) {
-            const iconPath = getBrowserIconPath();
-            setBrowserIconPath(iconPath);
+        const activeLocal = localStorage.getItem("active-tab");
+        if (activeLocal) {
+            setActiveTab(parseInt(activeLocal));
+        } else {
+            setActiveTab(0);
         }
-    }, [preferences, id]);
+    }, []);
+
+    useEffect(() => {
+        if (browserIconPath == "" || activeTab == -1 || windowIconPath == "") {
+            return;
+        }
+
+        let openDuration = 0;
+        if (!isBrowserOpen.current) {
+            openDuration = animateOpenBrowser();
+            setTimeout(() => {
+                isBrowserOpen.current = true;
+            }, openDuration * 1000);
+        }
+
+        if (!tabs) {
+            return;
+        }
+
+        if (isCurrentTabPortfolio()) {
+            animatePortfolioPage(openDuration);
+        }
+
+    }, [browserIconPath, activeTab, windowIconPath]);
+
+    const isCurrentTabPortfolio = () => {
+        console.log("isCurrentTabPortfolio");
+
+        if (!tabs) return false;
+        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio - Mikaël Léger");
+        console.log({ tabFound, activeTab });
+        console.log(tabFound == activeTab);
+        return tabFound == activeTab;
+    }
+
+    useEffect(() => {
+        if (preferences == null || preferences.color == null || id == null || hide) {
+            return;
+        }
+
+        const iconPath = getBrowserIconPath();
+        setBrowserIconPath(iconPath);
+    }, [preferences, id, hide]);
 
     const isBrowser = (type === 'browser');
     if (!isBrowser) {
@@ -37,11 +82,6 @@ export default function useBrowser(type: string, id?: number, preferences?: Pref
     }
 
     const animateOpenBrowser = () => {
-        if (isAnimating.current) {
-            return;
-        }
-        isAnimating.current = true;
-
         const timeline = gsap.timeline();
         timeline.fromTo(document.querySelector(`.window-browser-${id}`), {
             opacity: 0,
@@ -56,7 +96,14 @@ export default function useBrowser(type: string, id?: number, preferences?: Pref
             x: 0,
             ease: "sine.in"
         });
+
+        return timeline.totalDuration();
+    }
+
+    const animatePortfolioPage = (delay: number) => {
+        const timeline = gsap.timeline();
         timeline.from(".portfolio-name", {
+            delay,
             duration: 1.2,
             opacity: 0,
             x: -600,
@@ -83,7 +130,8 @@ export default function useBrowser(type: string, id?: number, preferences?: Pref
 
     const switchTab = (index: number) => {
         setActiveTab(index);
+        localStorage.setItem("active-tab", index.toString());
     }
 
-    return { activeTab, setActiveTab, browserIconPath, switchTab, animateOpenBrowser };
+    return { activeTab, setActiveTab, browserIconPath, switchTab, animateOpenBrowser, isCurrentTabPortfolio };
 }

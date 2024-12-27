@@ -71,6 +71,12 @@ export default function Home() {
         if (tabs.length === 0) {
             return;
         }
+        const tabsLocalStr = JSON.stringify(tabs.map(tab => (
+            { title: tab.title, url: tab.url, logoPath: tab.logoPath, defaultTab: tab.defaultTab }
+        )));
+        localStorage.setItem("tabs", tabsLocalStr);
+
+
         if (newTab == null) {
             const defaultWindows: WindowProps[] = [];
             defaultWindows.push(
@@ -145,14 +151,9 @@ export default function Home() {
         setWindowsOrder();
 
         const browserWindow = windows.find(window => window.type == "browser");
-        if (browserWindow) {
-            if (!browserWindow.hide) {
-                handleWindowAction(0, "animateOpenBrowser", "browser");
-            }
-            if (newTabIndex.current >= 0) {
-                handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
-                newTabIndex.current = -1;
-            }
+        if (browserWindow && newTabIndex.current >= 0) {
+            handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
+            newTabIndex.current = -1;
         }
 
     }, [windows]);
@@ -234,6 +235,7 @@ export default function Home() {
 
     const showBrowser = () => {
         lastUpdatedWindowRef.current = { id: 0 };
+
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
             const windowFound = updatedWindows.findIndex(window => window.type == "browser");
@@ -261,6 +263,21 @@ export default function Home() {
 
     useEffect(() => {
         if (currentLocation && !isBooting) {
+            const tabsLocalStr = localStorage.getItem("tabs");
+            if (tabsLocalStr) {
+                const tabsLocal = JSON.parse(tabsLocalStr) as TabInterface[];
+
+                const tabsLocalWithContent = tabsLocal.map(tabLocal => {
+                    if (tabLocal.defaultTab) {
+                        const defaultTabs = getDefaultTabs();
+                        const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.url === tabLocal.url);
+                        if (defaultTabFound) return defaultTabFound;
+                    }
+                    return getNewTab(tabLocal);
+                });
+
+                setTabs(tabsLocalWithContent);
+            }
 
             const timeline = gsap.timeline();
             const startingDuration = BASE_TIME_STARTING / 1000;
@@ -278,6 +295,7 @@ export default function Home() {
 
     useEffect(() => {
         if (isBooted) {
+
             initializeTabs();
 
             const firstAnimation = localStorage.getItem("first-animation");
@@ -313,41 +331,53 @@ export default function Home() {
         return <Loading />;
     }
 
+    const getDefaultTabs = (): TabInterface[] => ([
+        {
+            defaultTab: true,
+            logoPath: "/vercel.svg",
+            title: "Portfolio - Mikaël Léger",
+            url: `${currentLocation}home`,
+            content: (
+                <Portfolio addTab={addTab} />
+            )
+        },
+        {
+            defaultTab: true,
+            logoPath: "/vercel.svg",
+            title: "CV",
+            url: `${currentLocation}curriculum-vitae`,
+            content: (
+                <>
+                    CV
+                </>
+            )
+        }
+    ])
+
     const initializeTabs = () => {
-        const defaultTabs = [
-            {
-                logoPath: "/vercel.svg",
-                title: "Portfolio - Mikaël Léger",
-                url: `${currentLocation}home`,
-                content: (
-                    <Portfolio addTab={addTab} />
-                )
-            },
-            {
-                logoPath: "/vercel.svg",
-                title: "CV",
-                url: `${currentLocation}curriculum-vitae`,
-                content: (
-                    <>
-                        CV
-                    </>
-                )
-            }
-        ];
-        setTabs(defaultTabs);
+        const defaultTabs = getDefaultTabs();
+        const tabsLocalStr = localStorage.getItem("tabs");
+        if (!tabsLocalStr) {
+            setTabs(defaultTabs);
+        }
     }
 
-    const addTab = (title: string, url: string, imgPath: string) => {
-        const openTab = {
-            logoPath: imgPath,
-            title,
-            url,
+    const getNewTab = (tabData: TabInterface): TabInterface => {
+        return {
+            defaultTab: tabData.defaultTab,
+            logoPath: tabData.logoPath,
+            title: tabData.title,
+            url: tabData.url,
             content: (
                 <iframe
-                    src={url}>
+                    src={tabData.url}>
                 </iframe>
             )
         };
+    }
+
+    const addTab = (tabData: TabInterface) => {
+        const openTab = getNewTab(tabData);
         setNewTab(openTab);
     }
 

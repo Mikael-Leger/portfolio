@@ -17,6 +17,7 @@ export default interface WindowRef {
         switchTab?: (value: number) => void;
         animateOpenBrowser?: () => void;
         isNotBrowser?: boolean;
+        isCurrentTabPortfolio?: () => boolean;
     },
     commandLogic?: {
         contentNodes?: React.ReactNode[];
