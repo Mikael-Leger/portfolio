@@ -37,6 +37,7 @@ export default function Home() {
 
     const windowRefs = useRef<Record<number, WindowRef>>({});
     const lastUpdatedWindowRef = useRef<{ id: number } | null>(null);
+    const newTabIndex = useRef<number>(-1);
 
     const setWindowRef = (id: number, ref: WindowRef) => {
         windowRefs.current[id] = ref;
@@ -67,7 +68,10 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        if (tabs.length > 0) {
+        if (tabs.length === 0) {
+            return;
+        }
+        if (newTab == null) {
             const defaultWindows: WindowProps[] = [];
             defaultWindows.push(
                 {
@@ -81,6 +85,17 @@ export default function Home() {
                 });
             lastUpdatedWindowRef.current = { id: 0 };
             setWindows(defaultWindows);
+        } else {
+            const newActiveTab = tabs.length - 1;
+            newTabIndex.current = newActiveTab;
+            setWindows(prevWindows => {
+                let updatedWindows = [...prevWindows];
+
+                const windowIndex = updatedWindows.findIndex(window => window.window_id == 0);
+                updatedWindows[windowIndex].tabs = tabs;
+
+                return updatedWindows;
+            });
         }
     }, [tabs]);
 
@@ -97,7 +112,7 @@ export default function Home() {
                     const actionBrowser = action as BrowserLogicAction;
 
                     if (typeof browserLogic[actionBrowser] === "function") {
-                        return (browserLogic[actionBrowser] as () => void)();
+                        return (browserLogic[actionBrowser] as (payload?: any) => void)(payload);
                     }
                     return browserLogic[actionBrowser];
                 case "command":
@@ -130,9 +145,16 @@ export default function Home() {
         setWindowsOrder();
 
         const browserWindow = windows.find(window => window.type == "browser");
-        if (browserWindow && !browserWindow.hide) {
-            handleWindowAction(0, "animateOpenBrowser", "browser");
+        if (browserWindow) {
+            if (!browserWindow.hide) {
+                handleWindowAction(0, "animateOpenBrowser", "browser");
+            }
+            if (newTabIndex.current >= 0) {
+                handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
+                newTabIndex.current = -1;
+            }
         }
+
     }, [windows]);
 
     const getWindowsByRefs = (): WindowProps[] => {
@@ -280,11 +302,10 @@ export default function Home() {
                     const updatedTabs = [...prevTabs, newTab];
                     return updatedTabs;
                 });
+            } else {
+                const newTabIndexFound = tabs.findIndex(tab => tab.url == newTab.url);
+                handleWindowAction(0, "switchTab", "browser", newTabIndexFound);
             }
-
-            const newActiveTab = (tabFound == -1) ? tabs.length : tabFound;
-
-            handleWindowAction(0, "switchTab", "browser");
         }
     }, [newTab]);
 
