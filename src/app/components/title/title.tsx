@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 
-import { TimelineProp } from "@/app/types/timeline-prop";
-
 import "./title.scss";
 
 type TitleProps = {

@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import Registry from 'winreg';
 
 export default function handler(req, res) {

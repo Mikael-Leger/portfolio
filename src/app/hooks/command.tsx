@@ -3,38 +3,61 @@ import gsap from "gsap";
 
 import CommandLine from "../interfaces/command-line.interface";
 import Preferences from "../interfaces/preferences.interface";
+import { getFormattedDate } from "../services/date.service";
+import UsernameContext from "../contexts/username-context";
 
-const BASE_TIME_WAIT = 50;
+const BASE_TIME_WAIT = 0;
+// const BASE_TIME_WAIT = 80;
 
-export default function useCommand(lines: CommandLine[], id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
+const BASE_DELAY = 0;
+// const BASE_DELAY = 800;
+
+export default function useCommand(type: string, lines: CommandLine[] | undefined, id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
+    const username = useContext(UsernameContext) as string;
+
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
     const [currentPath, setCurrentPath] = useState<string>("~");
     const [ipFormatted, setIpFormatted] = useState<string>();
     const [isSimulationStarted, setIsSimulationStarted] = useState(false);
 
     useEffect(() => {
-        if (ip != null) {
-            const ipFormatted = ip.replaceAll('.', '-');
-            setIpFormatted(ipFormatted);
-
-            const timeline = gsap.timeline();
-            timeline.from(document.querySelector(`.window-command-${id}`), {
-                duration: .7,
-                opacity: 0,
-                scale: 0.2,
-                y: '40vh',
-                x: '40vw',
-                ease: "sine.in"
-            });
+        if (ip == null || id == null) {
+            return;
         }
-    }, [ip]);
+
+        const ipFormatted = ip.replaceAll('.', '-');
+        setIpFormatted(ipFormatted);
+    }, [ip, id]);
+
+    const isCommand = (type === 'command');
+    if (!isCommand) {
+        return { isNotCommand: true };
+    }
+
+    const animateOpenCommand = () => {
+        const timeline = gsap.timeline();
+        timeline.fromTo(document.querySelector(`.window-command-${id}`), {
+            opacity: 0,
+            y: '40vh',
+            x: '40vw',
+        }, {
+            duration: BASE_DELAY / 1000,
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            x: 0,
+            ease: "sine.in"
+        });
+
+        return timeline.totalDuration();
+    }
 
     const waitFor = async (ms: number) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     const waitRandom = async (baseMs: number = 0) => {
-        if (process.env.NODE_ENV == 'development' && process.env.HIDE_ANIMATION) {
+        if (process.env.DEV_ANIMATION_SPEED == 'fast') {
             return waitFor(0);
         }
         const min = (BASE_TIME_WAIT / 4) + baseMs;
@@ -43,12 +66,16 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const startSimulation = async () => {
-        if (!ipFormatted) {
+        if (!ipFormatted || !lines) {
             return null;
         }
+        const animationDuration = animateOpenCommand();
+        await waitFor(animationDuration * 1000);
+
+        await waitFor(BASE_DELAY);
 
         const loginOutput = "Login as: "
-        const loginText = "dev-user\n";
+        const loginText = `${username}\n`;
         const authText = "Authenticating with public key \"portfolio-key\"\n";
         const imgAsciiText =
             " ,     #_\n"
@@ -62,17 +89,12 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
             + "       _/ _/\n"
             + "     _/m/'\n";
 
-        const date = new Date();
-        const formattedDate = date.toLocaleString('en-US', { weekday: 'short' })
-            + " " + date.toLocaleString('en-US', { month: 'short' })
-            + " " + date.getDate()
-            + " " + date.toLocaleTimeString('en-US', { hour12: false })
-            + " " + date.getFullYear();
+        const formattedDate = getFormattedDate();
         const lastLogintext = `Last login: ${formattedDate} from ${ip}\n`;
 
         let path = '~';
 
-        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
+        if (process.env.DEV_ANIMATION_SPEED == 'none') {
             await waitFor(BASE_TIME_WAIT * 5);
         }
 
@@ -87,7 +109,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
 
         for (const line of lines) {
             if (line.command != null) {
-                const userAndPath = `[dev-user@${ipFormatted} ${path}]$ `;
+                const userAndPath = `[${username}@${ipFormatted} ${path}]$ `;
                 await simulateDisplay(userAndPath);
                 await simulateWriting(`${line.command}\n`);
             }
@@ -112,9 +134,10 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const simulateDisplay = async (node: React.ReactNode) => {
-        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
+        if (process.env.DEV_ANIMATION_SPEED == 'none') {
             await waitFor(BASE_TIME_WAIT);
         }
+
         setContentNodes(prevContentNodes => {
             const updatedContent = [...prevContentNodes, node];
             return updatedContent;
@@ -122,7 +145,7 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
     }
 
     const simulateWriting = async (text: string) => {
-        if (process.env.NODE_ENV == 'production' || !process.env.HIDE_ANIMATION) {
+        if (process.env.DEV_ANIMATION_SPEED == 'none') {
             await waitFor(BASE_TIME_WAIT);
         }
         for (let i = 0; i < text.length; i++) {
@@ -134,5 +157,5 @@ export default function useCommand(lines: CommandLine[], id?: number, onFinish?:
         }
     }
 
-    return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation };
+    return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation, animateOpenCommand };
 }

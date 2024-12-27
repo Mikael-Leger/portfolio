@@ -7,6 +7,8 @@
     height: 180px;
     padding: 0 40px;
 
+    user-select: none;
+
     &-restart {
         display: flex;
         justify-content: center;
@@ -17,6 +19,7 @@
         border-radius: 5px;
         padding: 5px;
         color: black;
+        opacity: 0;
 
         &-img {
             width: 30px;

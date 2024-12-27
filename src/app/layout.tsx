@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
 import { IPProvider } from "@/app/contexts/ip-context";
+import { PreferencesProvider } from "./contexts/preferences-context";
+import { UsernameProvider } from "./contexts/username-context";
 
 import "./globals.scss";
-import { PreferencesProvider } from "./contexts/preferences-context";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -27,7 +29,9 @@ export default function RootLayout({
 			>
 				<IPProvider>
 					<PreferencesProvider>
-						{children}
+						<UsernameProvider>
+							{children}
+						</UsernameProvider>
 					</PreferencesProvider>
 				</IPProvider>
 			</body>

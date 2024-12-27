@@ -13,20 +13,12 @@ interface PreferencesProviderProps {
 }
 
 export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ children }) => {
-    const [theme, setTheme] = useState("no-preference");
-    const [customColor, setCustomColor] = useState<CustomColor>();
+    const [preferences, setPreferences] = useState<Preferences>();
 
     useEffect(() => {
         const theme = getPreferredTheme();
-        setTheme(theme);
-
+        getPreferredColor(theme);
     }, []);
-
-    useEffect(() => {
-        if (theme) {
-            getPreferredColor();
-        }
-    }, [theme]);
 
     const getPreferredTheme = () => {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -37,7 +29,7 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
         return "no-preference";
     };
 
-    const getPreferredColor = async () => {
+    const getPreferredColor = async (theme: string) => {
         try {
             let r = 0, g = 0, b = 0;
             const response = await fetch('/api/getColorizationColor');
@@ -65,10 +57,13 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
             const gShaded = shadeColorValue(g, factor);
             const bShaded = shadeColorValue(b, factor);
 
-            setCustomColor({
-                backgroundColor: `rgb(${r}, ${g}, ${b})`,
-                textColor: luminance < 128 ? "white" : "black",
-                backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
+            setPreferences({
+                theme,
+                color: {
+                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
+                    textColor: luminance < 128 ? "white" : "black",
+                    backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
+                }
             });
 
         } catch (error) {
@@ -81,7 +76,7 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
     }
 
     return (
-        <PreferencesContext.Provider value={{ theme: theme, color: customColor }}>
+        <PreferencesContext.Provider value={preferences}>
             {children}
         </PreferencesContext.Provider>
     );
