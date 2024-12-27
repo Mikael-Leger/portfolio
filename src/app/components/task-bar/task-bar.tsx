@@ -13,9 +13,9 @@ export default function TaskBar({ }: TaskBarProps) {
 
     return (
         <div className="task-bar">
-            <div className="task-bar-restart">
+            <div className="task-bar-restart" onClick={restartWebsiteAnimations}>
                 <img className="task-bar-restart-img" src="/icons/restart.png" />
-                <div className="task-bar-restart-button" onClick={restartWebsiteAnimations}>
+                <div className="task-bar-restart-button">
                     Restart
                 </div>
             </div>
