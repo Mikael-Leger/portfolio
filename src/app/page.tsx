@@ -265,7 +265,7 @@ export default function Home() {
     const showDesktopAnimation = (beforeHome: CSSRule, timeline: GSAPTimeline, startingDuration = 0, nextDuration = 0) => {
         timeline.to(beforeHome, {
             duration: startingDuration,
-            opacity: .4,
+            opacity: 1,
             ease: "sine.in"
         });
         timeline.to(".task-bar-restart", {

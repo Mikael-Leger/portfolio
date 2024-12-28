@@ -8,7 +8,7 @@
         "img": "/projects/exchange.png",
         "url": "https://ex-change-currency.vercel.app/",
         "logo": "/projects/logo_exchange.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.",
+        "description": "Convert an amount of a currency to a another one",
         "stack": [
             {
                 "name": "TypeScript",
@@ -45,7 +45,8 @@
                 "groupName": "api",
                 "url": "https://freecurrencyapi.com/docs/"
             }
-        ]
+        ],
+        "date": "2024"
     },
     {
         "name": "ScrimCheck",
@@ -57,7 +58,7 @@
         "img": "/projects/scrimcheck.png",
         "url": "https://scrim-check.vercel.app/",
         "logo": "/projects/logo_scrimcheck.png",
-        "description": "ScrimCheck est un projet",
+        "description": "Fetch League of legends games of players to show their historic and statistics",
         "stack": [
             {
                 "name": "React",
@@ -90,7 +91,8 @@
                 "groupName": "api",
                 "url": "https://developer.riotgames.com/"
             }
-        ]
+        ],
+        "date": "2022"
     },
     {
         "name": "Portfolio",
@@ -116,12 +118,125 @@
                 "name": "Next.js",
                 "groupName": "frontend & backend",
                 "version": "15.1.0"
+            }
+        ],
+        "date": "2024"
+    },
+    {
+        "name": "Game of Life",
+        "status": {
+            "title": "Offline",
+            "type": "error",
+            "detail": "Application is not served"
+        },
+        "img": "/projects/gameoflife.png",
+        "url": "https://github.com/Mikael-Leger/game-of-life",
+        "logo": "/logo_gameoflife.png",
+        "description": "Reproduction of Game of Life",
+        "stack": [
+            {
+                "name": "Unity",
+                "groupName": "graphic",
+                "version": "2022.3.30f1"
+            }
+        ],
+        "date": "2024"
+    },
+    {
+        "name": "Cookmii",
+        "status": {
+            "title": "Offline",
+            "type": "error",
+            "detail": "Application is not served"
+        },
+        "img": "/projects/cookmii.png",
+        "logo": "/logo_cookmii.png",
+        "description": "List recipes with its ingredients and instructions",
+        "stack": [
+            {
+                "name": "TypeScript",
+                "groupName": "frontend",
+                "version": "5.0.0"
             },
             {
-                "name": "NestJS",
-                "groupName": "backend",
-                "version": "10.4.15"
+                "name": "Next.js",
+                "groupName": "frontend & backend",
+                "version": "15.0.3"
+            },
+            {
+                "name": "Spoonacular",
+                "groupName": "api",
+                "url": "https://api.spoonacular.com"
             }
-        ]
+        ],
+        "date": "2024"
+    },
+    {
+        "name": "Mono Stock",
+        "status": {
+            "title": "Offline",
+            "type": "error",
+            "detail": "Application is not served"
+        },
+        "img": "/projects/monostock.png",
+        "logo": "/logo_monostock.png",
+        "description": "Stock management for a self-service employee in a supermarket",
+        "stack": [
+            {
+                "name": "Next.js",
+                "groupName": "frontend & backend",
+                "version": "14.2.3"
+            },
+            {
+                "name": "IndexedDB",
+                "groupName": "api",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API"
+            }
+        ],
+        "date": "2024"
+    },
+    {
+        "name": "Majority",
+        "status": {
+            "title": "Offline",
+            "type": "error",
+            "detail": "Application is not served"
+        },
+        "img": "/projects/majority.png",
+        "logo": "/logo_majority.png",
+        "description": "Game online represented by a quiz and random answers, majority wins",
+        "stack": [
+            {
+                "name": "Angular",
+                "groupName": "frontend",
+                "version": "10.0.0"
+            },
+            {
+                "name": "TypeScript",
+                "groupName": "frontend",
+                "version": "3.9.5"
+            },
+            {
+                "name": "Express",
+                "groupName": "backend",
+                "version": "4.17.3"
+            },
+            {
+                "name": "Heroku",
+                "groupName": "database",
+                "version": "MySQL"
+            },
+            {
+                "name": "Vercel",
+                "groupName": "deploy",
+                "url": "https://vercel.com/"
+            },
+            {
+                "name": "Heroku",
+                "groupName": "deploy",
+                "url": "https://www.heroku.com/"
+            }
+        ],
+        "date": "2022"
     }
 ]

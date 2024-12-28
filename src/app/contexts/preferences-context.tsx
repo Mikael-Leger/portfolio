@@ -68,6 +68,32 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
 
         } catch (error) {
             console.error('Error fetching accent color:', error);
+
+            let r, g, b;
+            let rShaded, gShaded, bShaded;
+            if (theme == "dark") {
+                r = 220;
+                g = 220;
+                b = 220;
+                rShaded = 200;
+                gShaded = 200;
+                bShaded = 200;
+            } else {
+                r = 20;
+                g = 20;
+                b = 20;
+                rShaded = 40;
+                gShaded = 40;
+                bShaded = 40;
+            }
+            setPreferences({
+                theme,
+                color: {
+                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
+                    textColor: theme == "dark" ? "white" : "black",
+                    backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
+                }
+            });
         }
     };
 

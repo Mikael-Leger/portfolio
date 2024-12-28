@@ -14,7 +14,7 @@
     }
 
     &-shadow {
-        color: #fff;
+        color: var(--color);
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px #a855f7;
         position: relative;
         display: inline-block;

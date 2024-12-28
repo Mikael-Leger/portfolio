@@ -9,4 +9,5 @@ export default interface ProjectInterface {
     status?: Status,
     url?: string;
     stack?: ProjectTechno[];
+    date?: string;
 }

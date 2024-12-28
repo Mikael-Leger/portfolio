@@ -368,11 +368,11 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 			onMouseDown={handleWindowMouseDown}
 			onClick={handleWindowClick}
 			ref={windowRef}>
-			<div className="window-header">
+			<div className="window-header" style={{ "color": preferences.color?.textColor }}>
 				<div
 					className="window-header-head"
 					onMouseDown={handleMouseDown}
-					style={{ "backgroundColor": preferences.color?.backgroundColor, "color": preferences.color?.textColor }}>
+					style={{ "backgroundColor": preferences.color?.backgroundColor }}>
 					<div className="window-header-head-left">
 						{!browserLogic.isNotBrowser && browserLogic.switchTab && tabs && (
 							<>
@@ -437,7 +437,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 			</div>
 			{
 				!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && tabs[browserLogic.activeTab] && (
-					<div className={`window-content browser-content browser-${preferences.theme} ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
+					<div className={`window-content browser-content ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
 						{tabs[browserLogic.activeTab].content}
 					</div>
 				)

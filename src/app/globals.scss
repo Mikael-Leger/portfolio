@@ -10,15 +10,38 @@
 }
 
 :root {
-    --background: #ffffff;
-    --foreground: #171717;
+    --background: #ebebeb;
     --purple: #5d2294;
+    --color: #0a0a0a;
+    --brightnessAdjust: 0.85;
+    --bg-modal: #b6b4b4;
+    --bg-project-frontend: radial-gradient(ellipse at top right, #627fa1 33%, #4175b4);
+    --bg-project-backend: radial-gradient(ellipse at top right, #613494 33%, #6c36aa);
+    --bg-project-database: radial-gradient(ellipse at top right, #387526 33%, #4ca334);
+    --bg-project-deploy: radial-gradient(ellipse at top right, #676e75 33%, #8394a5);
+    --bg-project-api: radial-gradient(ellipse at top right, #a17d3e 33%, #b68942);
+    --bg-project-blockchain: radial-gradient(ellipse at top right, #625168 33%, #a665b9);
+    --bg-project-graphic: radial-gradient(ellipse at top right, #7a4b4b 33%, #b63f3f);
+    --bg-opacity: 1;
+    --invert: invert(0%);
+    --invert-grey: invert(50%);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
+        --background: #383838;
+        --color: #e0e0e0;
+        --brightnessAdjust: 1.3;
+        --bg-modal: #212121;
+        --bg-project-frontend: radial-gradient(ellipse at top right, #627fa1 33%, #25466d);
+        --bg-project-backend: radial-gradient(ellipse at top right, #613494 33%, #3e1c65);
+        --bg-project-database: radial-gradient(ellipse at top right, #387526 33%, #1e4713);
+        --bg-project-deploy: radial-gradient(ellipse at top right, #676e75 33%, #43494f);
+        --bg-project-api: radial-gradient(ellipse at top right, #a17d3e 33%, #5e451c);
+        --bg-project-blockchain: radial-gradient(ellipse at top right, #625168 33%, #603b6b);
+        --bg-project-graphic: radial-gradient(ellipse at top right, #7a4b4b 33%, #681c1c);
+        --bg-opacity: 0.6;
+        --invert: invert(100%);
     }
 }
 

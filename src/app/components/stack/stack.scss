@@ -56,52 +56,31 @@
 
         &.group {
             &-frontend {
-                background-color: #4e75a3;
+                background-image: var(--bg-project-frontend);
             }
 
             &-backend {
-                background-color: #6e3aa9;
+                background-image: var(--bg-project-backend);
             }
 
             &-database {
-                background-color: #377926;
+                background-image: var(--bg-project-database);
             }
 
             &-deploy {
-                background-color: #6a7179;
+                background-image: var(--bg-project-deploy);
             }
 
             &-api {
-                background-color: #a37c37;
+                background-image: var(--bg-project-api);
             }
-        }
-    }
-}
 
-.browser-dark {
-    .stack {
-        &-group {
-            &.group {
-                &-frontend {
-                    background-image: radial-gradient(ellipse at top right, #627fa1 33%, #25466d);
-                }
+            &-blockchain {
+                background-image: var(--bg-project-blockchain);
+            }
 
-                &-backend {
-                    background-image: radial-gradient(ellipse at top right, #613494 33%, #3e1c65);
-                }
-
-                &-database {
-                    background-image: radial-gradient(ellipse at top right, #387526 33%, #1e4713);
-                }
-
-                &-deploy {
-                    background-image: radial-gradient(ellipse at top right, #676e75 33%, #43494f);
-                }
-
-                &-api {
-                    background-image: radial-gradient(ellipse at top right, #a17d3e 33%, #5e451c);
-                }
-
+            &-graphic {
+                background-image: var(--bg-project-graphic);
             }
         }
     }

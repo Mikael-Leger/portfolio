@@ -19,7 +19,7 @@
         border-radius: 15px;
 
         &:hover {
-            filter: grayscale(20%);
+            filter: brightness(var(--brightnessAdjust));
             cursor: pointer;
         }
 

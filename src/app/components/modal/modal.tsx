@@ -72,7 +72,11 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                             <div
                                 className={`modal-container-content-details-img ${modalData.item.url ? 'link-working' : ''}`}
                                 onClick={() => addTabFromitem(modalData.item as ProjectInterface)}>
-                                <img src={modalData.item.img} />
+                                <img src={modalData.item.img} onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.onerror = null;
+                                    target.src = "/projects/not_found.png";
+                                }} />
                                 {modalData.item.url && (
                                     <div className="modal-container-content-details-img-open">
                                         <img className="modal-container-content-details-img-open-logo" src="/icons/open.png" />
