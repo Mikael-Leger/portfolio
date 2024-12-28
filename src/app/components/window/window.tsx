@@ -17,6 +17,7 @@ import { useIsReduced } from "@/app/contexts/is-reduced";
 import UsernameContext from "@/app/contexts/username-context";
 
 import "./window.scss";
+import Favorites from "../favorites/favorites";
 
 export type WindowProps =
 	| {
@@ -31,6 +32,7 @@ export type WindowProps =
 		onAction: (action: string, payload?: any) => void;
 		setWindowRef?: (id: number, ref: WindowRef) => void;
 		windowRefs?: React.RefObject<Record<number, WindowRef>>;
+		getDefaultTabs?: () => TabInterface[];
 	}
 	| {
 		window_id: number;
@@ -41,9 +43,10 @@ export type WindowProps =
 		removeTab?: never;
 		onFinish?: () => void;
 		hide?: boolean;
-		onAction: (action: string) => void;
+		onAction: (action: string, payload?: any) => void;
 		setWindowRef?: (id: number, ref: WindowRef) => void;
 		windowRefs?: React.RefObject<Record<number, WindowRef>>;
+		getDefaultTabs?: () => TabInterface[];
 	};
 
 
@@ -59,7 +62,7 @@ const WindowDiv = styled.div<WindowDivProps>`
 
 let idCounter = 0;
 
-export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, hide = false }: WindowProps) {
+export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, hide = false }: WindowProps) {
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
@@ -348,6 +351,15 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		return <></>;
 	}
 
+	const onActionWindowCheck = (action: string, payload?: any) => {
+		if (action === "removeTab" && browserLogic.activeTab != null && browserLogic.activeTab >= payload) {
+			const newIndex = browserLogic.activeTab - 1;
+			browserLogic.setActiveTab?.(newIndex);
+			localStorage.setItem("active-tab", newIndex.toString());
+		}
+		onAction(action, payload);
+	}
+
 	return (
 		<WindowDiv
 			className={`window window-${type} window-${type}-${id}`}
@@ -356,83 +368,96 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 			onMouseDown={handleWindowMouseDown}
 			onClick={handleWindowClick}
 			ref={windowRef}>
-			<div
-				className="window-header"
-				onMouseDown={handleMouseDown}
-				style={{ "backgroundColor": preferences.color?.backgroundColor, "color": preferences.color?.textColor }}>
-				<div className="window-header-left">
-					{!browserLogic.isNotBrowser && browserLogic.switchTab && tabs && (
-						<>
-							<img className="window-header-left-logo logo-icon" src={windowIconPath} />
-							<div className="window-header-left-tabs">
-								{tabs.map((tabValue, idx) => {
-									if (tabValue.logoPath == null) {
+			<div className="window-header">
+				<div
+					className="window-header-head"
+					onMouseDown={handleMouseDown}
+					style={{ "backgroundColor": preferences.color?.backgroundColor, "color": preferences.color?.textColor }}>
+					<div className="window-header-head-left">
+						{!browserLogic.isNotBrowser && browserLogic.switchTab && tabs && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-tabs">
+									{tabs.map((tabValue, idx) => {
+										if (tabValue.logoPath == null) {
 
-									}
-									return (
-										<Tab
-											preferences={preferences}
-											logoPath={tabValue.logoPath}
-											title={tabValue.title}
-											active={browserLogic.activeTab == idx}
-											index={idx}
-											onclick={() => browserLogic.switchTab?.(idx)}
-											removeTab={removeTabWindow}
-											key={idx} />
-									);
-								})}
-							</div>
-						</>
-					)}
-					{!commandLogic.isNotCommand && (
-						<>
-							<img className="window-header-left-logo logo-icon" src={windowIconPath} />
-							<div className="window-header-left-text" >
-								{username}@ip-{commandLogic.ipFormatted}:{commandLogic.currentPath}
-							</div>
-						</>
-					)}
-				</div>
-				<div className="window-header-actions">
-					{
-						actionsList.map(action => {
-							if (action.hide) return null;
-							return (
-								<div
-									className="window-header-actions-action"
-									key={action.name}
-									style={{ "backgroundColor": preferences.color?.backgroundColor }}
-									onClick={() => action.onClick()}>
-									<img
-										className={`window-header-actions-action-${action.name} logo-icon`}
-										src={`/icons/${action.name}.png`}
-										style={{ filter: preferences.color?.textColor == 'white' ? 'invert(100%)' : '' }} />
+										}
+										return (
+											<Tab
+												preferences={preferences}
+												logoPath={tabValue.logoPath}
+												title={tabValue.title}
+												active={browserLogic.activeTab == idx}
+												index={idx}
+												onclick={() => browserLogic.switchTab?.(idx)}
+												onAction={onActionWindowCheck}
+												key={idx} />
+										);
+									})}
 								</div>
-							);
-						})
-					}
+							</>
+						)}
+						{!commandLogic.isNotCommand && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-text" >
+									{username}@ip-{commandLogic.ipFormatted}:{commandLogic.currentPath}
+								</div>
+							</>
+						)}
+					</div>
+					<div className="window-header-head-actions">
+						{
+							actionsList.map(action => {
+								if (action.hide) return null;
+								return (
+									<div
+										className="window-header-head-actions-action"
+										key={action.name}
+										style={{ "backgroundColor": preferences.color?.backgroundColor }}
+										onClick={() => action.onClick()}>
+										<img
+											className={`window-header-head-actions-action-${action.name} logo-icon`}
+											src={`/icons/${action.name}.png`}
+											style={{ filter: preferences.color?.textColor == 'white' ? 'invert(100%)' : '' }} />
+									</div>
+								);
+							})
+						}
+					</div>
 				</div>
+				{
+					!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && tabs[browserLogic.activeTab] && (
+						<>
+							<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
+							<Favorites preferences={preferences} getDefaultTabs={getDefaultTabs} onAction={onAction} />
+						</>
+					)
+				}
 			</div>
-			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && tabs[browserLogic.activeTab] && (
-				<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
-			)}
-			{!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && tabs[browserLogic.activeTab] && (
-				<div className={`window-content browser-content browser-${preferences.theme} ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
-					{tabs[browserLogic.activeTab].content}
-				</div>
-			)}
-			{!commandLogic.isNotCommand && commandLogic.contentNodes && (
-				<div className={`window-content command-content`}>
-					{commandLogic.contentNodes.map((node, idx) => (
-						<span key={idx}>{node}</span>
-					))}
-				</div>
-			)}
-			{(isReducing || isReduced || isIncreasing) && (
-				<div className="window-reduced">
-					<img className="window-reduced-logo" src={windowIconPath} />
-				</div>
-			)}
-		</WindowDiv>
+			{
+				!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && tabs[browserLogic.activeTab] && (
+					<div className={`window-content browser-content browser-${preferences.theme} ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
+						{tabs[browserLogic.activeTab].content}
+					</div>
+				)
+			}
+			{
+				!commandLogic.isNotCommand && commandLogic.contentNodes && (
+					<div className={`window-content command-content`}>
+						{commandLogic.contentNodes.map((node, idx) => (
+							<span key={idx}>{node}</span>
+						))}
+					</div>
+				)
+			}
+			{
+				(isReducing || isReduced || isIncreasing) && (
+					<div className="window-reduced">
+						<img className="window-reduced-logo" src={windowIconPath} />
+					</div>
+				)
+			}
+		</WindowDiv >
 	);
 }

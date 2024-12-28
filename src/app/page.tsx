@@ -51,6 +51,11 @@ export default function Home() {
                 case "putWindowOnTop":
                     putWindowOnTop(id);
                     break;
+                case "addTab":
+                    addTab(payload);
+                    break;
+                case "removeTab":
+                    removeTab(payload);
                 default:
                     break;
             }
@@ -97,7 +102,7 @@ export default function Home() {
                     removeTab: removeTab,
                     hide: true,
                     zIndex: 0,
-                    onAction: (action: string) => handleAction(0, action)
+                    onAction: (action: string, payload?: any) => handleAction(0, action, payload)
                 });
             lastUpdatedWindowRef.current = { id: 0 };
             setWindows(defaultWindows);
@@ -182,7 +187,7 @@ export default function Home() {
                     zIndex: windowLogic.zIndex,
                     tabs: windowLogic.tabs as TabInterface[],
                     removeTab: removeTab,
-                    onAction: (action: string) => handleAction(id, action)
+                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
             }
             return {
@@ -191,7 +196,7 @@ export default function Home() {
                 zIndex: windowLogic.zIndex,
                 lines: windowLogic.lines as CommandLine[],
                 hide: windowLogic.hide,
-                onAction: (action: string) => handleAction(id, action)
+                onAction: (action: string, payload?: any) => handleAction(id, action, payload)
             }
         });
     }
@@ -240,7 +245,7 @@ export default function Home() {
                 lines: linesSection1,
                 onFinish: onFirstAnimationFinish,
                 zIndex: 0,
-                onAction: (action: string) => handleAction(1, action)
+                onAction: (action: string, payload?: any) => handleAction(1, action, payload)
             });
             return updatedWindows;
         });
@@ -283,7 +288,7 @@ export default function Home() {
                 const tabsLocalWithContent = tabsLocal.map(tabLocal => {
                     if (tabLocal.defaultTab) {
                         const defaultTabs = getDefaultTabs();
-                        const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.url === tabLocal.url);
+                        const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.title === tabLocal.title);
                         if (defaultTabFound) return defaultTabFound;
                     }
                     return getNewTab(tabLocal);
@@ -334,7 +339,7 @@ export default function Home() {
                     return updatedTabs;
                 });
             } else {
-                const newTabIndexFound = tabs.findIndex(tab => tab.url == newTab.url);
+                const newTabIndexFound = tabs.findIndex(tab => tab.title == newTab.title);
                 handleWindowAction(0, "switchTab", "browser", newTabIndexFound);
             }
         }
@@ -390,8 +395,20 @@ export default function Home() {
     }
 
     const addTab = (tabData: TabInterface) => {
-        const openTab = getNewTab(tabData);
-        setNewTab(openTab);
+        if (tabData.defaultTab) {
+            const defaultTabs = getDefaultTabs();
+            const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.title === tabData.title);
+            if (defaultTabFound) {
+                defaultTabFound.url = `${window.location.href}${defaultTabFound?.url}`;
+
+                setNewTab(defaultTabFound);
+            }
+        } else {
+            const openTab = getNewTab(tabData);
+
+            setNewTab(openTab);
+        }
+
     }
 
     const linesSection1: CommandLine[] = [
@@ -472,7 +489,8 @@ export default function Home() {
                             key={idx}
                             {...window}
                             setWindowRef={setWindowRef}
-                            windowRefs={windowRefs} />
+                            windowRefs={windowRefs}
+                            getDefaultTabs={getDefaultTabs} />
                     )
                 }) : (
                     <div className="home-session">

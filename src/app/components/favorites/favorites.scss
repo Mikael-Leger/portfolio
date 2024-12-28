@@ -1,0 +1,31 @@
+.favorites {
+    display: flex;
+    gap: 10px;
+
+    padding: 4px 10px;
+
+    user-select: none;
+
+    &-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    &-item {
+        display: flex;
+        gap: 5px;
+
+        padding: 2px 10px;
+        border-radius: 15px;
+
+        &:hover {
+            filter: grayscale(20%);
+            cursor: pointer;
+        }
+
+        &-icon {
+            display: flex;
+            align-items: center
+        }
+    }
+}
