@@ -1,0 +1,23 @@
+@mixin flex {
+    display: flex;
+}
+
+@mixin flexAligned {
+    @include flex;
+    align-items: center;
+}
+
+@mixin flexCentered {
+    @include flex;
+    justify-content: center;
+}
+
+@mixin flexAlignedAndCentered {
+    @include flexAligned;
+    @include flexCentered;
+}
+
+@mixin flexAlignedAndCenteredByColumn {
+    @include flexAlignedAndCentered;
+    flex-direction: column;
+}

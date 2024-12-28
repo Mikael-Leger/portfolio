@@ -5,7 +5,7 @@ import { IPProvider } from "@/app/contexts/ip-context";
 import { PreferencesProvider } from "./contexts/preferences-context";
 import { UsernameProvider } from "./contexts/username-context";
 
-import "./globals.scss";
+import "./styles/globals.scss";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",

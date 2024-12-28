@@ -109,7 +109,7 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
     const isCurrentTabPortfolio = () => {
         if (!tabs) return false;
 
-        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio - Mikaël Léger");
+        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio");
         return tabFound == activeTab;
     }
 

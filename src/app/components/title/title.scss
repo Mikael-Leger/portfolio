@@ -1,7 +1,10 @@
 .title {
     font-size: 32px;
-    text-transform: uppercase;
     font-family: 'Playfair Display', serif;
+
+    &-upper {
+        text-transform: uppercase;
+    }
 
     &-big {
         font-size: 54px;

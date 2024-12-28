@@ -15,6 +15,7 @@ import { IsReducedProvider } from "./contexts/is-reduced";
 import TaskBar from "./components/task-bar/task-bar";
 import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
+import Welcome from "./components/welcome/welcome";
 
 import "./home.scss";
 
@@ -46,7 +47,9 @@ export default function Home() {
 
     const handleAction = useCallback((id: number, action: string, payload?: any) => {
         const windowRef = windowRefs.current[id];
-        if (windowRef) {
+        if (action == "showPDF" && !windowRef) {
+            showPDF();
+        } else if (windowRef) {
             switch (action) {
                 case "putWindowOnTop":
                     putWindowOnTop(id);
@@ -56,6 +59,8 @@ export default function Home() {
                     break;
                 case "removeTab":
                     removeTab(payload);
+                case "openPDF":
+                    break;
                 default:
                     break;
             }
@@ -262,6 +267,20 @@ export default function Home() {
         });
     }
 
+    const showPDF = () => {
+        // lastUpdatedWindowRef.current = { id: 2 };
+        // setWindows(prevWindows => {
+        //     const updatedWindows = [...prevWindows];
+        //     updatedWindows.push({
+        //         window_id: 2,
+        //         type: "pdf",
+        //         zIndex: 0,
+        //         onAction: (action: string, payload?: any) => handleAction(2, action, payload)
+        //     });
+        //     return updatedWindows;
+        // });
+    }
+
     const showDesktopAnimation = (beforeHome: CSSRule, timeline: GSAPTimeline, startingDuration = 0, nextDuration = 0) => {
         timeline.to(beforeHome, {
             duration: startingDuration,
@@ -353,8 +372,17 @@ export default function Home() {
         {
             defaultTab: true,
             logoPath: "/vercel.svg",
-            title: "Portfolio - Mikaël Léger",
+            title: "Welcome - Mikaël Léger",
             url: `${currentLocation}home`,
+            content: (
+                <Welcome getDefaultTabs={getDefaultTabs} handleAction={handleAction} />
+            )
+        },
+        {
+            defaultTab: true,
+            logoPath: "/vercel.svg",
+            title: "Portfolio",
+            url: `${currentLocation}portfolio`,
             content: (
                 <Portfolio addTab={addTab} />
             )
@@ -362,11 +390,11 @@ export default function Home() {
         {
             defaultTab: true,
             logoPath: "/vercel.svg",
-            title: "CV",
-            url: `${currentLocation}curriculum-vitae`,
+            title: "Skills",
+            url: `${currentLocation}skills`,
             content: (
                 <>
-                    CV
+                    Skills
                 </>
             )
         }
