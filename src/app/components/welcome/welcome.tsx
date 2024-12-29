@@ -45,7 +45,7 @@ export default function Welcome({ getDefaultTabs, handleAction }: WelcomeProps) 
                         I am French and I live in Belgium
                     </p>
                     <p className="welcome-content-description-paragraph">
-                        As you can see I really like originality, also purple is my favorite color
+                        I enjoy creativity and purple color very much
                     </p>
                     <p className="welcome-content-description-paragraph">
                         You can check anything more you want to know about me below

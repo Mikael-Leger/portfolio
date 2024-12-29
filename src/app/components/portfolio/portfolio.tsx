@@ -131,7 +131,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
                 {groupsOfProjects.map(groupOfProjects => (
                     <div className="portfolio-container-group" key={groupOfProjects.title}>
                         <div className="portfolio-container-group-title">
-                            <Title text={groupOfProjects.title} effect="shadow" />
+                            <Title text={groupOfProjects.title} effect="shadow" color="purple" />
                         </div>
                         <div className="portfolio-container-group-projects">
                             {groupOfProjects.projects.map(project => (

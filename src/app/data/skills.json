@@ -1,0 +1,267 @@
+[
+    {
+        "type": "Natural languages",
+        "name": "French",
+        "rating": 10
+    },
+    {
+        "type": "Natural languages",
+        "name": "English",
+        "rating": 8
+    },
+    {
+        "type": "Programming languages",
+        "name": "HTML",
+        "rating": 8
+    },
+    {
+        "type": "Programming languages",
+        "name": "CSS",
+        "rating": 7
+    },
+    {
+        "type": "Programming languages",
+        "name": "Sass",
+        "rating": 4
+    },
+    {
+        "type": "Programming languages",
+        "name": "JavaScript",
+        "rating": 8
+    },
+    {
+        "type": "Programming languages",
+        "name": "TypeScript",
+        "rating": 6
+    },
+    {
+        "type": "Programming languages",
+        "name": "Python",
+        "rating": 4
+    },
+    {
+        "type": "Programming languages",
+        "name": "Java",
+        "rating": 5
+    },
+    {
+        "type": "Programming languages",
+        "name": "PHP",
+        "rating": 1
+    },
+    {
+        "type": "Programming languages",
+        "name": "C#",
+        "rating": 3
+    },
+    {
+        "type": "Programming languages",
+        "name": "SQL",
+        "rating": 5
+    },
+    {
+        "type": "Programming languages",
+        "name": "Shell",
+        "rating": 5
+    },
+    {
+        "type": "Operating Systems",
+        "name": "Windows",
+        "rating": 10
+    },
+    {
+        "type": "Operating Systems",
+        "name": "Linux",
+        "rating": 4
+    },
+    {
+        "type": "Operating Systems",
+        "name": "MacOS",
+        "rating": 4
+    },
+    {
+        "type": "Framework",
+        "name": "React",
+        "rating": 8
+    },
+    {
+        "type": "Framework",
+        "name": "Next.js",
+        "rating": 5
+    },
+    {
+        "type": "Framework",
+        "name": "Express",
+        "rating": 8
+    },
+    {
+        "type": "Framework",
+        "name": "NestJS",
+        "rating": 5
+    },
+    {
+        "type": "Framework",
+        "name": "Vue.js",
+        "rating": 3
+    },
+    {
+        "type": "Framework",
+        "name": "Angular",
+        "rating": 4
+    },
+    {
+        "type": "Framework",
+        "name": "Django",
+        "rating": 2
+    },
+    {
+        "type": "Framework",
+        "name": "JEE",
+        "rating": 2
+    },
+    {
+        "type": "Framework",
+        "name": "Spring Boot",
+        "rating": 3
+    },
+    {
+        "type": "CMS",
+        "name": "Wagtail",
+        "rating": 1
+    },
+    {
+        "type": "Tools",
+        "name": "Postman",
+        "rating": 7
+    },
+    {
+        "type": "Tools",
+        "name": "Putty",
+        "rating": 5
+    },
+    {
+        "type": "Tools",
+        "name": "WinSCP",
+        "rating": 5
+    },
+    {
+        "type": "IDE",
+        "name": "Visual Studio Code",
+        "rating": 9
+    },
+    {
+        "type": "IDE",
+        "name": "Eclipse",
+        "rating": 6
+    },
+    {
+        "type": "IDE",
+        "name": "IntelliJ",
+        "rating": 5
+    },
+    {
+        "type": "DevOps",
+        "name": "Docker",
+        "rating": 5
+    },
+    {
+        "type": "DevOps",
+        "name": "Jenkins",
+        "rating": 3
+    },
+    {
+        "type": "DevOps",
+        "name": "Terraform",
+        "rating": 2
+    },
+    {
+        "type": "Runtimes",
+        "name": "Node.js",
+        "rating": 8
+    },
+    {
+        "type": "Versionning",
+        "name": "Git",
+        "rating": 8
+    },
+    {
+        "type": "Versionning",
+        "name": "Github",
+        "rating": 7
+    },
+    {
+        "type": "Versionning",
+        "name": "Gitlab",
+        "rating": 5
+    },
+    {
+        "type": "Versionning",
+        "name": "Gitkraken",
+        "rating": 6
+    },
+    {
+        "type": "Methodology",
+        "name": "Scrum",
+        "rating": 8
+    },
+    {
+        "type": "Methodology",
+        "name": "Kanban",
+        "rating": 8
+    },
+    {
+        "type": "Tools",
+        "name": "Jira",
+        "rating": 8
+    },
+    {
+        "type": "Tools",
+        "name": "Confluence",
+        "rating": 8
+    },
+    {
+        "type": "Tools",
+        "name": "Figma",
+        "rating": 4
+    },
+    {
+        "type": "Tools",
+        "name": "ESlint",
+        "rating": 7
+    },
+    {
+        "type": "Databases",
+        "name": "MySQL",
+        "rating": 6
+    },
+    {
+        "type": "Databases",
+        "name": "PostgreSQL",
+        "rating": 4
+    },
+    {
+        "type": "Deployment",
+        "name": "AWS EC2",
+        "rating": 5
+    },
+    {
+        "type": "Deployment",
+        "name": "AWS S3",
+        "rating": 5
+    },
+    {
+        "type": "Deployment",
+        "name": "AWS RDS",
+        "rating": 4
+    },
+    {
+        "type": "Deployment",
+        "name": "AWS Lambda",
+        "rating": 2
+    },
+    {
+        "type": "Game engines",
+        "name": "Unity",
+        "rating": 5
+    }
+]

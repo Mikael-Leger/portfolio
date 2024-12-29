@@ -7,9 +7,19 @@
     align-items: center;
 }
 
+@mixin flexAlignedByColumn {
+    @include flexAligned;
+    flex-direction: column;
+}
+
 @mixin flexCentered {
     @include flex;
     justify-content: center;
+}
+
+@mixin flexCenteredByColumn {
+    @include flexCentered;
+    flex-direction: column;
 }
 
 @mixin flexAlignedAndCentered {

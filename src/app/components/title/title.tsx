@@ -7,11 +7,12 @@ type TitleProps = {
     size?: "big" | "normal";
     effect?: "neon" | "shadow" | "gradient";
     transform?: "upper";
+    color?: string;
 };
 
-export default function Title({ text, effect, transform, size = "normal" }: TitleProps) {
+export default function Title({ text, effect, transform, color = "", size = "normal" }: TitleProps) {
     return (
-        <div className={`title title-${size} ${effect ? `title-${effect}` : ''} ${transform ? `title-${transform}` : ''}`}>
+        <div className={`title title-${size} ${effect ? `title-${effect}${color}` : ''} ${transform ? `title-${transform}` : ''}`}>
             {text}
         </div>
     );

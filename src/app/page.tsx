@@ -16,6 +16,7 @@ import TaskBar from "./components/task-bar/task-bar";
 import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
 import Welcome from "./components/welcome/welcome";
+import Skills from "./components/skills/skills";
 
 import "./home.scss";
 
@@ -404,9 +405,7 @@ export default function Home() {
             title: "Skills",
             url: `${currentLocation}skills`,
             content: (
-                <>
-                    Skills
-                </>
+                <Skills />
             )
         }
     ])

@@ -12,8 +12,13 @@
 :root {
     --background: #ebebeb;
     --background-weightier: #c3c3c3;
-    --purple: #5d2294;
+    --background-weightier-100: #d6d5d5;
+    --background-node: #636363;
+    --background-node-highlight: #858585;
     --color: #0a0a0a;
+    --black: #000;
+    --white: #fff;
+    --purple: #a855f7;
     --brightnessAdjust: 0.85;
     --bg-modal: #b6b4b4;
     --bg-project-frontend: radial-gradient(ellipse at top right, #627fa1 33%, #4175b4);
@@ -32,6 +37,7 @@
     :root {
         --background: #383838;
         --background-weightier: #2f2f2f;
+        --background-weightier-100: #474747;
         --color: #e0e0e0;
         --brightnessAdjust: 1.3;
         --bg-modal: #212121;
