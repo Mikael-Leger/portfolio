@@ -89,7 +89,7 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
         const windowBrowser = document.getElementsByClassName("window-browser");
 
         let openDuration = 0;
-        if (!isBrowserOpen.current && windowBrowser[0]) {
+        if (type === 'browser' && !isBrowserOpen.current && windowBrowser[0]) {
             openDuration = animateOpenBrowser();
             setTimeout(() => {
                 isBrowserOpen.current = true;

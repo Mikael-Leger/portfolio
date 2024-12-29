@@ -47,6 +47,7 @@ export default function Home() {
 
     const handleAction = useCallback((id: number, action: string, payload?: any) => {
         const windowRef = windowRefs.current[id];
+
         if (action == "showPDF" && !windowRef) {
             showPDF();
         } else if (windowRef) {
@@ -174,6 +175,7 @@ export default function Home() {
         setWindowsOrder();
 
         const browserWindow = windows.find(window => window.type == "browser");
+        // TODO: use better condition
         if (browserWindow && newTabIndex.current >= 0) {
             handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
             newTabIndex.current = -1;
@@ -194,6 +196,13 @@ export default function Home() {
                     removeTab: removeTab,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
+            } else if (windowLogic.type == "pdf") {
+                return {
+                    window_id: id,
+                    type: "pdf",
+                    zIndex: windowLogic.zIndex,
+                    onAction: (action: string, payload?: any) => handleAction(2, action, payload)
+                }
             }
             return {
                 window_id: id,
@@ -210,6 +219,7 @@ export default function Home() {
         lastUpdatedWindowRef.current = { id: window_id };
 
         const windowsByRefs = getWindowsByRefs();
+
         setWindows(windowsByRefs);
     }
 
@@ -268,17 +278,18 @@ export default function Home() {
     }
 
     const showPDF = () => {
-        // lastUpdatedWindowRef.current = { id: 2 };
-        // setWindows(prevWindows => {
-        //     const updatedWindows = [...prevWindows];
-        //     updatedWindows.push({
-        //         window_id: 2,
-        //         type: "pdf",
-        //         zIndex: 0,
-        //         onAction: (action: string, payload?: any) => handleAction(2, action, payload)
-        //     });
-        //     return updatedWindows;
-        // });
+        // if already here then open it
+        lastUpdatedWindowRef.current = { id: 2 };
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            updatedWindows.push({
+                window_id: 2,
+                type: "pdf",
+                zIndex: 0,
+                onAction: (action: string, payload?: any) => handleAction(2, action, payload)
+            });
+            return updatedWindows;
+        });
     }
 
     const showDesktopAnimation = (beforeHome: CSSRule, timeline: GSAPTimeline, startingDuration = 0, nextDuration = 0) => {

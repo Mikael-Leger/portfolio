@@ -28,5 +28,8 @@ export default interface WindowRef {
         startSimulation?: () => void;
         animateOpenCommand?: () => void;
         isNotCommand?: boolean;
+    },
+    pdfLogic?: {
+        isNotPdf?: boolean;
     }
 }

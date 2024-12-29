@@ -16,6 +16,25 @@
         height: 69vh;
     }
 
+    &-command {
+        .window-content {
+            color: white;
+        }
+    }
+
+    &-pdf {
+        height: 100vh;
+
+        .pdf-content {
+            height: 100%;
+
+            iframe {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
     &-header {
         width: 100%;
 

@@ -29,7 +29,7 @@ export default function Welcome({ getDefaultTabs, handleAction }: WelcomeProps) 
         },
         {
             name: "CV",
-            onClick: () => handleAction(2, "openPDF")
+            onClick: () => handleAction(2, "showPDF")
         },
     ];
 

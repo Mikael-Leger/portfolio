@@ -15,35 +15,22 @@ import WindowDetails from "@/app/interfaces/window-details.interface";
 import WindowRef from "@/app/interfaces/window-ref.interface";
 import { useIsReduced } from "@/app/contexts/is-reduced";
 import UsernameContext from "@/app/contexts/username-context";
+import Favorites from "../favorites/favorites";
+import usePdf from "@/app/hooks/pdf";
 
 import "./window.scss";
-import Favorites from "../favorites/favorites";
 
 export type WindowProps =
 	| {
 		window_id: number;
-		type: "browser";
+		type: "browser" | "command" | "pdf";
 		zIndex: number;
-		tabs: TabInterface[];
-		removeTab: (index: number) => void;
-		lines?: never;
+		onAction: (action: string, payload?: any) => void;
+		tabs?: TabInterface[];
+		removeTab?: (index: number) => void;
+		lines?: CommandLine[];
 		onFinish?: () => void;
 		hide?: boolean;
-		onAction: (action: string, payload?: any) => void;
-		setWindowRef?: (id: number, ref: WindowRef) => void;
-		windowRefs?: React.RefObject<Record<number, WindowRef>>;
-		getDefaultTabs?: () => TabInterface[];
-	}
-	| {
-		window_id: number;
-		type: "command";
-		zIndex: number;
-		lines: CommandLine[];
-		tabs?: never;
-		removeTab?: never;
-		onFinish?: () => void;
-		hide?: boolean;
-		onAction: (action: string, payload?: any) => void;
 		setWindowRef?: (id: number, ref: WindowRef) => void;
 		windowRefs?: React.RefObject<Record<number, WindowRef>>;
 		getDefaultTabs?: () => TabInterface[];
@@ -62,12 +49,12 @@ const WindowDiv = styled.div<WindowDivProps>`
 
 let idCounter = 0;
 
-export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, hide = false }: WindowProps) {
+export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, hide = false }: WindowProps) {
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
 
-	const [id, setId] = useState<number>();
+	// const [window_id, setId] = useState<number>();
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
 	const [isMaximized, setIsMaximized] = useState<boolean>(true);
 	const [isReducing, setIsReducing] = useState<boolean>(false);
@@ -88,7 +75,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 	const windowRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (id == null || !setWindowRef) {
+		if (window_id == null || !setWindowRef) {
 			return;
 		}
 		const windowLogic = {
@@ -98,24 +85,24 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 			lines,
 		}
 
-		if (windowRefs && windowRefs.current[id]) {
-			windowRefs.current[id] = { windowLogic, browserLogic, commandLogic };
+		if (windowRefs && windowRefs.current[window_id]) {
+			windowRefs.current[window_id] = { windowLogic, browserLogic, commandLogic, pdfLogic };
 		} else {
-			setWindowRef(id, { windowLogic, browserLogic, commandLogic });
+			setWindowRef(window_id, { windowLogic, browserLogic, commandLogic, pdfLogic });
 		}
 
-	}, [id, type, zIndex, tabs, lines, setWindowRef, windowRefs]);
+	}, [window_id, type, zIndex, tabs, lines, setWindowRef, windowRefs]);
 
-	const generatedId = useMemo(() => {
-		if (process.env.NODE_ENV == 'production') return idCounter++;
-		return idCounter++ / 2;
-	}, []);
+	// const generatedId = useMemo(() => {
+	// 	if (process.env.NODE_ENV == 'production') return idCounter++;
+	// 	return idCounter++ / 2;
+	// }, []);
 
-	useEffect(() => {
-		if (generatedId != null) {
-			setId(generatedId);
-		}
-	}, [generatedId]);
+	// useEffect(() => {
+	// 	if (generatedId != null) {
+	// 		setId(generatedId);
+	// 	}
+	// }, [generatedId]);
 
 	useEffect(() => {
 		if (windowRef && windowRef.current) {
@@ -129,7 +116,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 	useEffect(() => {
 		if (windowRef && windowRef.current) {
 			if (isMaximized) {
-				gsap.to(document.querySelector(`.window-${type}-${id}`), {
+				gsap.to(document.querySelector(`.window-${type}-${window_id}`), {
 					duration: .2,
 					left: 0,
 					top: 0,
@@ -138,7 +125,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 					ease: "sine.in"
 				});
 			} else {
-				gsap.to(document.querySelector(`.window-${type}-${id}`), {
+				gsap.to(document.querySelector(`.window-${type}-${window_id}`), {
 					duration: .2,
 					left: `${windowDetails.offsetX}px`,
 					top: `${windowDetails.offsetY}px`,
@@ -151,10 +138,10 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 	}, [isMaximized]);
 
 	useEffect(() => {
-		if (id != null && isReducing) {
+		if (window_id != null && isReducing) {
 			const timeline = gsap.timeline();
-			const newLeft = -28 + (id * 16) + 'vw';
-			timeline.to(document.querySelector(`.window-${type}-${id}`), {
+			const newLeft = -28 + (window_id * 16) + 'vw';
+			timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
 				duration: .7,
 				scale: 0.1,
 				left: newLeft,
@@ -163,7 +150,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 				minHeight: isMaximized ? '' : '100vh',
 				ease: "sine.in"
 			});
-			timeline.to(document.querySelector(`.window-${type}-${id} .window-reduced-logo`), {
+			timeline.to(document.querySelector(`.window-${type}-${window_id} .window-reduced-logo`), {
 				duration: .2,
 				opacity: .8,
 				ease: "sine.in"
@@ -178,18 +165,18 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 	}, [isReducing]);
 
 	useEffect(() => {
-		if (id != null && isIncreasing) {
+		if (window_id != null && isIncreasing) {
 			const newLeft = (isMaximized) ? 0 : windowDetails.offsetX;
 			const newTop = (isMaximized) ? 0 : windowDetails.offsetY;
 
 			const timeline = gsap.timeline();
-			timeline.to(document.querySelector(`.window-${type}-${id} .window-reduced-logo`), {
+			timeline.to(document.querySelector(`.window-${type}-${window_id} .window-reduced-logo`), {
 				duration: .2,
 				opacity: 0,
 				ease: "sine.in"
 			});
-			const oldLeft = -28 + (id * 16) + 'vw';
-			timeline.fromTo(document.querySelector(`.window-${type}-${id}`), {
+			const oldLeft = -28 + (window_id * 16) + 'vw';
+			timeline.fromTo(document.querySelector(`.window-${type}-${window_id}`), {
 				left: oldLeft,
 				top: "40vh",
 			}, {
@@ -258,45 +245,27 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		};
 	}, [isDragging]);
 
-	const browserLogic = useBrowser(type, hide, windowIconPath, tabs, id, preferences) as WindowRef["browserLogic"];
+	const browserLogic = useBrowser(type, hide, windowIconPath, tabs, window_id, preferences) as WindowRef["browserLogic"];
 
-	const [activeTabTmp, setActiveTabTmp] = useState<{ index: number, remove: boolean }>();
+	const commandLogic = useCommand(type, lines, window_id, onFinish, preferences, ip) as WindowRef["commandLogic"];
 
-	useEffect(() => {
-		if (browserLogic && browserLogic.activeTab && activeTabTmp) {
-			const newActiveTab = (browserLogic.activeTab == activeTabTmp.index) ? 0 : browserLogic.activeTab - 1;
-			localStorage.setItem("active-tab", newActiveTab.toString());
-			browserLogic.setActiveTab?.(newActiveTab);
-
-			if (activeTabTmp.remove && removeTab) {
-				removeTab(activeTabTmp.index);
-			}
-
-		}
-	}, [activeTabTmp])
-
-	const removeTabWindow = (index: number) => {
-		if (browserLogic) {
-			setActiveTabTmp({
-				index: index,
-				remove: true
-			});
-		}
-	}
-
-	const commandLogic = useCommand(type, lines, id, onFinish, preferences, ip) as WindowRef["commandLogic"];
+	const pdfLogic = usePdf(type, windowIconPath, window_id);
 
 	useEffect(() => {
-		if (browserLogic && browserLogic.browserIconPath != null) {
+		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
 			setWindowIconPath(browserLogic.browserIconPath);
 
 		} else if (commandLogic && !commandLogic.isNotCommand) {
 			setWindowIconPath("/icons/linux.png");
+
+		} else if (pdfLogic && !pdfLogic.isNotPdf) {
+			setWindowIconPath("/icons/pdf.png");
+
 		}
-	}, [browserLogic]);
+	}, [browserLogic, commandLogic, pdfLogic]);
 
 	useEffect(() => {
-		if (commandLogic && !commandLogic.isSimulationStarted && commandLogic.ipFormatted != null && id != null) {
+		if (commandLogic && !commandLogic.isSimulationStarted && commandLogic.ipFormatted != null && window_id != null) {
 			commandLogic.setIsSimulationStarted?.(true);
 			commandLogic.startSimulation?.();
 		}
@@ -334,7 +303,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		{
 			name: "minimize",
 			onClick: () => setIsMaximized(false),
-			hide: !isMaximized
+			hide: !isMaximized || type == "pdf"
 		},
 		{
 			name: "maximize",
@@ -347,7 +316,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 		}
 	];
 
-	if (type == "browser" && (!tabs || tabs.length == 0) || !browserLogic || !commandLogic) {
+	if ((type == "browser" && (!tabs || tabs.length == 0)) || !browserLogic || !commandLogic || !pdfLogic) {
 		return <></>;
 	}
 
@@ -362,7 +331,7 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 
 	return (
 		<WindowDiv
-			className={`window window-${type} window-${type}-${id}`}
+			className={`window window-${type} window-${type}-${window_id}`}
 			$preferences={preferences}
 			$zIndex={zIndex}
 			onMouseDown={handleWindowMouseDown}
@@ -402,6 +371,14 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
 								<div className="window-header-head-left-text" >
 									{username}@ip-{commandLogic.ipFormatted}:{commandLogic.currentPath}
+								</div>
+							</>
+						)}
+						{!pdfLogic.isNotPdf && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-text" >
+									PDF Viewer
 								</div>
 							</>
 						)}
@@ -448,6 +425,13 @@ export default function Window({ type, zIndex, tabs, lines, onFinish, removeTab,
 						{commandLogic.contentNodes.map((node, idx) => (
 							<span key={idx}>{node}</span>
 						))}
+					</div>
+				)
+			}
+			{
+				!pdfLogic.isNotPdf && (
+					<div className="window-content pdf-content">
+						<iframe src="/pdf/CV_LEGER_Mikael.pdf" />
 					</div>
 				)
 			}
