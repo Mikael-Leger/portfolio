@@ -17,6 +17,7 @@ import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
 import Welcome from "./components/welcome/welcome";
 import Skills from "./components/skills/skills";
+import Dekstop from "./components/desktop/dekstop";
 
 import "./home.scss";
 
@@ -514,6 +515,19 @@ export default function Home() {
         showBrowser();
     }
 
+    const desktopOpenActions = (action: string) => {
+        switch (action) {
+            case "browser":
+                showBrowser();
+                break;
+            case "pdf":
+                showPDF();
+                break;
+            default:
+                break;
+        }
+    }
+
     const homeTemplate = () => {
         if (isBooting) {
             return <Booting onFinish={() => setIsBooting(false)} />;
@@ -521,16 +535,14 @@ export default function Home() {
 
         return (
             <div className="home">
-                {windows.length > 0 ? windows.map((window, idx) => {
-                    return (
-                        <Window
-                            key={idx}
-                            {...window}
-                            setWindowRef={setWindowRef}
-                            windowRefs={windowRefs}
-                            getDefaultTabs={getDefaultTabs} />
-                    )
-                }) : (
+                {windows.length > 0 ? (
+                    <Dekstop
+                        windows={windows}
+                        setWindowRef={setWindowRef}
+                        windowRefs={windowRefs}
+                        getDefaultTabs={getDefaultTabs}
+                        desktopOpenActions={desktopOpenActions} />
+                ) : (
                     <div className="home-session">
                         <UserSession />
                     </div>

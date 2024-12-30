@@ -22,7 +22,7 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
         if (userAgent.includes("Edg")) return `${basePath}/edge${extension}`;
         if (userAgent.includes("Opera") || userAgent.includes("OPR")) return `${basePath}/opera${extension}`;
 
-        return "Unknown Browser";
+        return `${basePath}/edge${extension}`;
     };
 
     useEffect(() => {
