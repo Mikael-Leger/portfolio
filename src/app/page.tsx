@@ -195,7 +195,7 @@ export default function Home() {
         const windowRef = windowRefs.current[window_id];
 
         if (windowRef == null) {
-            openWindowById(window_id);
+            showBrowser();
 
         } else {
             windowRef.windowLogic.animateOpenWindow?.();
@@ -570,23 +570,28 @@ export default function Home() {
         windowRef.windowLogic.animateHideWindow?.();
     }
 
-    const openWindowById = (id: number) => {
-        switch (id) {
-            case 0:
-                showBrowser();
-                break;
-            case 2:
-                showPDF();
-                break;
-            default:
-                break;
-        }
-    }
-
     const desktopOpenActions = (action: string, payload?: any) => {
         switch (action) {
             case "openWindow":
-                openWindow(payload);
+                const windowRef = windowRefs.current[payload];
+                if (windowRef) {
+                    openWindow(payload);
+                } else {
+                    switch (payload) {
+                        case 0:
+                            showBrowser();
+                            break;
+                        case 1:
+                            showCommand();
+                            break;
+                        case 2:
+                            addPDF();
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
                 break;
             case "closeWindow":
                 closeWindow(payload);
