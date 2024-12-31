@@ -11,7 +11,7 @@ type DekstopProps = {
     setWindowRef: (id: number, ref: WindowRef) => void;
     windowRefs: RefObject<Record<number, WindowRef>>;
     getDefaultTabs: () => TabInterface[];
-    desktopOpenActions: (action: string) => void;
+    desktopOpenActions: (action: string, payload?: any) => void;
 };
 
 export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultTabs, desktopOpenActions }: DekstopProps) {
@@ -20,13 +20,13 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             title: "Portfolio",
             iconPath: "/browsers/chrome.png",
             position: { top: 200, left: 200 },
-            onClick: () => desktopOpenActions("browser")
+            onClick: () => desktopOpenActions("openWindow", 0)
         },
         {
             title: "CV",
             iconPath: "/icons/pdf.png",
             position: { top: 400, right: 200 },
-            onClick: () => desktopOpenActions("pdf")
+            onClick: () => desktopOpenActions("openWindow", 2)
         }
     ];
 
@@ -43,7 +43,8 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
                     {...window}
                     setWindowRef={setWindowRef}
                     windowRefs={windowRefs}
-                    getDefaultTabs={getDefaultTabs} />
+                    getDefaultTabs={getDefaultTabs}
+                    desktopOpenActions={desktopOpenActions} />
             ))}
         </div>
     );

@@ -36,10 +36,11 @@ export default function Home() {
     const [windows, setWindows] = useState<WindowProps[]>([]);
     const [newTab, setNewTab] = useState<TabInterface>();
     const [isBooting, setIsBooting] = useState<boolean>(true);
-    const [isBooted, setIsBooted] = useState(false);
+    const [isBooted, setIsBooted] = useState<boolean>(false);
 
     const windowRefs = useRef<Record<number, WindowRef>>({});
     const lastUpdatedWindowRef = useRef<{ id: number } | null>(null);
+    const lastOpenedWindowRef = useRef<{ id: number } | null>(null);
     const newTabIndex = useRef<number>(-1);
     const usedDefaultTabs = useRef<boolean>(false);
 
@@ -162,7 +163,6 @@ export default function Home() {
                     const windowLogic = windowRef.windowLogic;
                     type LogicAction = keyof NonNullable<WindowRef['windowLogic']>;
                     const actionLogic = action as LogicAction;
-
                     if (typeof windowLogic[actionLogic] === "function") {
                         return (windowLogic[actionLogic] as () => void)();
                     }
@@ -177,11 +177,28 @@ export default function Home() {
         setWindowsOrder();
 
         const browserWindow = windows.find(window => window.type == "browser");
+
         // TODO: use better condition
         if (browserWindow && newTabIndex.current >= 0) {
             handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
             newTabIndex.current = -1;
         }
+
+        const window_id = lastOpenedWindowRef.current?.id;
+        if (window_id == null) {
+            return;
+        }
+        const windowRef = windowRefs.current[window_id];
+
+        if (windowRef == null) {
+            openWindowById(window_id);
+
+        } else {
+            windowRef.windowLogic.animateOpenWindow?.();
+
+        }
+
+        lastOpenedWindowRef.current = null;
 
     }, [windows]);
 
@@ -515,13 +532,57 @@ export default function Home() {
         showBrowser();
     }
 
-    const desktopOpenActions = (action: string) => {
-        switch (action) {
-            case "browser":
+    const openWindow = (window_id: number) => {
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const windowFound = updatedWindows.find(window => window.window_id == window_id)
+            if (windowFound) {
+                windowFound.hide = false;
+            }
+            return updatedWindows;
+        });
+
+        lastOpenedWindowRef.current = { id: window_id };
+    }
+
+    const closeWindow = (window_id: number) => {
+        const windowRef = windowRefs.current[window_id];
+        const duration = windowRef.windowLogic.animateHideWindow?.();
+        if (duration == null) {
+            return;
+        }
+        setTimeout(() => {
+            setWindows(prevWindows => {
+                const updatedWindows = [...prevWindows];
+                const windowFound = updatedWindows.find(window => window.window_id == window_id)
+                if (windowFound) {
+                    windowFound.hide = true;
+                }
+                return updatedWindows;
+            });
+        }, duration * 1000);
+    }
+
+    const openWindowById = (id: number) => {
+        switch (id) {
+            case 0:
                 showBrowser();
                 break;
-            case "pdf":
+            case 2:
                 showPDF();
+                break;
+            default:
+                break;
+        }
+    }
+
+    const desktopOpenActions = (action: string, payload?: any) => {
+        switch (action) {
+            case "openWindow":
+                openWindow(payload);
+                break;
+            case "closeWindow":
+                closeWindow(payload);
                 break;
             default:
                 break;
@@ -535,7 +596,7 @@ export default function Home() {
 
         return (
             <div className="home">
-                {windows.length > 0 ? (
+                {isBooted ? (
                     <Dekstop
                         windows={windows}
                         setWindowRef={setWindowRef}

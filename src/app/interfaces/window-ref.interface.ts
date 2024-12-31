@@ -9,6 +9,8 @@ export default interface WindowRef {
         lines?: CommandLine[];
         hide?: boolean;
         removeTab?: (index: number) => void;
+        animateHideWindow?: () => number;
+        animateOpenWindow?: () => void;
     }
     browserLogic?: {
         activeTab?: number;

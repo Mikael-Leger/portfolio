@@ -34,6 +34,7 @@ export type WindowProps =
 		setWindowRef?: (id: number, ref: WindowRef) => void;
 		windowRefs?: React.RefObject<Record<number, WindowRef>>;
 		getDefaultTabs?: () => TabInterface[];
+		desktopOpenActions?: (action: string, payload?: any) => void;
 	};
 
 
@@ -49,7 +50,7 @@ const WindowDiv = styled.div<WindowDivProps>`
 
 let idCounter = 0;
 
-export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, hide = false }: WindowProps) {
+export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, desktopOpenActions, hide = false }: WindowProps) {
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
@@ -74,6 +75,29 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const windowRef = useRef<HTMLDivElement>(null);
 
+	const animateOpenWindow = () => {
+		const timeline = gsap.timeline();
+		timeline.fromTo(`.window-${type}-${window_id}`, {
+			opacity: 0,
+			scale: .2
+		}, {
+			duration: .2,
+			opacity: 1,
+			scale: 1
+		})
+		return timeline.totalDuration();
+	}
+
+	const animateHideWindow = () => {
+		const timeline = gsap.timeline();
+		timeline.to(`.window-${type}-${window_id}`, {
+			duration: .2,
+			opacity: 0,
+			scale: .5
+		})
+		return timeline.totalDuration();
+	}
+
 	useEffect(() => {
 		if (window_id == null || !setWindowRef) {
 			return;
@@ -83,6 +107,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			zIndex,
 			tabs,
 			lines,
+			animateOpenWindow,
+			animateHideWindow
 		}
 
 		if (windowRefs && windowRefs.current[window_id]) {
@@ -312,7 +338,9 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		},
 		{
 			name: "close",
-			onClick: () => { }
+			onClick: () => {
+				desktopOpenActions?.("closeWindow", window_id);
+			}
 		}
 	];
 
