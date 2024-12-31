@@ -11,7 +11,7 @@ import Loading from "./components/loading/loading";
 import Portfolio from "./components/portfolio/portfolio";
 import TabInterface from "./interfaces/tab.interface";
 import WindowRef from "./interfaces/window-ref.interface";
-import { IsReducedProvider } from "./contexts/is-reduced";
+import { IsAnyReducedProvider } from "./contexts/is-reduced";
 import TaskBar from "./components/task-bar/task-bar";
 import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
@@ -627,9 +627,9 @@ export default function Home() {
 
     return (
         <PageLayout>
-            <IsReducedProvider>
+            <IsAnyReducedProvider>
                 {homeTemplate()}
-            </IsReducedProvider>
+            </IsAnyReducedProvider>
         </PageLayout>
     );
 }

@@ -7,7 +7,7 @@ import ProjectModal from "@/app/interfaces/modal.interface";
 import Modal from "../modal/modal";
 import Title from "../title/title";
 import WindowRef from "@/app/interfaces/window-ref.interface";
-import { useIsReduced } from "@/app/contexts/is-reduced";
+import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import personalProjects from "@/app/data/personal_projects.json";
 import professionalProjects from "@/app/data/professional_projects.json";
 import schoolProjects from "@/app/data/school_projects.json";
@@ -23,7 +23,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     const [modalData, setModalData] = useState<ProjectModal>({
         isVisible: false
     });
-    const { isReduced } = useIsReduced();
+    const { isAnyReduced } = useIsAnyReduced();
 
     const portfolioRef = useRef(null);
     const modalRef = useRef(null);
@@ -75,7 +75,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     }, [portfolioRef, modalRef, modalData.isVisible])
 
     const showModal = async (show: boolean) => {
-        if (isReduced) {
+        if (isAnyReduced) {
             return;
         }
         if (!show) {
@@ -97,7 +97,7 @@ export default function Portfolio({ addTab }: PortfolioProps) {
     }
 
     const showProjectInModal = (project: ProjectInterface) => {
-        if (isReduced) {
+        if (isAnyReduced) {
             return;
         }
 

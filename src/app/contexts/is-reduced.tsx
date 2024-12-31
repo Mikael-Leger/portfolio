@@ -1,30 +1,54 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface IsReducedContextType {
-    isReduced: boolean;
-    setIsReduced: (value: boolean) => void;
+interface IsAnyReducedContextType {
+    isAnyReduced: boolean;
+    addToList: (value: number) => void;
+    removeFromList: (value: number) => void;
 }
 
-const IsReducedContext = createContext<IsReducedContextType | undefined>(undefined);
+const IsAnyReducedContext = createContext<IsAnyReducedContextType | undefined>(undefined);
 
-export const useIsReduced = (): IsReducedContextType => {
-    const context = useContext(IsReducedContext);
+export const useIsAnyReduced = (): IsAnyReducedContextType => {
+    const context = useContext(IsAnyReducedContext);
     if (!context) {
-        throw new Error('useIsReduced must be used within a IsReducedProvider');
+        throw new Error('useIsAnyReduced must be used within a IsAnyReducedProvider');
     }
     return context;
 };
 
-interface IsReducedProviderProps {
+interface IsAnyReducedProviderProps {
     children: ReactNode;
 }
 
-export const IsReducedProvider: React.FC<IsReducedProviderProps> = ({ children }) => {
-    const [isReduced, setIsReduced] = useState<boolean>(false);
+export const IsAnyReducedProvider: React.FC<IsAnyReducedProviderProps> = ({ children }) => {
+    const [listOfReduced, setListOfReduced] = useState<number[]>([]);
+
+    const addToList = (id: number) => {
+        setListOfReduced(prevList => {
+            const updatedList = [...prevList];
+
+            if (!updatedList.includes(id)) {
+                updatedList.push(id);
+            }
+
+            return updatedList;
+        });
+    }
+
+    const removeFromList = (id: number) => {
+        setListOfReduced(prevList => {
+            const updatedList = [...prevList];
+            const elemIndex = updatedList.findIndex(elem => elem == id);
+
+            updatedList.splice(elemIndex, 1);
+
+            return updatedList;
+        });
+    }
 
     return (
-        <IsReducedContext.Provider value={{ isReduced, setIsReduced }}>
+        <IsAnyReducedContext.Provider value={{ isAnyReduced: listOfReduced.length != 0, addToList, removeFromList }}>
             {children}
-        </IsReducedContext.Provider>
+        </IsAnyReducedContext.Provider>
     );
 };

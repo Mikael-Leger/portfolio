@@ -4,7 +4,7 @@ import ProjectInterface from "@/app/interfaces/project.interface";
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
 import Stack from "../stack/stack";
 import Status from "@/app/interfaces/status.interface";
-import { useIsReduced } from "@/app/contexts/is-reduced";
+import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import TabInterface from "@/app/interfaces/tab.interface";
 
 import "./modal.scss";
@@ -17,7 +17,7 @@ type ModalProps = {
 };
 
 export default function Modal({ modalData, addTab, showModal, ref }: ModalProps) {
-    const { isReduced } = useIsReduced();
+    const { isAnyReduced } = useIsAnyReduced();
 
     if (!modalData.isVisible) return;
 
@@ -40,7 +40,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
     }
 
     const addTabFromitem = (item: ProjectInterface) => {
-        if (!item.url || isReduced) {
+        if (!item.url || isAnyReduced) {
             return;
         }
         addTab({ title: item.name, url: item.url, logoPath: item.logo, defaultTab: false });

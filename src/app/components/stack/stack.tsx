@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
-import { useIsReduced } from "@/app/contexts/is-reduced";
+import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 
 import "./stack.scss";
 
@@ -10,10 +10,10 @@ type StackProps = {
 };
 
 export default function Stack({ groupsOfItems }: StackProps) {
-    const { isReduced } = useIsReduced();
+    const { isAnyReduced } = useIsAnyReduced();
 
     const openTab = (url: string) => {
-        if (isReduced) {
+        if (isAnyReduced) {
             return;
         }
         window.open(url, '_blank');

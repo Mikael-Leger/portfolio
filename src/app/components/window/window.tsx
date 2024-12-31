@@ -13,7 +13,7 @@ import Bar from "../bar/bar";
 import TabInterface from "@/app/interfaces/tab.interface";
 import WindowDetails from "@/app/interfaces/window-details.interface";
 import WindowRef from "@/app/interfaces/window-ref.interface";
-import { useIsReduced } from "@/app/contexts/is-reduced";
+import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import UsernameContext from "@/app/contexts/username-context";
 import Favorites from "../favorites/favorites";
 import usePdf from "@/app/hooks/pdf";
@@ -59,6 +59,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
 	const [isMaximized, setIsMaximized] = useState<boolean>(true);
 	const [isReducing, setIsReducing] = useState<boolean>(false);
+	const [isReduced, setIsReduced] = useState<boolean>(false);
 	const [isIncreasing, setIsIncreasing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [windowDetails, setWindowDetails] = useState<WindowDetails>({
@@ -71,7 +72,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		initialOffsetX: 0,
 		initialOffsetY: 0
 	});
-	const { isReduced, setIsReduced } = useIsReduced();
+	const { addToList, removeFromList } = useIsAnyReduced();
 
 	const windowRef = useRef<HTMLDivElement>(null);
 
@@ -163,6 +164,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 					ease: "sine.in"
 				});
 			} else {
+				removeFromList(window_id);
 				gsap.to(document.querySelector(`.window-${type}-${window_id}`), {
 					duration: .2,
 					left: `${windowDetails.offsetX}px`,
@@ -177,6 +179,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	useEffect(() => {
 		if (window_id != null && isReducing) {
+			addToList(window_id);
+
 			const timeline = gsap.timeline();
 			const newLeft = -28 + (window_id * 16) + 'vw';
 			timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
@@ -336,11 +340,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const actionsList = [
 		{
 			name: "reduce",
-			onClick: () => setIsReducing(true)
+			onClick: () => {
+				setIsReducing(true)
+			}
 		},
 		{
 			name: "minimize",
-			onClick: () => setIsMaximized(false),
+			onClick: () => {
+				setIsMaximized(false)
+			},
 			hide: !isMaximized || type == "pdf"
 		},
 		{

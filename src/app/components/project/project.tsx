@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import gsap from "gsap";
 
 import ProjectInterface from "@/app/interfaces/project.interface";
-import { useIsReduced } from "@/app/contexts/is-reduced";
+import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 
 import "./project.scss";
 
@@ -12,10 +12,10 @@ type ProjectProps = {
 };
 
 export default function Project({ item, showProjectInModal }: ProjectProps) {
-    const { isReduced } = useIsReduced();
+    const { isAnyReduced } = useIsAnyReduced();
 
     return (
-        <div className="project" onClick={() => showProjectInModal(item)} style={{ cursor: isReduced ? 'initial' : 'pointer' }}>
+        <div className="project" onClick={() => showProjectInModal(item)} style={{ cursor: isAnyReduced ? 'initial' : 'pointer' }}>
             {item.img && (
                 <img className="project-img" src={item.img} onError={(e) => {
                     const target = e.target as HTMLImageElement;
