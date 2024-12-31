@@ -8,9 +8,10 @@ import "./welcome.scss";
 type WelcomeProps = {
     getDefaultTabs: () => TabInterface[];
     handleAction: (id: number, action: string, payload?: any) => void;
+    openWindow: (id: number) => void;
 };
 
-export default function Welcome({ getDefaultTabs, handleAction }: WelcomeProps) {
+export default function Welcome({ getDefaultTabs, handleAction, openWindow }: WelcomeProps) {
     const goToTab = (tabTitle: string) => {
         const defaultTabs = getDefaultTabs();
         const newTab = defaultTabs.find(tab => tab.title == tabTitle);
@@ -29,7 +30,7 @@ export default function Welcome({ getDefaultTabs, handleAction }: WelcomeProps) 
         },
         {
             name: "CV",
-            onClick: () => handleAction(2, "showPDF")
+            onClick: () => { handleAction(2, "showPDF") }
         },
     ];
 

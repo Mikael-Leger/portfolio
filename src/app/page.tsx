@@ -62,15 +62,15 @@ export default function Home() {
                 case "removeTab":
                     removeTab(payload);
                 case "showPDF":
-                    // showPDF();
+                    showPDF();
 
-                    openWindow(id);
+                    // openWindow(id);
                     break;
                 default:
                     break;
             }
         } else if (action == "showPDF") {
-            addPdf();
+            addPDF();
         } else {
             console.warn(`No ref found for window ${id}`);
         }
@@ -294,13 +294,13 @@ export default function Home() {
 
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.findIndex(window => window.type == "browser");
+            const windowFound = updatedWindows.findIndex(window => window.window_id == 0);
             updatedWindows[windowFound].hide = false;
             return updatedWindows;
         });
     }
 
-    const addPdf = () => {
+    const addPDF = () => {
         lastUpdatedWindowRef.current = { id: 2 };
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
@@ -310,14 +310,13 @@ export default function Home() {
                 zIndex: 0,
                 onAction: (action: string, payload?: any) => handleAction(2, action, payload)
             });
+
             return updatedWindows;
         });
-
     }
 
     const showPDF = () => {
         lastUpdatedWindowRef.current = { id: 2 };
-
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
             const windowFound = updatedWindows.findIndex(window => window.window_id == 2);
@@ -326,6 +325,9 @@ export default function Home() {
 
             return updatedWindows;
         });
+        const pdfRef = windowRefs.current[2];
+        pdfRef?.windowLogic?.animateOpenWindow?.();
+
     }
 
     const showDesktopAnimation = (beforeHome: CSSRule, timeline: GSAPTimeline, startingDuration = 0, nextDuration = 0) => {
@@ -422,7 +424,7 @@ export default function Home() {
             title: "Welcome - Mikaël Léger",
             url: `${currentLocation}home`,
             content: (
-                <Welcome getDefaultTabs={getDefaultTabs} handleAction={handleAction} />
+                <Welcome getDefaultTabs={getDefaultTabs} handleAction={handleAction} openWindow={openWindow} />
             )
         },
         {
