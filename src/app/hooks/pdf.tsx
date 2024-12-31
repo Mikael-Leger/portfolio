@@ -12,7 +12,7 @@ const BASE_TIME_WAIT = 0;
 const BASE_DELAY = 0;
 // const BASE_DELAY = 800;
 
-export default function usePdf(type: string, windowIconPath: string, id?: number) {
+export default function usePdf(type: string, hide: boolean, windowIconPath: string, id?: number) {
 
     useEffect(() => {
         if (type != "pdf" || id == null || windowIconPath == "") {
@@ -25,7 +25,7 @@ export default function usePdf(type: string, windowIconPath: string, id?: number
 
         }
 
-    }, [type, id, windowIconPath]);
+    }, [type, hide, id, windowIconPath]);
 
     const isPdf = (type === 'pdf');
     if (!isPdf) {

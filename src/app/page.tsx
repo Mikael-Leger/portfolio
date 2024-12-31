@@ -51,9 +51,7 @@ export default function Home() {
     const handleAction = useCallback((id: number, action: string, payload?: any) => {
         const windowRef = windowRefs.current[id];
 
-        if (action == "showPDF" && !windowRef) {
-            showPDF();
-        } else if (windowRef) {
+        if (windowRef) {
             switch (action) {
                 case "putWindowOnTop":
                     putWindowOnTop(id);
@@ -63,11 +61,16 @@ export default function Home() {
                     break;
                 case "removeTab":
                     removeTab(payload);
-                case "openPDF":
+                case "showPDF":
+                    // showPDF();
+
+                    openWindow(id);
                     break;
                 default:
                     break;
             }
+        } else if (action == "showPDF") {
+            addPdf();
         } else {
             console.warn(`No ref found for window ${id}`);
         }
@@ -180,6 +183,7 @@ export default function Home() {
 
         // TODO: use better condition
         if (browserWindow && newTabIndex.current >= 0) {
+
             handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
             newTabIndex.current = -1;
         }
@@ -296,8 +300,7 @@ export default function Home() {
         });
     }
 
-    const showPDF = () => {
-        // if already here then open it
+    const addPdf = () => {
         lastUpdatedWindowRef.current = { id: 2 };
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
@@ -307,6 +310,20 @@ export default function Home() {
                 zIndex: 0,
                 onAction: (action: string, payload?: any) => handleAction(2, action, payload)
             });
+            return updatedWindows;
+        });
+
+    }
+
+    const showPDF = () => {
+        lastUpdatedWindowRef.current = { id: 2 };
+
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const windowFound = updatedWindows.findIndex(window => window.window_id == 2);
+
+            updatedWindows[windowFound].hide = false;
+
             return updatedWindows;
         });
     }
@@ -541,26 +558,14 @@ export default function Home() {
             }
             return updatedWindows;
         });
+        putWindowOnTop(window_id);
 
         lastOpenedWindowRef.current = { id: window_id };
     }
 
     const closeWindow = (window_id: number) => {
         const windowRef = windowRefs.current[window_id];
-        const duration = windowRef.windowLogic.animateHideWindow?.();
-        if (duration == null) {
-            return;
-        }
-        setTimeout(() => {
-            setWindows(prevWindows => {
-                const updatedWindows = [...prevWindows];
-                const windowFound = updatedWindows.find(window => window.window_id == window_id)
-                if (windowFound) {
-                    windowFound.hide = true;
-                }
-                return updatedWindows;
-            });
-        }, duration * 1000);
+        windowRef.windowLogic.animateHideWindow?.();
     }
 
     const openWindowById = (id: number) => {

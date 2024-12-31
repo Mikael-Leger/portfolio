@@ -79,11 +79,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		const timeline = gsap.timeline();
 		timeline.fromTo(`.window-${type}-${window_id}`, {
 			opacity: 0,
-			scale: .2
+			scale: .2,
+			display: 'none'
 		}, {
 			duration: .2,
 			opacity: 1,
-			scale: 1
+			scale: 1,
+			display: 'flex'
 		})
 		return timeline.totalDuration();
 	}
@@ -93,7 +95,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		timeline.to(`.window-${type}-${window_id}`, {
 			duration: .2,
 			opacity: 0,
-			scale: .5
+			scale: .5,
+			display: 'none'
 		})
 		return timeline.totalDuration();
 	}
@@ -275,7 +278,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const commandLogic = useCommand(type, lines, window_id, onFinish, preferences, ip) as WindowRef["commandLogic"];
 
-	const pdfLogic = usePdf(type, windowIconPath, window_id);
+	const pdfLogic = usePdf(type, hide, windowIconPath, window_id);
 
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
