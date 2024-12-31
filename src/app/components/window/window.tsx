@@ -76,6 +76,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const windowRef = useRef<HTMLDivElement>(null);
 
 	const animateOpenWindow = () => {
+		if (windowRefs?.current[window_id]) {
+			if (isReduced) {
+				increaseWindow();
+				return;
+			} else {
+				return;
+			}
+		}
+
 		const timeline = gsap.timeline();
 		timeline.fromTo(`.window-${type}-${window_id}`, {
 			opacity: 0,
