@@ -6,11 +6,9 @@ import Preferences from "../interfaces/preferences.interface";
 import { getFormattedDate } from "../services/date.service";
 import UsernameContext from "../contexts/username-context";
 
-const BASE_TIME_WAIT = 0;
-// const BASE_TIME_WAIT = 80;
+const BASE_TIME_WAIT = process.env.DEV_ANIMATION_SPEED === "fast" ? 0 : 80;
 
-const BASE_DELAY = 0;
-// const BASE_DELAY = 800;
+const BASE_DELAY = process.env.DEV_ANIMATION_SPEED === "fast" ? 0 : 800;
 
 export default function useCommand(type: string, lines: CommandLine[] | undefined, id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
     const username = useContext(UsernameContext) as string;
@@ -94,7 +92,7 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
 
         let path = '~';
 
-        if (process.env.DEV_ANIMATION_SPEED == 'none') {
+        if (process.env.DEV_ANIMATION_SPEED != "fast") {
             await waitFor(BASE_TIME_WAIT * 5);
         }
 
@@ -134,7 +132,7 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
     }
 
     const simulateDisplay = async (node: React.ReactNode) => {
-        if (process.env.DEV_ANIMATION_SPEED == 'none') {
+        if (process.env.DEV_ANIMATION_SPEED != "fast") {
             await waitFor(BASE_TIME_WAIT);
         }
 
@@ -145,7 +143,7 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
     }
 
     const simulateWriting = async (text: string) => {
-        if (process.env.DEV_ANIMATION_SPEED == 'none') {
+        if (process.env.DEV_ANIMATION_SPEED != "fast") {
             await waitFor(BASE_TIME_WAIT);
         }
         for (let i = 0; i < text.length; i++) {

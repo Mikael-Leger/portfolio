@@ -14,8 +14,7 @@ type BootingProps = {
 
 gsap.registerPlugin(TextPlugin);
 
-const BASE_TIME_BOOTING_FACTOR = 0;
-// const BASE_TIME_BOOTING_FACTOR = 1000;
+const BASE_TIME_BOOTING_FACTOR = process.env.DEV_ANIMATION_SPEED === "fast" ? 0 : 1000;
 
 export default function Booting({ onFinish }: BootingProps) {
     const preferences = useContext(PreferencesContext) as Preferences;
