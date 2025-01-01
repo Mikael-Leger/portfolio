@@ -18,7 +18,7 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
     const shortcuts = [
         {
             title: "Portfolio",
-            iconPath: "/browsers/chrome.png",
+            iconPath: "/browsers/edge.png",
             position: { top: 200, left: 200 },
             onClick: () => desktopOpenActions("openWindow", 0)
         },

@@ -37,20 +37,23 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
     return (
         <div className="welcome">
             <div className="welcome-header">
-                <Title text="Full-Stack Developer" size="big" transform="upper" effect="shadow" />
-                <Title text="Mikaël Léger" />
+                <Title text="Mikaël Léger" size="big" transform="upper" effect="shadow" />
+                <Title text="Full-Stack Developer" />
             </div>
             <div className="welcome-content">
                 <div className="welcome-content-description">
-                    <p className="welcome-content-description-paragraph">
-                        I am French and I live in Belgium
-                    </p>
-                    <p className="welcome-content-description-paragraph">
-                        I enjoy creativity and purple color very much
-                    </p>
-                    <p className="welcome-content-description-paragraph">
-                        You can check anything more you want to know about me below
-                    </p>
+                    <div className="welcome-content-description-paragraph">
+                        Welcome to my portfolio!
+                    </div>
+                    <div className="welcome-content-description-paragraph">
+                        <img className="logo-icon" src="/icons/earth.png" /> French developer based in Belgium
+                    </div>
+                    <div className="welcome-content-description-paragraph">
+                        <img className="logo-icon" src="/icons/creativity.png" /> Passionate about web development and creativity (and purple color)
+                    </div>
+                    <div className="welcome-content-description-paragraph">
+                        Feel free to explore and learn more about me below:
+                    </div>
                 </div>
                 <div className="welcome-content-sections">
                     {sections.map(section => (

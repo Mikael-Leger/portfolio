@@ -76,13 +76,34 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const windowRef = useRef<HTMLDivElement>(null);
 
-	const animateOpenWindow = () => {
-		if (windowRefs?.current[window_id]) {
-			if (isReduced) {
-				increaseWindow();
-				return;
+	const animateCreateWindow = () => {
+		const timeline = gsap.timeline();
+		timeline.fromTo(`.window-${type}-${window_id}`, {
+			display: 'none',
+			opacity: 0,
+			scale: 0.2,
+			y: '40vh',
+			x: '40vw',
+		}, {
+			duration: .7,
+			display: 'flex',
+			opacity: 1,
+			scale: 1,
+			y: 0,
+			x: 0,
+			ease: "sine.in"
+		});
+
+		return timeline.totalDuration();
+	}
+
+	const animateOpenWindow = (isReducedFromRef: boolean = false) => {
+		const currentRef = windowRefs?.current[window_id];
+		if (currentRef != null) {
+			if (isReducedFromRef) {
+				return increaseWindow();
 			} else {
-				return;
+				return animateCreateWindow();
 			}
 		}
 
@@ -287,11 +308,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		};
 	}, [isDragging]);
 
-	const browserLogic = useBrowser(type, hide, windowIconPath, tabs, window_id, preferences) as WindowRef["browserLogic"];
+	const browserLogic = useBrowser(animateCreateWindow, type, hide, windowIconPath, tabs, window_id, preferences) as WindowRef["browserLogic"];
 
-	const commandLogic = useCommand(type, lines, window_id, onFinish, preferences, ip) as WindowRef["commandLogic"];
+	const commandLogic = useCommand(animateCreateWindow, type, lines, window_id, onFinish, preferences, ip) as WindowRef["commandLogic"];
 
-	const pdfLogic = usePdf(type, hide, windowIconPath, window_id);
+	const pdfLogic = usePdf(animateCreateWindow, type, hide, windowIconPath, window_id);
 
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
@@ -360,6 +381,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			name: "close",
 			onClick: () => {
 				desktopOpenActions?.("closeWindow", window_id);
+				removeFromList(window_id);
 			}
 		}
 	];

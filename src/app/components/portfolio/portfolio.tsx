@@ -124,9 +124,6 @@ export default function Portfolio({ addTab }: PortfolioProps) {
 
     return (
         <div className="portfolio" ref={portfolioRef}>
-            <div className="portfolio-name">
-                <Title text="Mikaël Léger - Développeur Full-Stack" size="big" />
-            </div>
             <div className="portfolio-container">
                 {groupsOfProjects.map(groupOfProjects => (
                     <div className="portfolio-container-group" key={groupOfProjects.title}>

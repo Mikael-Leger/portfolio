@@ -17,6 +17,10 @@
 
         &-description {
             @include flexAlignedAndCenteredByColumn;
+
+            &-paragraph {
+                @include flexAlignedAndCentered;
+            }
         }
 
         &-sections {

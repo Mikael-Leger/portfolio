@@ -4,7 +4,7 @@ import gsap from "gsap";
 import Preferences from "../interfaces/preferences.interface";
 import TabInterface from "../interfaces/tab.interface";
 
-export default function useBrowser(type: string, hide: boolean, windowIconPath: string, tabs?: TabInterface[], id?: number, preferences?: Preferences) {
+export default function useBrowser(animateCreateWindow: () => number, type: string, hide: boolean, windowIconPath: string, tabs?: TabInterface[], id?: number, preferences?: Preferences) {
     const [activeTab, setActiveTab] = useState<number>(-1);
     const [browserIconPath, setBrowserIconPath] = useState<string>("");
 
@@ -34,45 +34,16 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
         }
     }, []);
 
-    const animateOpenBrowser = () => {
-        const timeline = gsap.timeline();
-        timeline.fromTo(document.querySelector(`.window-browser-${id}`), {
-            opacity: 0,
-            scale: 0.2,
-            y: '40vh',
-            x: '40vw',
-        }, {
-            duration: .7,
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            x: 0,
-            ease: "sine.in"
-        });
-
-        return timeline.totalDuration();
-    }
-
     const animatePortfolioPage = (delay: number) => {
         const timeline = gsap.timeline();
-        timeline.from(".portfolio-name", {
-            delay,
-            duration: 1.2,
-            opacity: 0,
-            x: -600,
-            ease: "sine.in"
-        });
-
-        const currentDuration = timeline.totalDuration();
-        gsap.from(".portfolio-container-group-title", {
-            delay: currentDuration - .5,
+        timeline.from(".portfolio-container-group-title", {
             duration: 1.2,
             opacity: 0,
             x: 600,
             stagger: 1.9,
         });
 
-        timeline.from(".project", {
+        gsap.from(".project", {
             duration: .7,
             opacity: 0,
             y: 100,
@@ -90,7 +61,7 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
 
         let openDuration = 0;
         if (type === 'browser' && !isBrowserOpen.current && windowBrowser[0]) {
-            openDuration = animateOpenBrowser();
+            openDuration = animateCreateWindow();
             setTimeout(() => {
                 isBrowserOpen.current = true;
             }, openDuration * 1000);
@@ -132,5 +103,5 @@ export default function useBrowser(type: string, hide: boolean, windowIconPath: 
         localStorage.setItem("active-tab", index.toString());
     }
 
-    return { activeTab, setActiveTab, browserIconPath, switchTab, animateOpenBrowser, isCurrentTabPortfolio };
+    return { activeTab, setActiveTab, browserIconPath, switchTab, isCurrentTabPortfolio };
 }

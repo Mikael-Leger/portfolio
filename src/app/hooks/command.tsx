@@ -10,7 +10,7 @@ const BASE_TIME_WAIT = process.env.DEV_ANIMATION_SPEED === "fast" ? 0 : 80;
 
 const BASE_DELAY = process.env.DEV_ANIMATION_SPEED === "fast" ? 0 : 800;
 
-export default function useCommand(type: string, lines: CommandLine[] | undefined, id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
+export default function useCommand(animateCreateWindow: () => number, type: string, lines: CommandLine[] | undefined, id?: number, onFinish?: () => void, preferences?: Preferences, ip?: string) {
     const username = useContext(UsernameContext) as string;
 
     const [contentNodes, setContentNodes] = useState<React.ReactNode[]>([]);
@@ -32,24 +32,6 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
         return { isNotCommand: true };
     }
 
-    const animateOpenCommand = () => {
-        const timeline = gsap.timeline();
-        timeline.fromTo(document.querySelector(`.window-command-${id}`), {
-            opacity: 0,
-            y: '40vh',
-            x: '40vw',
-        }, {
-            duration: BASE_DELAY / 1000,
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            x: 0,
-            ease: "sine.in"
-        });
-
-        return timeline.totalDuration();
-    }
-
     const waitFor = async (ms: number) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -67,7 +49,7 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
         if (!ipFormatted || !lines) {
             return null;
         }
-        const animationDuration = animateOpenCommand();
+        const animationDuration = animateCreateWindow();
         await waitFor(animationDuration * 1000);
 
         await waitFor(BASE_DELAY);
@@ -155,5 +137,5 @@ export default function useCommand(type: string, lines: CommandLine[] | undefine
         }
     }
 
-    return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation, animateOpenCommand };
+    return { contentNodes, currentPath, ipFormatted, isSimulationStarted, setIsSimulationStarted, startSimulation };
 }

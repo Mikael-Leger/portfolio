@@ -10,7 +10,7 @@ export default interface WindowRef {
         hide?: boolean;
         removeTab?: (index: number) => void;
         animateHideWindow?: () => number;
-        animateOpenWindow?: () => void;
+        animateOpenWindow?: (isReduced?: boolean) => void;
     }
     browserLogic?: {
         activeTab?: number;

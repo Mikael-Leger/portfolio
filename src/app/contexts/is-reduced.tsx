@@ -1,7 +1,10 @@
+"use client"
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface IsAnyReducedContextType {
     isAnyReduced: boolean;
+    listOfReduced: any;
     addToList: (value: number) => void;
     removeFromList: (value: number) => void;
 }
@@ -40,14 +43,16 @@ export const IsAnyReducedProvider: React.FC<IsAnyReducedProviderProps> = ({ chil
             const updatedList = [...prevList];
             const elemIndex = updatedList.findIndex(elem => elem == id);
 
-            updatedList.splice(elemIndex, 1);
+            if (elemIndex != -1) {
+                updatedList.splice(elemIndex, 1);
+            }
 
             return updatedList;
         });
     }
 
     return (
-        <IsAnyReducedContext.Provider value={{ isAnyReduced: listOfReduced.length != 0, addToList, removeFromList }}>
+        <IsAnyReducedContext.Provider value={{ isAnyReduced: listOfReduced.length != 0, listOfReduced, addToList, removeFromList }}>
             {children}
         </IsAnyReducedContext.Provider>
     );

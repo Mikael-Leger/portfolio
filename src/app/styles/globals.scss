@@ -20,6 +20,7 @@
     --white: #fff;
     --purple: #a855f7;
     --brightnessAdjust: 0.85;
+    --bg-init: #222222;
     --bg-modal: #b6b4b4;
     --bg-project-frontend: radial-gradient(ellipse at top right, #627fa1 33%, #4175b4);
     --bg-project-backend: radial-gradient(ellipse at top right, #613494 33%, #6c36aa);
@@ -58,8 +59,7 @@ html {
 }
 
 body {
-    color: var(--foreground);
-    background: var(--background);
+    background: var(--bg-init);
     font-family: Arial, Helvetica, sans-serif;
 
     height: 100%;

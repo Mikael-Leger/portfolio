@@ -11,13 +11,13 @@ import Loading from "./components/loading/loading";
 import Portfolio from "./components/portfolio/portfolio";
 import TabInterface from "./interfaces/tab.interface";
 import WindowRef from "./interfaces/window-ref.interface";
-import { IsAnyReducedProvider } from "./contexts/is-reduced";
 import TaskBar from "./components/task-bar/task-bar";
 import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
 import Welcome from "./components/welcome/welcome";
 import Skills from "./components/skills/skills";
 import Dekstop from "./components/desktop/dekstop";
+import { useIsAnyReduced } from "./contexts/is-reduced";
 
 import "./home.scss";
 
@@ -31,6 +31,8 @@ const speedMap: { [key: string]: number } = {
 const BASE_TIME_STARTING = speedMap[process.env.DEV_ANIMATION_SPEED || ""] ?? 4000;
 
 export default function Home() {
+    const { listOfReduced } = useIsAnyReduced();
+
     const [currentLocation, setCurrentLocation] = useState<string>("");
     const [tabs, setTabs] = useState<TabInterface[]>([]);
     const [windows, setWindows] = useState<WindowProps[]>([]);
@@ -197,9 +199,6 @@ export default function Home() {
         if (windowRef == null) {
             showBrowser();
 
-        } else {
-            windowRef.windowLogic.animateOpenWindow?.();
-
         }
 
         lastOpenedWindowRef.current = null;
@@ -325,8 +324,8 @@ export default function Home() {
 
             return updatedWindows;
         });
-        const pdfRef = windowRefs.current[2];
-        pdfRef?.windowLogic?.animateOpenWindow?.();
+        // const pdfRef = windowRefs.current[2];
+        // pdfRef?.windowLogic?.animateOpenWindow?.();
 
     }
 
@@ -562,6 +561,10 @@ export default function Home() {
         });
         putWindowOnTop(window_id);
 
+        const windowRef = windowRefs.current[window_id];
+
+        windowRef?.windowLogic?.animateOpenWindow?.(listOfReduced.includes(window_id));
+
         lastOpenedWindowRef.current = { id: window_id };
     }
 
@@ -627,9 +630,7 @@ export default function Home() {
 
     return (
         <PageLayout>
-            <IsAnyReducedProvider>
-                {homeTemplate()}
-            </IsAnyReducedProvider>
+            {homeTemplate()}
         </PageLayout>
     );
 }
