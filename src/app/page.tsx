@@ -63,10 +63,9 @@ export default function Home() {
                     break;
                 case "removeTab":
                     removeTab(payload);
+                    break;
                 case "showPDF":
                     showPDF();
-
-                    // openWindow(id);
                     break;
                 default:
                     break;
@@ -106,7 +105,7 @@ export default function Home() {
                 return updatedWindows;
             });
 
-        } else if (newTab == null) {
+        } else {
             const defaultWindows: WindowProps[] = [];
             defaultWindows.push(
                 {
@@ -122,8 +121,9 @@ export default function Home() {
             setWindows(defaultWindows);
 
             usedDefaultTabs.current = true;
-
-        } else {
+            return;
+        }
+        if (newTab != null) {
             const newActiveTab = tabs.length - 1;
             newTabIndex.current = newActiveTab;
             setWindows(prevWindows => {
@@ -324,9 +324,6 @@ export default function Home() {
 
             return updatedWindows;
         });
-        // const pdfRef = windowRefs.current[2];
-        // pdfRef?.windowLogic?.animateOpenWindow?.();
-
     }
 
     const showDesktopAnimation = (beforeHome: CSSRule, timeline: GSAPTimeline, startingDuration = 0, nextDuration = 0) => {
@@ -541,7 +538,9 @@ export default function Home() {
     const removeTab = (index: number) => {
         setTabs(prevTabs => {
             const updatedTabs = [...prevTabs];
+
             updatedTabs.splice(index, 1);
+
             return updatedTabs;
         });
     }

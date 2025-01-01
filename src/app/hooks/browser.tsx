@@ -37,17 +37,17 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
     const animatePortfolioPage = (delay: number) => {
         const timeline = gsap.timeline();
         timeline.from(".portfolio-container-group-title", {
-            duration: 1.2,
+            duration: 1,
             opacity: 0,
             x: 600,
-            stagger: 1.9,
+            stagger: 1.6,
         });
 
         gsap.from(".project", {
-            duration: .7,
+            duration: .4,
             opacity: 0,
             y: 100,
-            stagger: .5,
+            stagger: .3,
             ease: "sine.in"
         });
     }
