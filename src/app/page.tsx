@@ -36,7 +36,7 @@ export default function Home() {
     const [currentLocation, setCurrentLocation] = useState<string>("");
     const [tabs, setTabs] = useState<TabInterface[]>([]);
     const [windows, setWindows] = useState<WindowProps[]>([]);
-    const [newTab, setNewTab] = useState<TabInterface>();
+    const [newTab, setNewTab] = useState<TabInterface | null>();
     const [isBooting, setIsBooting] = useState<boolean>(true);
     const [isBooted, setIsBooted] = useState<boolean>(false);
 
@@ -405,6 +405,7 @@ export default function Home() {
             } else {
                 const newTabIndexFound = tabs.findIndex(tab => tab.title == newTab.title);
                 handleWindowAction(0, "switchTab", "browser", newTabIndexFound);
+                setNewTab(null);
             }
         }
     }, [newTab]);
@@ -549,13 +550,29 @@ export default function Home() {
         showBrowser();
     }
 
-    const openWindow = (window_id: number) => {
+    const openWindow = (window_id: number, tabName: string | null = null) => {
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
             const windowFound = updatedWindows.find(window => window.window_id == window_id)
+
             if (windowFound) {
                 windowFound.hide = false;
+
+                if (tabName != null) {
+                    const tabFound = windowFound.tabs?.find(tab => tab.title === tabName)
+
+                    if (tabFound != null) {
+                        setNewTab(tabFound);
+
+                    } else {
+                        const defaultTabs = getDefaultTabs();
+                        const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.title === tabName);
+
+                        setNewTab(defaultTabFound);
+                    }
+                }
             }
+
             return updatedWindows;
         });
         putWindowOnTop(window_id);
@@ -577,7 +594,7 @@ export default function Home() {
             case "openWindow":
                 const windowRef = windowRefs.current[payload];
                 if (windowRef) {
-                    openWindow(payload);
+                    openWindow(payload, "Portfolio");
                 } else {
                     switch (payload) {
                         case 0:

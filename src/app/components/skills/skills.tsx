@@ -44,6 +44,15 @@ export default function Skills({ }: SkillsProps) {
     }, []);
 
     useEffect(() => {
+        if (skillsGroups == null) {
+            return;
+        }
+
+        animateTree();
+
+    }, [skillsGroups]);
+
+    useEffect(() => {
         animateAdditions();
 
     }, [skillsGroupsFiltered]);
@@ -103,6 +112,18 @@ export default function Skills({ }: SkillsProps) {
 
 
     }, [searchFilter]);
+
+    const animateTree = () => {
+        const groups = Array.from(document.getElementsByClassName("skills-content-groups-group")).reverse();
+
+        gsap.to(groups, {
+            delay: .5,
+            duration: .2,
+            opacity: 1,
+            scale: 1,
+            stagger: .03,
+        });
+    }
 
     const animateDeletions = (groupsDeleted: string[], duration: number) => {
         groupsDeleted.forEach(groupDeleted => {
