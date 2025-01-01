@@ -639,8 +639,6 @@ export default function Home() {
                 const windowRef = windowRefs.current[id];
 
                 if (windowRef) {
-                    console.log("openWindow");
-
                     openWindow(id, name);
 
                 } else {

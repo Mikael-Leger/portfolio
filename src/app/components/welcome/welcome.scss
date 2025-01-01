@@ -2,7 +2,7 @@
 
 .welcome {
     @include flexAlignedAndCenteredByColumn;
-    gap: 50px;
+    gap: 100px;
 
     padding: 30px 0;
 
@@ -12,14 +12,22 @@
     }
 
     &-content {
-        @include flexAlignedAndCenteredByColumn;
-        gap: 30px;
+        @include flexCentered;
+        align-items: end;
+        gap: 100px;
+
+        .title {
+            width: 300px;
+            font-weight: 700;
+            font-size: 36px;
+        }
 
         &-description {
-            @include flexAlignedAndCenteredByColumn;
+            @include flexCenteredByColumn;
+            gap: 6px;
 
             &-paragraph {
-                @include flexAlignedAndCentered;
+                @include flexAligned;
 
                 &-link {
                     text-decoration: underline;
@@ -31,23 +39,84 @@
                 }
             }
         }
+    }
 
-        &-sections {
+    &-sections {
+        @include flexAlignedAndCentered;
+        gap: 50px;
+
+        &-section {
             @include flexAlignedAndCentered;
-            gap: 20px;
 
-            &-section {
-                @include flexAlignedAndCentered;
+            font-size: 1.5em;
+            margin: 5px;
+            width: 200px;
+            height: 50px;
+            position: relative;
+            z-index: 0;
 
-                font-size: 1.5em;
-                padding: 5px 10px;
-                border-radius: 10px;
-                background-color: var(--background-weightier);
+            cursor: pointer;
 
-                cursor: pointer;
+            &:before {
+                position: absolute;
+                content: "";
+                height: 110%;
+                width: 110%;
+                border-radius: 25px;
+                background-image: var(--btn-primary);
+                left: -5%;
+                top: -5%;
+                z-index: -1;
+            }
 
-                &:hover {
-                    filter: brightness(1.1);
+            &:hover {
+
+                .welcome-sections-section-container {
+                    background-color: transparent;
+                    transition: all 0.2s ease;
+
+                }
+
+                .welcome-sections-section-container-icon {
+                    left: 78%;
+                    transition: all 0.3s ease;
+                }
+            }
+
+            &-container {
+                @include flexAligned;
+                justify-content: end;
+                flex: 1;
+
+                position: relative;
+                padding: 0 10px;
+                background-color: var(--background);
+                border-radius: 50px;
+
+                &-name {
+                    @include flexAlignedAndCentered;
+                    flex: 1;
+                }
+
+                &-icon {
+                    @include flexAlignedAndCentered;
+                    position: absolute;
+                    left: -7px;
+
+                    &:before {
+                        content: "";
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 25px;
+                        background-image: var(--btn-primary);
+                        z-index: 0;
+                    }
+
+                    .logo-icon {
+                        position: absolute;
+
+                        filter: invert(100%);
+                    }
                 }
             }
         }

@@ -12,6 +12,30 @@ type WelcomeProps = {
 };
 
 export default function Welcome({ getDefaultTabs, handleAction, openWindow }: WelcomeProps) {
+    useEffect(() => {
+        const timeline = gsap.timeline();
+        timeline.fromTo(".title, .welcome-content-description", {
+            clipPath: "inset(100% 0 0 0)",
+            y: 100,
+        }, {
+            duration: .4,
+            clipPath: "inset(0% 0 0 0)",
+            y: 0,
+            stagger: .2,
+            ease: "power1.inOut"
+        })
+        timeline.fromTo(".welcome-sections-section", {
+            clipPath: "inset(100% 0 0 0)",
+            y: 100,
+        }, {
+            duration: .4,
+            clipPath: "inset(-5% -10px -10px)",
+            y: 0,
+            stagger: .1,
+            ease: "power1.inOut"
+        })
+    }, []);
+
     const goToTab = (tabTitle: string) => {
         const defaultTabs = getDefaultTabs();
         const newTab = defaultTabs.find(tab => tab.title == tabTitle);
@@ -38,31 +62,19 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
         <div className="welcome">
             <div className="welcome-header">
                 <Title text="Mikaël Léger" size="big" transform="upper" effect="shadow" />
-                <Title text="Full-Stack Developer" />
             </div>
             <div className="welcome-content">
+                <Title text="Full-Stack Developer Junior" />
                 <div className="welcome-content-description">
                     <div className="welcome-content-description-paragraph">
                         Welcome to my portfolio!
                     </div>
                     <div className="welcome-content-description-paragraph">
-                        <img className="logo-icon" src="/icons/earth.png" /> French developer based in Belgium
+                        French developer based in Belgium <img className="logo-icon" src="/icons/earth.png" />
                     </div>
                     <div className="welcome-content-description-paragraph">
-                        <img className="logo-icon" src="/icons/creativity.png" /> Passionate about web development and creativity
+                        Passionate about web development and creativity <img className="logo-icon" src="/icons/creativity.png" />
                     </div>
-                    <div className="welcome-content-description-paragraph">
-                        Feel free to explore and learn more about me below:
-                    </div>
-                </div>
-                <div className="welcome-content-sections">
-                    {mainSections.map(section => (
-                        <div className="welcome-content-sections-section" onClick={section.onClick} key={section.name}>
-                            {section.name}
-                        </div>
-                    ))}
-                </div>
-                <div className="welcome-content-description">
                     <div className="welcome-content-description-paragraph">
                         You can find me on <span className="welcome-content-description-paragraph-link blue-link"
                             onClick={() => window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank')}>
@@ -72,7 +84,24 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
                             here!
                         </span>
                     </div>
+                    <div className="welcome-content-description-paragraph">
+                        Feel free to explore and learn more about me below
+                    </div>
                 </div>
+            </div>
+            <div className="welcome-sections">
+                {mainSections.map(section => (
+                    <div className="welcome-sections-section" onClick={section.onClick} key={section.name}>
+                        <div className="welcome-sections-section-container">
+                            <div className="welcome-sections-section-container-icon">
+                                <img className="logo-icon" src="/icons/arrow_right.png" />
+                            </div>
+                            <div className="welcome-sections-section-container-name">
+                                {section.name}
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

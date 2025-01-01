@@ -114,6 +114,37 @@ export default function Skills({ }: SkillsProps) {
     }, [searchFilter]);
 
     const animateTree = () => {
+        const timeline = gsap.timeline();
+        timeline.fromTo(".skills-header", {
+            clipPath: "inset(100% 0 0 0)",
+            y: 100,
+        }, {
+            duration: .4,
+            clipPath: "inset(0% 0 0 0)",
+            y: 0,
+            stagger: .2,
+            ease: "power1.inOut"
+        })
+        const duration = timeline.totalDuration();
+        gsap.fromTo(".skills-content-search-input", {
+            x: -100,
+            opacity: 0
+        }, {
+            delay: duration,
+            duration: .4,
+            x: 0,
+            opacity: 1
+        })
+        gsap.fromTo(".skills-content-search-icon", {
+            x: 100,
+            opacity: 0
+        }, {
+            delay: duration,
+            duration: .4,
+            x: 0,
+            opacity: 1
+        })
+
         const groups = Array.from(document.getElementsByClassName("skills-content-groups-group")).reverse();
 
         gsap.to(groups, {
