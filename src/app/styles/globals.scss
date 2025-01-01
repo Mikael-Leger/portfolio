@@ -10,7 +10,7 @@
 }
 
 :root {
-    --background: #ebebeb;
+    --background: #f5f5f5;
     --background-weightier: #c3c3c3;
     --background-weightier-100: #d6d5d5;
     --background-node: #636363;
@@ -20,9 +20,11 @@
     --black: #000;
     --white: #fff;
     --purple: #a855f7;
-    --brightnessAdjust: 0.85;
+    --blue: #0b57d0;
+    --border-grey: rgba(161, 161, 161, .5);
     --bg-init: #222222;
     --bg-modal: #b6b4b4;
+    --bg-white: #f5f5f5;
     --bg-project-frontend: radial-gradient(ellipse at top right, #627fa1 33%, #4175b4);
     --bg-project-backend: radial-gradient(ellipse at top right, #613494 33%, #6c36aa);
     --bg-project-database: radial-gradient(ellipse at top right, #387526 33%, #4ca334);
@@ -31,6 +33,7 @@
     --bg-project-blockchain: radial-gradient(ellipse at top right, #625168 33%, #a665b9);
     --bg-project-graphic: radial-gradient(ellipse at top right, #7a4b4b 33%, #b63f3f);
     --bg-opacity: 1;
+    --brightnessAdjust: 0.85;
     --invert: invert(0%);
     --invert-grey: invert(50%);
 }

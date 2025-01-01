@@ -17,16 +17,34 @@ type DekstopProps = {
 export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultTabs, desktopOpenActions }: DekstopProps) {
     const shortcuts = [
         {
-            title: "Portfolio",
+            title: "Welcome Page",
             iconPath: "/browsers/edge.png",
             position: { top: 200, left: 200 },
-            onClick: () => desktopOpenActions("openWindow", 0)
+            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Welcome - Mikaël Léger" })
+        },
+        {
+            title: "Portfolio",
+            position: { top: 200, left: 350 },
+            iconPath: "/browsers/edge.png",
+            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Portfolio" })
+        },
+        {
+            title: "Skills",
+            iconPath: "/browsers/edge.png",
+            position: { top: 350, left: 200 },
+            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Skills" })
         },
         {
             title: "CV",
             iconPath: "/icons/pdf.png",
-            position: { top: 400, right: 200 },
-            onClick: () => desktopOpenActions("openWindow", 2)
+            position: { top: 100, right: 200 },
+            onClick: () => desktopOpenActions("openWindow", { id: 2 })
+        },
+        {
+            title: "Contact me",
+            iconPath: "/icons/mail.png",
+            position: { top: 500, right: 300 },
+            onClick: () => desktopOpenActions("openWindow", { id: 3 })
         }
     ];
 

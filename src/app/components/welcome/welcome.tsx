@@ -19,7 +19,7 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
         handleAction(0, "addTab", newTab);
     }
 
-    const sections = [
+    const mainSections = [
         {
             name: "Portfolio",
             onClick: () => goToTab("Portfolio")
@@ -30,7 +30,7 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
         },
         {
             name: "CV",
-            onClick: () => { handleAction(2, "showPDF") }
+            onClick: () => { handleAction(2, "openWindow") }
         },
     ];
 
@@ -49,21 +49,31 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
                         <img className="logo-icon" src="/icons/earth.png" /> French developer based in Belgium
                     </div>
                     <div className="welcome-content-description-paragraph">
-                        <img className="logo-icon" src="/icons/creativity.png" /> Passionate about web development and creativity (and purple color)
+                        <img className="logo-icon" src="/icons/creativity.png" /> Passionate about web development and creativity
                     </div>
                     <div className="welcome-content-description-paragraph">
                         Feel free to explore and learn more about me below:
                     </div>
                 </div>
                 <div className="welcome-content-sections">
-                    {sections.map(section => (
+                    {mainSections.map(section => (
                         <div className="welcome-content-sections-section" onClick={section.onClick} key={section.name}>
                             {section.name}
                         </div>
                     ))}
                 </div>
+                <div className="welcome-content-description">
+                    <div className="welcome-content-description-paragraph">
+                        You can find me on <span className="welcome-content-description-paragraph-link blue-link"
+                            onClick={() => window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank')}>
+                            LinkedIn
+                        </span> or message me directly <span className="welcome-content-description-paragraph-link"
+                            onClick={() => handleAction(3, "openWindow")}>
+                            here!
+                        </span>
+                    </div>
+                </div>
             </div>
-
         </div>
     );
 }

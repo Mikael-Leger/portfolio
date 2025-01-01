@@ -64,14 +64,23 @@ export default function Home() {
                 case "removeTab":
                     removeTab(payload);
                     break;
-                case "showPDF":
-                    showPDF();
+                case "openWindow":
+                    openWindow(id);
+                    break;
+                case "closeWindow":
+                    closeWindow(id);
                     break;
                 default:
                     break;
             }
-        } else if (action == "showPDF") {
-            addPDF();
+        } else if (action == "openWindow") {
+            if (id == 2) {
+                addPDF();
+
+            } else if (id == 3) {
+                addMail();
+
+            }
         } else {
             console.warn(`No ref found for window ${id}`);
         }
@@ -223,7 +232,14 @@ export default function Home() {
                     window_id: id,
                     type: "pdf",
                     zIndex: windowLogic.zIndex,
-                    onAction: (action: string, payload?: any) => handleAction(2, action, payload)
+                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
+                }
+            } else if (windowLogic.type == "mail") {
+                return {
+                    window_id: id,
+                    type: "mail",
+                    zIndex: windowLogic.zIndex,
+                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
             }
             return {
@@ -309,6 +325,33 @@ export default function Home() {
                 zIndex: 0,
                 onAction: (action: string, payload?: any) => handleAction(2, action, payload)
             });
+
+            return updatedWindows;
+        });
+    }
+
+    const addMail = () => {
+        lastUpdatedWindowRef.current = { id: 3 };
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            updatedWindows.push({
+                window_id: 3,
+                type: "mail",
+                zIndex: 0,
+                onAction: (action: string, payload?: any) => handleAction(3, action, payload)
+            });
+
+            return updatedWindows;
+        });
+    }
+
+    const showMail = () => {
+        lastUpdatedWindowRef.current = { id: 3 };
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const windowFound = updatedWindows.findIndex(window => window.window_id == 3);
+
+            updatedWindows[windowFound].hide = false;
 
             return updatedWindows;
         });
@@ -417,7 +460,7 @@ export default function Home() {
     const getDefaultTabs = (): TabInterface[] => ([
         {
             defaultTab: true,
-            logoPath: "/vercel.svg",
+            logoPath: "/icons/welcome.png",
             title: "Welcome - Mikaël Léger",
             url: `${currentLocation}home`,
             content: (
@@ -426,7 +469,7 @@ export default function Home() {
         },
         {
             defaultTab: true,
-            logoPath: "/vercel.svg",
+            logoPath: "/icons/portfolio.png",
             title: "Portfolio",
             url: `${currentLocation}portfolio`,
             content: (
@@ -435,7 +478,7 @@ export default function Home() {
         },
         {
             defaultTab: true,
-            logoPath: "/vercel.svg",
+            logoPath: "/icons/tree.png",
             title: "Skills",
             url: `${currentLocation}skills`,
             content: (
@@ -592,11 +635,16 @@ export default function Home() {
     const desktopOpenActions = (action: string, payload?: any) => {
         switch (action) {
             case "openWindow":
-                const windowRef = windowRefs.current[payload];
+                const { id, name } = payload;
+                const windowRef = windowRefs.current[id];
+
                 if (windowRef) {
-                    openWindow(payload, "Portfolio");
+                    console.log("openWindow");
+
+                    openWindow(id, name);
+
                 } else {
-                    switch (payload) {
+                    switch (id) {
                         case 0:
                             showBrowser();
                             break;
@@ -605,6 +653,9 @@ export default function Home() {
                             break;
                         case 2:
                             addPDF();
+                            break;
+                        case 3:
+                            addMail();
                             break;
                         default:
                             break;

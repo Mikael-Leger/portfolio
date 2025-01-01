@@ -117,7 +117,6 @@ export default function Skills({ }: SkillsProps) {
         const groups = Array.from(document.getElementsByClassName("skills-content-groups-group")).reverse();
 
         gsap.to(groups, {
-            delay: .5,
             duration: .2,
             opacity: 1,
             scale: 1,

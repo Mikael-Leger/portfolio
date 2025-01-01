@@ -35,6 +35,12 @@
         }
     }
 
+    &-mail {
+        .mail-content {
+            display: flex;
+        }
+    }
+
     &-header {
         width: 100%;
 

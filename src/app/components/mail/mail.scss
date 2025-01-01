@@ -1,0 +1,130 @@
+.mail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+
+    position: relative;
+    background-color: var(--bg-white);
+
+    &-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+
+        height: 100%;
+        padding: 20px;
+        color: var(--black);
+
+        >* {
+            width: 100%;
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 2px 7px;
+                border-radius: 5px;
+                background-color: var(--bg-white);
+                color: var(--black);
+                resize: none;
+
+                &:focus {
+                    outline-width: 0;
+                }
+            }
+        }
+
+        &-header {
+            font-weight: 600;
+            font-size: 1.2em;
+            color: var(--blue);
+        }
+
+        &-recipient {
+            &-name {
+                display: inline-block;
+                text-decoration: underline;
+            }
+        }
+
+        &-sender,
+        &-object {
+            border-bottom: 1px solid var(--border-grey);
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+
+        &-message {
+            flex: 1;
+
+            textarea {
+                height: 100%;
+            }
+        }
+
+        &-send {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+
+            height: 50px;
+
+            &-button {
+                padding: 8px 16px;
+                border-radius: 15px;
+                color: var(--white);
+                background-color: var(--blue);
+
+                text-transform: uppercase;
+
+                user-select: none;
+            }
+        }
+    }
+
+    &-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: absolute;
+        width: 100%;
+
+        &-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+
+            padding: 20px;
+            min-width: 300px;
+            min-height: 100px;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+
+            &-text {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+
+                &-icon {
+                    width: 30px;
+                }
+            }
+
+            &-options {
+                display: flex;
+                gap: 20px;
+
+                text-decoration: underline;
+
+                &-option {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

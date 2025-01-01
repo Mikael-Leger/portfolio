@@ -17,13 +17,15 @@ import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import UsernameContext from "@/app/contexts/username-context";
 import Favorites from "../favorites/favorites";
 import usePdf from "@/app/hooks/pdf";
+import useMail from "@/app/hooks/mail";
+import Mail from "../mail/mail";
 
 import "./window.scss";
 
 export type WindowProps =
 	| {
 		window_id: number;
-		type: "browser" | "command" | "pdf";
+		type: "browser" | "command" | "pdf" | "mail";
 		zIndex: number;
 		onAction: (action: string, payload?: any) => void;
 		tabs?: TabInterface[];
@@ -348,6 +350,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const pdfLogic = usePdf(animateCreateWindow, type, hide, windowIconPath, window_id);
 
+	const mailLogic = useMail(animateCreateWindow, type, hide, windowIconPath, window_id);
+
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
 			setWindowIconPath(browserLogic.browserIconPath);
@@ -357,6 +361,9 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 		} else if (pdfLogic && !pdfLogic.isNotPdf) {
 			setWindowIconPath("/icons/pdf.png");
+
+		} else if (mailLogic && !mailLogic.isNotMail) {
+			setWindowIconPath("/icons/mail.png");
 
 		}
 	}, [browserLogic, commandLogic, pdfLogic]);
@@ -488,6 +495,14 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 								</div>
 							</>
 						)}
+						{!mailLogic.isNotMail && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-text" >
+									Contact me
+								</div>
+							</>
+						)}
 					</div>
 					<div className="window-header-head-actions">
 						{
@@ -538,6 +553,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				!pdfLogic.isNotPdf && (
 					<div className="window-content pdf-content">
 						<iframe src="/pdf/CV_LEGER_Mikael.pdf" />
+					</div>
+				)
+			}
+			{
+				!mailLogic.isNotMail && (
+					<div className="window-content mail-content">
+						<Mail onAction={onAction} />
 					</div>
 				)
 			}
