@@ -7,6 +7,8 @@ interface Tabprops {
     title: string;
     active: boolean;
     index: number;
+    isMaximized: boolean;
+    isIncreasing: boolean;
     onclick: (index: number) => void;
     onAction: (action: string, payload?: any) => void;
 }
@@ -21,14 +23,19 @@ const TabDiv = styled.div<TabDivProps>`
     transition: background-color 0.3s ease;
 `;
 
-export default function Tab({ preferences, logoPath, title, active, index, onclick, onAction }: Tabprops) {
+export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onclick, onAction }: Tabprops) {
     const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
         event.stopPropagation();
         onAction("removeTab", index);
     }
 
     return (
-        <TabDiv $active={active} $preferences={preferences} className={`window-header-head-left-tabs-tab ${active ? 'active' : ''}`} onClick={() => onclick(index)}>
+        <TabDiv
+            $active={active}
+            $preferences={preferences}
+            className={`window-header-head-left-tabs-tab ${active ? 'active' : ''}`}
+            onClick={() => onclick(index)}
+            style={{ width: isMaximized && !isIncreasing ? "230px" : "100px" }}>
             <div className="window-header-head-left-tabs-tab-header">
                 <img className="window-header-head-left-tabs-tab-header-logo logo-icon" src={logoPath} />
                 <div className="window-header-head-left-tabs-tab-header-text">
@@ -43,7 +50,9 @@ export default function Tab({ preferences, logoPath, title, active, index, oncli
                     onClick={(e) => removeTabWithoutPropagation(e, index)} />
             )}
             {active && (
-                <div className="window-header-head-left-tabs-tab-neck" style={{ "backgroundColor": preferences?.color?.backgroundShadedColor }} />
+                <div
+                    className="window-header-head-left-tabs-tab-neck"
+                    style={{ "backgroundColor": preferences?.color?.backgroundShadedColor, width: isMaximized ? "230px" : "100px" }} />
             )}
         </TabDiv>
     );

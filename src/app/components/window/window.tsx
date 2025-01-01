@@ -58,6 +58,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	// const [window_id, setId] = useState<number>();
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
 	const [isMaximized, setIsMaximized] = useState<boolean>(true);
+	const [isMaximizing, setIsMaximizing] = useState<boolean>(false);
 	const [isReducing, setIsReducing] = useState<boolean>(false);
 	const [isReduced, setIsReduced] = useState<boolean>(false);
 	const [isIncreasing, setIsIncreasing] = useState<boolean>(false);
@@ -172,6 +173,39 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			}
 		}
 	}, [windowDetails]);
+
+	useEffect(() => {
+		if (windowRef && windowRef.current) {
+			const timeline = gsap.timeline();
+
+
+			if (isMaximizing) {
+				timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
+					duration: .2,
+					left: 0,
+					top: 0,
+					width: '100vw',
+					minHeight: '100vh',
+					ease: "sine.in"
+				});
+
+				setTimeout(() => {
+					setIsMaximizing(false);
+					setIsMaximized(true);
+				}, timeline.totalDuration() * 1000);
+			} else {
+				removeFromList(window_id);
+				timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
+					duration: .2,
+					left: `${windowDetails.offsetX}px`,
+					top: `${windowDetails.offsetY}px`,
+					width: windowDetails.width,
+					minHeight: windowDetails.height,
+					ease: "sine.in"
+				});
+			}
+		}
+	}, [isMaximizing]);
 
 	useEffect(() => {
 		if (windowRef && windowRef.current) {
@@ -374,7 +408,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		},
 		{
 			name: "maximize",
-			onClick: () => setIsMaximized(true),
+			onClick: () => setIsMaximizing(true),
 			hide: isMaximized
 		},
 		{
@@ -419,7 +453,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 								<div className="window-header-head-left-tabs">
 									{tabs.map((tabValue, idx) => {
 										if (tabValue.logoPath == null) {
-
+											return;
 										}
 										return (
 											<Tab
@@ -430,6 +464,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 												index={idx}
 												onclick={() => browserLogic.switchTab?.(idx)}
 												onAction={onActionWindowCheck}
+												isMaximized={isMaximized}
+												isIncreasing={isIncreasing}
 												key={idx} />
 										);
 									})}
