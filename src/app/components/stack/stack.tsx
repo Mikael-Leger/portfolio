@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
 import { useIsAnyReduced } from "@/app/contexts/is-reduced";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./stack.scss";
 
@@ -11,6 +12,7 @@ type StackProps = {
 
 export default function Stack({ groupsOfItems }: StackProps) {
     const { isAnyReduced } = useIsAnyReduced();
+    const { isMobile } = useIsMobile();
 
     const openTab = (url: string) => {
         if (isAnyReduced) {
@@ -23,7 +25,10 @@ export default function Stack({ groupsOfItems }: StackProps) {
             {groupsOfItems.map(groupOfItems => {
                 const { groupName } = groupOfItems[0];
                 return (
-                    <div className={`stack-group group-${groupName}`} key={groupName}>
+                    <div
+                        className={`stack-group group-${groupName}`}
+                        // style={{ minWidth: isMobile ? '50px' : '100px' }}
+                        key={groupName}>
                         <div className="stack-group-name">
                             {groupName}
                         </div>

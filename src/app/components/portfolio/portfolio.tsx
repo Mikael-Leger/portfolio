@@ -109,15 +109,15 @@ export default function Portfolio({ addTab }: PortfolioProps) {
 
     const groupsOfProjects = [
         {
-            title: "Projets personnels",
+            title: "Personal projects",
             projects: personalProjects
         },
         {
-            title: "Projets professionnels",
+            title: "Professional projects",
             projects: professionalProjects
         },
         {
-            title: "Projets scolaires",
+            title: "School projects",
             projects: schoolProjects
         },
     ];

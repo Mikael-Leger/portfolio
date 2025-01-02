@@ -6,6 +6,7 @@ import Stack from "../stack/stack";
 import Status from "@/app/interfaces/status.interface";
 import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import TabInterface from "@/app/interfaces/tab.interface";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./modal.scss";
 
@@ -18,6 +19,7 @@ type ModalProps = {
 
 export default function Modal({ modalData, addTab, showModal, ref }: ModalProps) {
     const { isAnyReduced } = useIsAnyReduced();
+    const { isMobile } = useIsMobile();
 
     if (!modalData.isVisible) return;
 
@@ -60,14 +62,17 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
     const modalTemplate = () => {
         if (modalData.item) {
             return (
-                <div className="modal-container" ref={ref}>
+                <div
+                    className="modal-container"
+                    style={{ width: isMobile ? '88vw' : '60vw', height: isMobile ? '80vh' : '70vh', padding: isMobile ? '36px' : '20px' }}
+                    ref={ref}>
                     <div className="modal-container-header">
                         <div className="modal-container-header-title">
                             {modalData.item.name}
                         </div>
                         {modalData.item.status && statusTemplate(modalData.item.status)}
                     </div>
-                    <div className="modal-container-content">
+                    <div className="modal-container-content" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
                         <div className="modal-container-content-details">
                             <div
                                 className={`modal-container-content-details-img ${modalData.item.url ? 'link-working' : ''}`}

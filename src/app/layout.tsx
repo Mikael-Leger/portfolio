@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { IPProvider } from "@/app/contexts/ip-context";
 import { PreferencesProvider } from "./contexts/preferences-context";
+import { IsMobileProvider } from "./contexts/mobile-context";
 import { UsernameProvider } from "./contexts/username-context";
 import { IsAnyReducedProvider } from "./contexts/is-reduced";
 
@@ -30,11 +31,13 @@ export default function RootLayout({
 			>
 				<IPProvider>
 					<PreferencesProvider>
-						<UsernameProvider>
-							<IsAnyReducedProvider>
-								{children}
-							</IsAnyReducedProvider>
-						</UsernameProvider>
+						<IsMobileProvider>
+							<UsernameProvider>
+								<IsAnyReducedProvider>
+									{children}
+								</IsAnyReducedProvider>
+							</UsernameProvider>
+						</IsMobileProvider>
 					</PreferencesProvider>
 				</IPProvider>
 			</body>

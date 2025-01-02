@@ -1,5 +1,6 @@
 import Preferences from "@/app/interfaces/preferences.interface";
 import styled from "styled-components";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 interface Tabprops {
     preferences: Preferences;
@@ -24,6 +25,8 @@ const TabDiv = styled.div<TabDivProps>`
 `;
 
 export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onclick, onAction }: Tabprops) {
+    const { isMobile } = useIsMobile();
+
     const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
         event.stopPropagation();
         onAction("removeTab", index);
@@ -35,14 +38,14 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             $preferences={preferences}
             className={`window-header-head-left-tabs-tab ${active ? 'active' : ''}`}
             onClick={() => onclick(index)}
-            style={{ width: isMaximized && !isIncreasing ? "230px" : "100px" }}>
+            style={{ width: isMobile ? "60px" : (isMaximized && !isIncreasing ? "230px" : "100px") }}>
             <div className="window-header-head-left-tabs-tab-header">
                 <img className="window-header-head-left-tabs-tab-header-logo logo-icon" src={logoPath} />
                 <div className="window-header-head-left-tabs-tab-header-text">
                     {title}
                 </div>
             </div>
-            {index != 0 && (
+            {index != 0 && !isMobile && (
                 <img
                     className="window-header-head-left-tabs-tab-close logo-icon"
                     src="/icons/close_small.png"
@@ -52,7 +55,10 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             {active && (
                 <div
                     className="window-header-head-left-tabs-tab-neck"
-                    style={{ "backgroundColor": preferences?.color?.backgroundShadedColor, width: isMaximized ? "230px" : "100px" }} />
+                    style={{
+                        "backgroundColor": preferences?.color?.backgroundShadedColor,
+                        width: isMobile ? "60px" : (isMaximized && !isIncreasing ? "230px" : "100px")
+                    }} />
             )}
         </TabDiv>
     );
