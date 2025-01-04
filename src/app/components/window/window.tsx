@@ -19,6 +19,7 @@ import Favorites from "../favorites/favorites";
 import usePdf from "@/app/hooks/pdf";
 import useMail from "@/app/hooks/mail";
 import Mail from "../mail/mail";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./window.scss";
 
@@ -76,6 +77,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		initialOffsetY: 0
 	});
 	const { addToList, removeFromList } = useIsAnyReduced();
+	const { isMobile } = useIsMobile();
 
 	const windowRef = useRef<HTMLDivElement>(null);
 
@@ -411,7 +413,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			onClick: () => {
 				setIsMaximized(false)
 			},
-			hide: !isMaximized || type == "pdf"
+			hide: isMobile || !isMaximized || type == "pdf"
 		},
 		{
 			name: "maximize",
@@ -452,12 +454,12 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				<div
 					className="window-header-head"
 					onMouseDown={handleMouseDown}
-					style={{ "backgroundColor": preferences.color?.backgroundColor }}>
+					style={{ backgroundColor: preferences.color?.backgroundColor, height: isMobile ? "68px" : "34px" }}>
 					<div className="window-header-head-left">
 						{!browserLogic.isNotBrowser && browserLogic.switchTab && tabs && (
 							<>
 								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
-								<div className="window-header-head-left-tabs">
+								<div className="window-header-head-left-tabs" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
 									{tabs.map((tabValue, idx) => {
 										if (tabValue.logoPath == null) {
 											return;

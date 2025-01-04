@@ -2,6 +2,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Title from "../title/title";
 import TabInterface from "@/app/interfaces/tab.interface";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./welcome.scss";
 
@@ -12,6 +13,8 @@ type WelcomeProps = {
 };
 
 export default function Welcome({ getDefaultTabs, handleAction, openWindow }: WelcomeProps) {
+    const { isMobile } = useIsMobile();
+
     useEffect(() => {
         const timeline = gsap.timeline();
         timeline.fromTo(".title, .welcome-content-description", {
@@ -63,11 +66,11 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
     ];
 
     return (
-        <div className="welcome">
+        <div className="welcome" style={{ gap: isMobile ? "50px" : "100px" }}>
             <div className="welcome-header">
                 <Title text="Mikaël Léger" size="big" transform="upper" effect="shadow" />
             </div>
-            <div className="welcome-content">
+            <div className="welcome-content" style={{ flexDirection: isMobile ? "column" : "row" }}>
                 <Title text="Full-Stack Developer Junior" />
                 <div className="welcome-content-description">
                     <div className="welcome-content-description-paragraph">
@@ -93,7 +96,7 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
                     </div>
                 </div>
             </div>
-            <div className="welcome-sections">
+            <div className="welcome-sections" style={{ scale: isMobile ? ".8" : "1" }}>
                 {mainSections.map(section => (
                     <div className="welcome-sections-section" onClick={section.onClick} key={section.name}>
                         <div className="welcome-sections-section-container">

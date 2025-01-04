@@ -1,5 +1,6 @@
 import Preferences from "@/app/interfaces/preferences.interface";
 import styled from "styled-components";
+
 import { useIsMobile } from "@/app/contexts/mobile-context";
 
 interface Tabprops {
@@ -38,7 +39,7 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             $preferences={preferences}
             className={`window-header-head-left-tabs-tab ${active ? 'active' : ''}`}
             onClick={() => onclick(index)}
-            style={{ width: isMobile ? "60px" : (isMaximized && !isIncreasing ? "230px" : "100px") }}>
+            style={{ width: (!isMobile && isMaximized && !isIncreasing ? "230px" : "100px") }}>
             <div className="window-header-head-left-tabs-tab-header">
                 <img className="window-header-head-left-tabs-tab-header-logo logo-icon" src={logoPath} />
                 <div className="window-header-head-left-tabs-tab-header-text">
@@ -52,12 +53,12 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
                     style={{ filter: preferences?.color?.textColor == 'white' ? 'invert(100%)' : '' }}
                     onClick={(e) => removeTabWithoutPropagation(e, index)} />
             )}
-            {active && (
+            {active && !isMobile && (
                 <div
                     className="window-header-head-left-tabs-tab-neck"
                     style={{
                         "backgroundColor": preferences?.color?.backgroundShadedColor,
-                        width: isMobile ? "60px" : (isMaximized && !isIncreasing ? "230px" : "100px")
+                        width: (isMaximized && !isIncreasing ? "230px" : "100px")
                     }} />
             )}
         </TabDiv>

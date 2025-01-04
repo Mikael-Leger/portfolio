@@ -14,7 +14,7 @@
     &-content {
         @include flexCentered;
         align-items: end;
-        gap: 100px;
+        gap: 40px 100px;
 
         .title {
             width: 300px;
@@ -39,6 +39,7 @@
 
     &-sections {
         @include flexAlignedAndCentered;
+        flex-wrap: wrap;
         gap: 50px;
 
         &-section {
