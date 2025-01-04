@@ -64,7 +64,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
             return (
                 <div
                     className="modal-container"
-                    style={{ width: isMobile ? '88vw' : '60vw', height: isMobile ? '80vh' : '70vh', padding: isMobile ? '36px' : '20px' }}
+                    style={{ width: isMobile ? '88vw' : '60vw', maxHeight: isMobile ? '69vh' : '', padding: isMobile ? '36px' : '20px' }}
                     ref={ref}>
                     <div className="modal-container-header">
                         <div className="modal-container-header-title">
