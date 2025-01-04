@@ -56,6 +56,10 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
             name: "CV",
             onClick: () => { handleAction(2, "openWindow") }
         },
+        {
+            name: "Contact",
+            onClick: () => { handleAction(3, "openWindow") }
+        },
     ];
 
     return (
