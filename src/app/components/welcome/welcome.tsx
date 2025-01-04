@@ -27,14 +27,48 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
             stagger: .2,
             ease: "power1.inOut"
         })
-        timeline.fromTo(".welcome-sections-section", {
-            clipPath: "inset(100% 0 0 0)",
-            y: 100,
+        let sectionsLeft: HTMLElement[] = [];
+        let sectionsRight: HTMLElement[] = [];
+
+        const leftOrders = isMobile ? [1, 3] : [1, 2];
+        const rightOrders = isMobile ? [2, 4] : [3, 4];
+
+        const items = document.querySelectorAll('.welcome-sections-section') as NodeListOf<HTMLElement>;
+        items.forEach((item: HTMLElement) => {
+            const order = parseInt(window.getComputedStyle(item).order, 10);
+
+            if (leftOrders.includes(order)) {
+                sectionsLeft.push(item);
+            } else if (rightOrders.includes(order)) {
+                sectionsRight.push(item);
+            }
+        });
+
+        const duration = timeline.totalDuration();
+
+        const sectionsLeftOrder = isMobile ? sectionsLeft : sectionsLeft.reverse();
+        gsap.fromTo(sectionsLeftOrder, {
+            x: -400,
+            opacity: 0
         }, {
-            duration: .4,
-            clipPath: "inset(-5% -10px -10px)",
-            y: 0,
-            stagger: .1,
+            delay: duration,
+            duration: .7,
+            x: 0,
+            opacity: 1,
+            stagger: .5,
+            ease: "power1.inOut"
+        })
+
+        const sectionsRightOrder = sectionsRight;
+        gsap.fromTo(sectionsRightOrder, {
+            x: 400,
+            opacity: 0
+        }, {
+            delay: duration,
+            duration: .7,
+            x: 0,
+            opacity: 1,
+            stagger: .5,
             ease: "power1.inOut"
         })
     }, []);
@@ -49,19 +83,23 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
     const mainSections = [
         {
             name: "Portfolio",
-            onClick: () => goToTab("Portfolio")
+            onClick: () => goToTab("Portfolio"),
+            order: 1
         },
         {
             name: "Skills",
-            onClick: () => goToTab("Skills")
+            onClick: () => goToTab("Skills"),
+            order: isMobile ? 3 : 2
         },
         {
             name: "CV",
-            onClick: () => { handleAction(2, "openWindow") }
+            onClick: () => { handleAction(2, "openWindow") },
+            order: isMobile ? 2 : 3
         },
         {
             name: "Contact",
-            onClick: () => { handleAction(3, "openWindow") }
+            onClick: () => { handleAction(3, "openWindow") },
+            order: 4
         },
     ];
 
@@ -98,7 +136,11 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
             </div>
             <div className="welcome-sections" style={{ scale: isMobile ? ".8" : "1" }}>
                 {mainSections.map(section => (
-                    <div className="welcome-sections-section" onClick={section.onClick} key={section.name}>
+                    <div
+                        className="welcome-sections-section"
+                        onClick={section.onClick}
+                        style={{ order: section.order }}
+                        key={section.name}>
                         <div className="welcome-sections-section-container">
                             <div className="welcome-sections-section-container-icon">
                                 <img className="logo-icon" src="/icons/arrow_right.png" />
