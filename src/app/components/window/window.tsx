@@ -554,7 +554,16 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			{
 				!pdfLogic.isNotPdf && (
 					<div className="window-content pdf-content">
-						<iframe src="/pdf/CV_LEGER_Mikael.pdf" />
+						<object data="/pdf/CV_LEGER_Mikael.pdf" type="application/pdf">
+							<div className="pdf-content-error">
+								<div className="pdf-content-error-text">
+									Your browser has some issues to visualize this PDF
+								</div>
+								<div className="pdf-content-error-text">
+									<a className="pdf-content-error-text-link" href="/pdf/CV_LEGER_Mikael.pdf" download="CV_LEGER_Mikael.pdf">Download my CV here</a>
+								</div>
+							</div>
+						</object>
 					</div>
 				)
 			}
