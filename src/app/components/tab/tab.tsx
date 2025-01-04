@@ -11,7 +11,7 @@ interface Tabprops {
     index: number;
     isMaximized: boolean;
     isIncreasing: boolean;
-    onclick: (index: number) => void;
+    onClick: (index: number) => void;
     onAction: (action: string, payload?: any) => void;
 }
 
@@ -25,7 +25,7 @@ const TabDiv = styled.div<TabDivProps>`
     transition: background-color 0.3s ease;
 `;
 
-export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onclick, onAction }: Tabprops) {
+export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onClick, onAction }: Tabprops) {
     const { isMobile } = useIsMobile();
 
     const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
@@ -38,7 +38,7 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             $active={active}
             $preferences={preferences}
             className={`window-header-head-left-tabs-tab ${active ? 'active' : ''}`}
-            onClick={() => onclick(index)}
+            onClick={() => onClick(index)}
             style={{ width: (!isMobile && isMaximized && !isIncreasing ? "230px" : "100px") }}>
             <div className="window-header-head-left-tabs-tab-header">
                 <img className="window-header-head-left-tabs-tab-header-logo logo-icon" src={logoPath} />

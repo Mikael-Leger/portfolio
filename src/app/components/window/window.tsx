@@ -442,6 +442,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		onAction(action, payload);
 	}
 
+	const onTabClick = (index: number) => {
+		const selection = window.getSelection();
+		if (selection) {
+			selection.removeAllRanges();
+		}
+
+		browserLogic.switchTab?.(index)
+	}
+
 	return (
 		<WindowDiv
 			className={`window window-${type} window-${type}-${window_id}`}
@@ -471,7 +480,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 												title={tabValue.title}
 												active={browserLogic.activeTab == idx}
 												index={idx}
-												onclick={() => browserLogic.switchTab?.(idx)}
+												onClick={() => onTabClick(idx)}
 												onAction={onActionWindowCheck}
 												isMaximized={isMaximized}
 												isIncreasing={isIncreasing}
