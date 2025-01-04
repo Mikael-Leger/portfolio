@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./task-bar.scss";
 
@@ -6,6 +7,8 @@ type TaskBarProps = {
 };
 
 export default function TaskBar({ }: TaskBarProps) {
+    const { isMobile } = useIsMobile();
+
     const restartWebsiteAnimations = () => {
         localStorage.removeItem('first-animation');
         localStorage.removeItem('active-tab');
@@ -14,12 +17,14 @@ export default function TaskBar({ }: TaskBarProps) {
     }
 
     return (
-        <div className="task-bar">
+        <div className="task-bar" style={{ padding: isMobile ? "0 20px" : "0 40px" }}>
             <div className="task-bar-restart" onClick={restartWebsiteAnimations}>
                 <img className="task-bar-restart-img" src="/icons/restart.png" />
-                <div className="task-bar-restart-button">
-                    Restart
-                </div>
+                {!isMobile && (
+                    <div className="task-bar-restart-button">
+                        Restart
+                    </div>
+                )}
             </div>
             <div className="task-bar-tabs">
             </div>
