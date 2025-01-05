@@ -1,0 +1,95 @@
+// .parallax {
+//     overflow: hidden;
+//     width: 100%;
+
+//     &-inner {
+//         height: 110vh;
+//         width: 100%;
+//         position: relative;
+
+//         img {
+//             position: absolute;
+//         }
+
+//         .moutain-1,
+//         .moutain-2,
+//         .moutain-3 {
+//             width: 100%;
+//             bottom: 0;
+//             z-index: 3;
+//         }
+
+//         .sun {
+//             top: 70%;
+//             left: 50%;
+//             transform: translate(-50%, -50%);
+//             width: 40%;
+//         }
+//     }
+// }
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primaryColor: #282a57;
+    --secondaryColor: #e4e4e4;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+}
+
+.parallax-outer {
+    overflow: hidden;
+    width: 100%;
+}
+
+.parallax {
+    height: 110vh;
+    width: 100%;
+    position: relative;
+}
+
+.parallax img {
+    position: absolute;
+}
+
+
+.mountain-3,
+.mountain-2,
+.mountain-1 {
+    width: 100%;
+    bottom: 0;
+    z-index: 3;
+}
+
+.mountain-2 {
+    bottom: 20px;
+    z-index: 2;
+}
+
+.mountain-1 {
+    bottom: 40px;
+    z-index: 1;
+}
+
+.sun {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+}
+
+.stars {
+    top: -550px;
+    left: 0;
+    width: 100%;
+}

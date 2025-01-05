@@ -7,6 +7,7 @@ import Shortcut from "../shortcut/shortcut";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./dekstop.scss";
+import Parallax from "../parallax/parallax";
 
 type DekstopProps = {
     windows: WindowProps[];

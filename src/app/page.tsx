@@ -20,6 +20,7 @@ import Dekstop from "./components/desktop/dekstop";
 import { useIsAnyReduced } from "./contexts/is-reduced";
 
 import "./home.scss";
+import Parallax from "./components/parallax/parallax";
 
 gsap.registerPlugin(CSSRulePlugin);
 
@@ -452,11 +453,6 @@ export default function Home() {
             }
         }
     }, [newTab]);
-
-    if (currentLocation == null) {
-        return <Loading />;
-    }
-
     const getDefaultTabs = (): TabInterface[] => ([
         {
             defaultTab: true,
@@ -692,6 +688,23 @@ export default function Home() {
             </div>
         )
     }
+
+    if (currentLocation == null) {
+        return <Loading />;
+    }
+
+    // return (
+    //     <PageLayout>
+    //         <div className="home">
+    //             <div className={`window window-browser window-browser-0`} style={{ opacity: 1, width: '80vw' }}>
+    //                 <Parallax children={<div></div>} />
+    //             </div>
+    //             {/* <div className="test">
+    //                 <Parallax children={<div></div>} />
+    //             </div> */}
+    //         </div>
+    //     </PageLayout >
+    // )
 
     return (
         <PageLayout>

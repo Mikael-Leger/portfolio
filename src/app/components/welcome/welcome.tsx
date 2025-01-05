@@ -1,8 +1,11 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+
 import Title from "../title/title";
 import TabInterface from "@/app/interfaces/tab.interface";
+import Gallery from "../parallax/parallax";
 import { useIsMobile } from "@/app/contexts/mobile-context";
+import Parallax from "../parallax/parallax";
 
 import "./welcome.scss";
 
@@ -15,62 +18,80 @@ type WelcomeProps = {
 export default function Welcome({ getDefaultTabs, handleAction, openWindow }: WelcomeProps) {
     const { isMobile } = useIsMobile();
 
+    const timeline = gsap.timeline();
+
     useEffect(() => {
-        const timeline = gsap.timeline();
-        timeline.fromTo(".title, .welcome-content-description", {
-            clipPath: "inset(100% 0 0 0)",
-            y: 100,
-        }, {
-            duration: .4,
-            clipPath: "inset(0% 0 0 0)",
-            y: 0,
-            stagger: .2,
-            ease: "power1.inOut"
-        })
-        let sectionsLeft: HTMLElement[] = [];
-        let sectionsRight: HTMLElement[] = [];
+        // timeline.to('.welcome-content-description', {
+        //     scrollTrigger: {
+        //         trigger: '.welcome-content-description',
+        //         start: 'top 50%'
+        //     }, // start the animation when ".box" enters the viewport (once)
+        //     duration: 1,
+        //     y: 500
+        // });
 
-        const leftOrders = isMobile ? [1, 3] : [1, 2];
-        const rightOrders = isMobile ? [2, 4] : [3, 4];
 
-        const items = document.querySelectorAll('.welcome-sections-section') as NodeListOf<HTMLElement>;
-        items.forEach((item: HTMLElement) => {
-            const order = parseInt(window.getComputedStyle(item).order, 10);
+        // timeline.pause();
+        // timeline.to(".aaa", {
+        //     duration: 1,
+        //     y: 0,
+        //     ease: "power4.inOut"
+        // });
 
-            if (leftOrders.includes(order)) {
-                sectionsLeft.push(item);
-            } else if (rightOrders.includes(order)) {
-                sectionsRight.push(item);
-            }
-        });
+        // timeline.fromTo(".title, .welcome-content-description", {
+        //     clipPath: "inset(100% 0 0 0)",
+        //     y: 100,
+        // }, {
+        //     duration: .4,
+        //     clipPath: "inset(0% 0 0 0)",
+        //     y: 0,
+        //     stagger: .2,
+        //     ease: "power1.inOut"
+        // })
+        // let sectionsLeft: HTMLElement[] = [];
+        // let sectionsRight: HTMLElement[] = [];
 
-        const duration = timeline.totalDuration();
+        // const leftOrders = isMobile ? [1, 3] : [1, 2];
+        // const rightOrders = isMobile ? [2, 4] : [3, 4];
 
-        const sectionsLeftOrder = isMobile ? sectionsLeft : sectionsLeft.reverse();
-        gsap.fromTo(sectionsLeftOrder, {
-            x: -400,
-            opacity: 0
-        }, {
-            delay: duration,
-            duration: .7,
-            x: 0,
-            opacity: 1,
-            stagger: .5,
-            ease: "power1.inOut"
-        })
+        // const items = document.querySelectorAll('.welcome-sections-section') as NodeListOf<HTMLElement>;
+        // items.forEach((item: HTMLElement) => {
+        //     const order = parseInt(window.getComputedStyle(item).order, 10);
 
-        const sectionsRightOrder = sectionsRight;
-        gsap.fromTo(sectionsRightOrder, {
-            x: 400,
-            opacity: 0
-        }, {
-            delay: duration,
-            duration: .7,
-            x: 0,
-            opacity: 1,
-            stagger: .5,
-            ease: "power1.inOut"
-        })
+        //     if (leftOrders.includes(order)) {
+        //         sectionsLeft.push(item);
+        //     } else if (rightOrders.includes(order)) {
+        //         sectionsRight.push(item);
+        //     }
+        // });
+
+        // const duration = timeline.totalDuration();
+
+        // const sectionsLeftOrder = isMobile ? sectionsLeft : sectionsLeft.reverse();
+        // gsap.fromTo(sectionsLeftOrder, {
+        //     x: -400,
+        //     opacity: 0
+        // }, {
+        //     delay: duration,
+        //     duration: .7,
+        //     x: 0,
+        //     opacity: 1,
+        //     stagger: .5,
+        //     ease: "power1.inOut"
+        // })
+
+        // const sectionsRightOrder = sectionsRight;
+        // gsap.fromTo(sectionsRightOrder, {
+        //     x: 400,
+        //     opacity: 0
+        // }, {
+        //     delay: duration,
+        //     duration: .7,
+        //     x: 0,
+        //     opacity: 1,
+        //     stagger: .5,
+        //     ease: "power1.inOut"
+        // })
     }, []);
 
     const goToTab = (tabTitle: string) => {
@@ -104,16 +125,17 @@ export default function Welcome({ getDefaultTabs, handleAction, openWindow }: We
     ];
 
     return (
-        <div className="welcome" style={{ gap: isMobile ? "50px" : "100px" }}>
+        <div className="welcome" style={{ gap: isMobile ? "50px" : "300px" }}>
             <div className="welcome-header">
+                <Title text="I am" size="small" />
                 <Title text="Mikaël Léger" size="big" transform="upper" effect="shadow" />
+                <Title text="Full-Stack Developer Junior" size="small" />
             </div>
-            <div className="welcome-content" style={{ flexDirection: isMobile ? "column" : "row" }}>
-                <Title text="Full-Stack Developer Junior" />
+            <div className="welcome-content">
+                <div className="welcome-content-section">
+                    <Title text="Welcome to my portfolio!" size="medium" />
+                </div>
                 <div className="welcome-content-description">
-                    <div className="welcome-content-description-paragraph">
-                        Welcome to my portfolio!
-                    </div>
                     <div className="welcome-content-description-paragraph">
                         French developer based in Belgium <img className="logo-icon" src="/icons/earth.png" />
                     </div>

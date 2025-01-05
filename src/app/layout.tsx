@@ -6,6 +6,7 @@ import { PreferencesProvider } from "./contexts/preferences-context";
 import { IsMobileProvider } from "./contexts/mobile-context";
 import { UsernameProvider } from "./contexts/username-context";
 import { IsAnyReducedProvider } from "./contexts/is-reduced";
+import Parallax from "./components/parallax/parallax";
 
 import "./styles/globals.scss";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
 						<IsMobileProvider>
 							<UsernameProvider>
 								<IsAnyReducedProvider>
+									{/* <Parallax children={<div></div>} /> */}
 									{children}
 								</IsAnyReducedProvider>
 							</UsernameProvider>

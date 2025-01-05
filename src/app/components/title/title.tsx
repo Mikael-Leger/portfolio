@@ -4,7 +4,7 @@ import "./title.scss";
 
 type TitleProps = {
     text: string;
-    size?: "big" | "normal";
+    size?: "big" | "medium" | "small" | "normal";
     effect?: "neon" | "shadow" | "gradient";
     transform?: "upper";
     color?: string;

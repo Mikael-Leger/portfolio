@@ -13,7 +13,7 @@
     opacity: 0;
 
     &-browser {
-        height: 69vh;
+        // height: 69vh;
     }
 
     &-command {
@@ -216,7 +216,7 @@
             color: var(--color);
 
             position: relative;
-            overflow: hidden;
+            // overflow: hidden;
 
             &.special-bg {
                 &:before {
@@ -239,6 +239,10 @@
                 height: 100%;
                 width: 100%;
             }
+        }
+
+        &.scrollable-content {
+            overflow-y: scroll;
         }
     }
 

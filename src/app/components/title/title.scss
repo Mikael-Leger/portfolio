@@ -6,8 +6,18 @@
         text-transform: uppercase;
     }
 
+    &-small {
+        font-size: 32px;
+        font-weight: 500;
+    }
+
+    &-medium {
+        font-size: 50px;
+        font-weight: 500;
+    }
+
     &-big {
-        font-size: 54px;
+        font-size: 78px;
         font-weight: 700;
     }
 

@@ -1,10 +1,11 @@
 @import "@/app/styles/_mixins";
 
 .welcome {
-    @include flexAlignedAndCenteredByColumn;
-    gap: 100px;
+    // @include flexAlignedAndCenteredByColumn;
 
-    padding: 30px 0;
+    // padding: 150px 0;
+
+    // overflow: hidden;
 
     &-header {
         @include flexAlignedAndCenteredByColumn;
@@ -12,15 +13,9 @@
     }
 
     &-content {
-        @include flexCentered;
+        @include flexCenteredByColumn;
         align-items: end;
         gap: 40px 100px;
-
-        .title {
-            width: 300px;
-            font-weight: 700;
-            font-size: 36px;
-        }
 
         &-description {
             @include flexCenteredByColumn;

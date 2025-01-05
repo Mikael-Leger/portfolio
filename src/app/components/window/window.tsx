@@ -22,6 +22,7 @@ import Mail from "../mail/mail";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./window.scss";
+import Parallax from "../parallax/parallax";
 
 export type WindowProps =
 	| {
