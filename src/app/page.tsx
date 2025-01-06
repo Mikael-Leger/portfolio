@@ -8,19 +8,17 @@ import PageLayout from "./layouts/page-layout";
 import CommandLine from "./interfaces/command-line.interface";
 import Window, { WindowProps } from "./components/window/window";
 import Loading from "./components/loading/loading";
-import Portfolio from "./components/portfolio/portfolio";
+import Projects from "./components/projects/projects";
 import TabInterface from "./interfaces/tab.interface";
 import WindowRef from "./interfaces/window-ref.interface";
 import TaskBar from "./components/task-bar/task-bar";
 import Booting from "./components/booting/booting";
 import UserSession from "./components/user-session/user-session";
-import Welcome from "./components/welcome/welcome";
 import Skills from "./components/skills/skills";
 import Dekstop from "./components/desktop/dekstop";
 import { useIsAnyReduced } from "./contexts/is-reduced";
 
 import "./home.scss";
-import Parallax from "./components/parallax/parallax";
 
 gsap.registerPlugin(CSSRulePlugin);
 
@@ -117,17 +115,23 @@ export default function Home() {
 
         } else {
             const defaultWindows: WindowProps[] = [];
-            defaultWindows.push(
-                {
-                    window_id: 0,
-                    type: "browser",
-                    tabs: tabs,
-                    removeTab: removeTab,
-                    hide: true,
-                    zIndex: 0,
-                    onAction: (action: string, payload?: any) => handleAction(0, action, payload)
-                });
-            lastUpdatedWindowRef.current = { id: 0 };
+            defaultWindows.push({
+                window_id: 0,
+                type: "browser",
+                tabs: tabs,
+                removeTab: removeTab,
+                hide: true,
+                zIndex: 0,
+                onAction: (action: string, payload?: any) => handleAction(0, action, payload)
+            });
+            defaultWindows.push({
+                window_id: 4,
+                type: "portfolio",
+                zIndex: 0,
+                hide: true,
+                onAction: (action: string, payload?: any) => handleAction(4, action, payload)
+            })
+            lastUpdatedWindowRef.current = { id: 4 };
             setWindows(defaultWindows);
 
             usedDefaultTabs.current = true;
@@ -242,6 +246,13 @@ export default function Home() {
                     zIndex: windowLogic.zIndex,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
+            } else if (windowLogic.type == "portfolio") {
+                return {
+                    window_id: id,
+                    type: "portfolio",
+                    zIndex: windowLogic.zIndex,
+                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
+                }
             }
             return {
                 window_id: id,
@@ -346,25 +357,28 @@ export default function Home() {
         });
     }
 
-    const showMail = () => {
-        lastUpdatedWindowRef.current = { id: 3 };
+    const showPortfolio = () => {
+        lastUpdatedWindowRef.current = { id: 4 };
+
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.findIndex(window => window.window_id == 3);
-
+            const windowFound = updatedWindows.findIndex(window => window.window_id == 4);
             updatedWindows[windowFound].hide = false;
-
             return updatedWindows;
         });
     }
 
-    const showPDF = () => {
-        lastUpdatedWindowRef.current = { id: 2 };
+
+    const addPortfolio = () => {
+        lastUpdatedWindowRef.current = { id: 4 };
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.findIndex(window => window.window_id == 2);
-
-            updatedWindows[windowFound].hide = false;
+            updatedWindows.push({
+                window_id: 4,
+                type: "portfolio",
+                zIndex: 0,
+                onAction: (action: string, payload?: any) => handleAction(4, action, payload)
+            });
 
             return updatedWindows;
         });
@@ -431,7 +445,9 @@ export default function Home() {
                 }, 1000);
             } else {
                 setTimeout(() => {
-                    showBrowser();
+                    showPortfolio();
+                    // addPortfolio();
+                    // showBrowser();
                 }, 1000);
             }
         }
@@ -456,20 +472,11 @@ export default function Home() {
     const getDefaultTabs = (): TabInterface[] => ([
         {
             defaultTab: true,
-            logoPath: "/icons/welcome.png",
-            title: "Welcome - Mikaël Léger",
-            url: `${currentLocation}home`,
+            logoPath: "/icons/projects.png",
+            title: "Projects",
+            url: `${currentLocation}projects`,
             content: (
-                <Welcome getDefaultTabs={getDefaultTabs} handleAction={handleAction} openWindow={openWindow} />
-            )
-        },
-        {
-            defaultTab: true,
-            logoPath: "/icons/portfolio.png",
-            title: "Portfolio",
-            url: `${currentLocation}portfolio`,
-            content: (
-                <Portfolio addTab={addTab} />
+                <Projects addTab={addTab} />
             )
         },
         {
@@ -592,7 +599,7 @@ export default function Home() {
     const openWindow = (window_id: number, tabName: string | null = null) => {
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.find(window => window.window_id == window_id)
+            const windowFound = updatedWindows.find(window => window.window_id == window_id);
 
             if (windowFound) {
                 windowFound.hide = false;
@@ -651,6 +658,9 @@ export default function Home() {
                         case 3:
                             addMail();
                             break;
+                        case 4:
+                            addPortfolio();
+                            break;
                         default:
                             break;
                     }
@@ -692,19 +702,6 @@ export default function Home() {
     if (currentLocation == null) {
         return <Loading />;
     }
-
-    // return (
-    //     <PageLayout>
-    //         <div className="home">
-    //             <div className={`window window-browser window-browser-0`} style={{ opacity: 1, width: '80vw' }}>
-    //                 <Parallax children={<div></div>} />
-    //             </div>
-    //             {/* <div className="test">
-    //                 <Parallax children={<div></div>} />
-    //             </div> */}
-    //         </div>
-    //     </PageLayout >
-    // )
 
     return (
         <PageLayout>

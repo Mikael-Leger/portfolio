@@ -80,7 +80,7 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
     const isCurrentTabPortfolio = () => {
         if (!tabs) return false;
 
-        const tabFound = tabs.findIndex(tab => tab.title === "Portfolio");
+        const tabFound = tabs.findIndex(tab => tab.title === "Projects");
         return tabFound == activeTab;
     }
 

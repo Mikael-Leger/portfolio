@@ -28,10 +28,10 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Welcome - Mikaël Léger" })
         },
         {
-            title: "Portfolio",
+            title: "Projects",
             position: { top: isMobile ? 175 : 200, left: isMobile ? 50 : 350 },
             iconPath: "/browsers/edge.png",
-            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Portfolio" })
+            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Projects" })
         },
         {
             title: "Skills",
@@ -46,9 +46,15 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             onClick: () => desktopOpenActions("openWindow", { id: 2 })
         },
         {
+            title: "Portfolio",
+            iconPath: "/icons/portfolio.png",
+            position: { top: isMobile ? 300 : 300, right: isMobile ? 50 : 200 },
+            onClick: () => desktopOpenActions("openWindow", { id: 4 })
+        },
+        {
             title: "Contact me",
             iconPath: "/icons/mail.png",
-            position: { top: isMobile ? 300 : 500, right: isMobile ? 50 : 300 },
+            position: { top: isMobile ? 425 : 500, right: isMobile ? 50 : 300 },
             onClick: () => desktopOpenActions("openWindow", { id: 3 })
         }
     ];

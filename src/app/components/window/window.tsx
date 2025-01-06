@@ -18,16 +18,17 @@ import UsernameContext from "@/app/contexts/username-context";
 import Favorites from "../favorites/favorites";
 import usePdf from "@/app/hooks/pdf";
 import useMail from "@/app/hooks/mail";
+import usePortfolio from "@/app/hooks/portfolio";
 import Mail from "../mail/mail";
 import { useIsMobile } from "@/app/contexts/mobile-context";
+import PortfolioMainPage from "../portfolio/portfolio";
 
 import "./window.scss";
-import Parallax from "../parallax/parallax";
 
 export type WindowProps =
 	| {
 		window_id: number;
-		type: "browser" | "command" | "pdf" | "mail";
+		type: "browser" | "command" | "pdf" | "mail" | "portfolio";
 		zIndex: number;
 		onAction: (action: string, payload?: any) => void;
 		tabs?: TabInterface[];
@@ -84,21 +85,35 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const animateCreateWindow = () => {
 		const timeline = gsap.timeline();
-		timeline.fromTo(`.window-${type}-${window_id}`, {
-			display: 'none',
-			opacity: 0,
-			scale: 0.2,
-			y: '40vh',
-			x: '40vw',
-		}, {
-			duration: .7,
-			display: 'flex',
-			opacity: 1,
-			scale: 1,
-			y: 0,
-			x: 0,
-			ease: "sine.in"
-		});
+		if (!portfolioLogic.isNotPortfolio) {
+			timeline.fromTo(`.window-${type}-${window_id}`, {
+				display: 'none',
+				opacity: 0
+			}, {
+				duration: .7,
+				display: 'flex',
+				opacity: 1,
+				ease: "sine.in"
+			});
+
+		} else {
+			timeline.fromTo(`.window-${type}-${window_id}`, {
+				display: 'none',
+				opacity: 0,
+				scale: 0.2,
+				y: '40vh',
+				x: '40vw'
+			}, {
+				duration: .7,
+				display: 'flex',
+				opacity: 1,
+				scale: 1,
+				y: 0,
+				x: 0,
+				ease: "sine.in"
+			});
+
+		}
 
 		return timeline.totalDuration();
 	}
@@ -114,27 +129,48 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		}
 
 		const timeline = gsap.timeline();
-		timeline.fromTo(`.window-${type}-${window_id}`, {
-			opacity: 0,
-			scale: .2,
-			display: 'none'
-		}, {
-			duration: .2,
-			opacity: 1,
-			scale: 1,
-			display: 'flex'
-		})
+		if (!portfolioLogic.isNotPortfolio) {
+			timeline.fromTo(`.window-${type}-${window_id}`, {
+				opacity: 0,
+				display: 'none'
+			}, {
+				duration: .2,
+				opacity: 1,
+				display: 'flex'
+			})
+		} else {
+			timeline.fromTo(`.window-${type}-${window_id}`, {
+				opacity: 0,
+				scale: .2,
+				display: 'none'
+			}, {
+				duration: .2,
+				opacity: 1,
+				scale: 1,
+				display: 'flex'
+			})
+
+		}
 		return timeline.totalDuration();
 	}
 
 	const animateHideWindow = () => {
 		const timeline = gsap.timeline();
-		timeline.to(`.window-${type}-${window_id}`, {
-			duration: .2,
-			opacity: 0,
-			scale: .5,
-			display: 'none'
-		})
+		if (!portfolioLogic.isNotPortfolio) {
+			timeline.to(`.window-${type}-${window_id}`, {
+				duration: .2,
+				opacity: 0,
+				display: 'none'
+			})
+		} else {
+			timeline.to(`.window-${type}-${window_id}`, {
+				duration: .2,
+				opacity: 0,
+				scale: .5,
+				display: 'none'
+			})
+
+		}
 		return timeline.totalDuration();
 	}
 
@@ -243,6 +279,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 			const timeline = gsap.timeline();
 			const newLeft = -28 + (window_id * 16) + 'vw';
+
 			timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
 				duration: .7,
 				scale: 0.1,
@@ -355,6 +392,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const mailLogic = useMail(animateCreateWindow, type, hide, windowIconPath, window_id);
 
+	const portfolioLogic = usePortfolio(animateCreateWindow, type, hide, windowIconPath, window_id);
+
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
 			setWindowIconPath(browserLogic.browserIconPath);
@@ -368,8 +407,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		} else if (mailLogic && !mailLogic.isNotMail) {
 			setWindowIconPath("/icons/mail.png");
 
+		} else if (portfolioLogic && !portfolioLogic.isNotPortfolio) {
+			setWindowIconPath("/icons/portfolio.png");
+
 		}
-	}, [browserLogic, commandLogic, pdfLogic]);
+	}, [browserLogic, commandLogic, pdfLogic, mailLogic, portfolioLogic]);
 
 	useEffect(() => {
 		if (commandLogic && !commandLogic.isSimulationStarted && commandLogic.ipFormatted != null && window_id != null) {
@@ -407,14 +449,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			name: "reduce",
 			onClick: () => {
 				setIsReducing(true)
-			}
+			},
+			hide: !portfolioLogic.isNotPortfolio
 		},
 		{
 			name: "minimize",
 			onClick: () => {
 				setIsMaximized(false)
 			},
-			hide: isMobile || !isMaximized || type == "pdf"
+			hide: isMobile || !isMaximized || !portfolioLogic.isNotPortfolio || !pdfLogic.isNotPdf
 		},
 		{
 			name: "maximize",
@@ -430,7 +473,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		}
 	];
 
-	if ((type == "browser" && (!tabs || tabs.length == 0)) || !browserLogic || !commandLogic || !pdfLogic) {
+	if ((type == "browser" && (!tabs || tabs.length == 0)) || preferences == null || !browserLogic || !commandLogic || !pdfLogic) {
 		return <></>;
 	}
 
@@ -459,6 +502,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			$zIndex={zIndex}
 			onMouseDown={handleWindowMouseDown}
 			onClick={handleWindowClick}
+			style={{ opacity: !portfolioLogic.isNotPortfolio ? 1 : 0 }}
 			ref={windowRef}>
 			<div className="window-header" style={{ "color": preferences.color?.textColor }}>
 				<div
@@ -515,8 +559,16 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 								</div>
 							</>
 						)}
+						{!portfolioLogic.isNotPortfolio && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-text" >
+									Mikaël LÉGER
+								</div>
+							</>
+						)}
 					</div>
-					<div className="window-header-head-actions">
+					<div className="window-header-head-actions" style={{ marginRight: !portfolioLogic.isNotPortfolio ? "18px" : 0 }}>
 						{
 							actionsList.map(action => {
 								if (action.hide) return null;
@@ -581,6 +633,14 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				!mailLogic.isNotMail && (
 					<div className="window-content mail-content">
 						<Mail onAction={onAction} />
+					</div>
+				)
+			}
+			{
+				!portfolioLogic.isNotPortfolio && (
+					<div style={{ width: "100%" }}>
+						{/* <div className="window-content portfolio-content"> */}
+						<PortfolioMainPage desktopOpenActions={desktopOpenActions} />
 					</div>
 				)
 			}

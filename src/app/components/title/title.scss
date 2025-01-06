@@ -1,9 +1,13 @@
 .title {
     font-size: 32px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Venite Adoremus', serif;
 
     &-upper {
         text-transform: uppercase;
+    }
+
+    &-underline {
+        text-decoration: underline;
     }
 
     &-small {
@@ -12,13 +16,14 @@
     }
 
     &-medium {
-        font-size: 50px;
+        font-size: 72px;
         font-weight: 500;
     }
 
     &-big {
-        font-size: 78px;
+        font-size: 104px;
         font-weight: 700;
+        font-family: 'Playfair Display', serif;
     }
 
     &-neon {
