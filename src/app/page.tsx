@@ -616,31 +616,36 @@ export default function Home() {
 
     const deleteWindow = (window_id: number) => {
         const windowRef = windowRefs.current[window_id];
-        windowRef.windowLogic.animateHideWindow?.();
-        delete windowRefs.current[window_id];
+        const duration = windowRef.windowLogic.animateHideWindow?.() ?? 0;
 
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            const windowIndex = windows.findIndex(window => window.window_id === window_id);
-            if (windowIndex != -1) {
-                updatedWindows.splice(windowIndex, 1);
-            }
-            return updatedWindows;
-        });
+        setTimeout(() => {
+            setWindows(prevWindows => {
+                const updatedWindows = [...prevWindows];
+                const windowIndex = windows.findIndex(window => window.window_id === window_id);
+                if (windowIndex != -1) {
+                    updatedWindows.splice(windowIndex, 1);
+                }
+                return updatedWindows;
+            });
+
+            delete windowRefs.current[window_id];
+        }, duration * 1000);
     }
 
     const closeWindow = (window_id: number) => {
         const windowRef = windowRefs.current[window_id];
-        windowRef.windowLogic.animateHideWindow?.();
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            const windowIndex = windows.findIndex(window => window.window_id === window_id);
-            if (windowIndex != -1) {
-                updatedWindows[windowIndex].hide = true;
-            }
-            lastClosedWindowRef.current = { id: window_id };
-            return updatedWindows;
-        })
+        const duration = windowRef.windowLogic.animateHideWindow?.() ?? 0;
+        setTimeout(() => {
+            setWindows(prevWindows => {
+                const updatedWindows = [...prevWindows];
+                const windowIndex = windows.findIndex(window => window.window_id === window_id);
+                if (windowIndex != -1) {
+                    updatedWindows[windowIndex].hide = true;
+                }
+                lastClosedWindowRef.current = { id: window_id };
+                return updatedWindows;
+            })
+        }, duration * 1000);
     }
 
     const desktopOpenActions = (action: string, payload?: any) => {
