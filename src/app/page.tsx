@@ -305,7 +305,9 @@ export default function Home() {
             );
 
             const windowIndex = updatedWindows.findIndex(window => window.window_id == window_id);
-            updatedWindows[windowIndex].zIndex = 0;
+            if (windowIndex != -1) {
+                updatedWindows[windowIndex].zIndex = 0;
+            }
 
             return updatedWindows;
         });
@@ -670,7 +672,6 @@ export default function Home() {
                 } else {
                     closeWindow(payload);
                 }
-                break;
             case "reduce":
                 removeLastFromOrder(payload);
                 break;
