@@ -16,10 +16,10 @@ type PortfolioMainPageProps = {
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
     const mainSections = [
         {
-            name: "Portfolio",
+            name: "Projects",
             description: "Discover my work and expertise",
             onClick: () => { desktopOpenActions?.("openWindow", { id: 0 }) },
-            logoPath: "/icons/portfolio.png"
+            logoPath: "/icons/projects.png"
         },
         {
             name: "CV",
@@ -40,6 +40,10 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             logoPath: "/icons/linkedin.png"
         },
     ];
+
+    const handleSectionClick = (e: React.MouseEvent<HTMLDivElement>, callback: () => void) => {
+        callback();
+    }
 
     return (
         <div className="portfolio">
@@ -62,7 +66,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                 <div className="portfolio-content-me">
                     <img id="me" className='me' src="/parallax/me.png" />
                     <div className="portfolio-content-me-quote">
-                        (Just me climbing while you scroll)
+                        (Keep scrolling to help me climb!)
                     </div>
                 </div>
                 <div className="portfolio-content-text">
@@ -106,7 +110,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                     {mainSections.map(section => (
                         <div
                             className="portfolio-content-sections-section"
-                            onClick={section.onClick}
+                            onClickCapture={(e) => handleSectionClick(e, section.onClick)}
                             key={section.name}>
                             <div className="portfolio-content-sections-section-border">
                                 <div className="portfolio-content-sections-section-border-container">

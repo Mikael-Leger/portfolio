@@ -191,7 +191,6 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                         end: "1100% center",
                         toggleActions: "restart none none none",
                         scrub: true,
-                        markers: true
                     },
                     motionPath: {
                         path: [
@@ -298,17 +297,6 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     opacity: .7,
                     y: 0
-                }
-            );
-            gsap.fromTo(
-                ".portfolio-content-quote",
-                {
-                    opacity: 0,
-
-                },
-                {
-                    opacity: 1,
-
                 }
             );
 

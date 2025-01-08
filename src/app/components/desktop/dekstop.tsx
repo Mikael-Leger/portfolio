@@ -22,21 +22,15 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
 
     const shortcuts = [
         {
-            title: "Welcome Page",
-            iconPath: "/browsers/edge.png",
-            position: { top: isMobile ? 50 : 200, left: isMobile ? 50 : 200 },
-            onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Welcome - Mikaël Léger" })
-        },
-        {
             title: "Projects",
-            position: { top: isMobile ? 175 : 200, left: isMobile ? 50 : 350 },
+            position: { top: isMobile ? 50 : 200, left: isMobile ? 50 : 200 },
             iconPath: "/browsers/edge.png",
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Projects" })
         },
         {
             title: "Skills",
             iconPath: "/browsers/edge.png",
-            position: { top: isMobile ? 300 : 350, left: isMobile ? 50 : 200 },
+            position: { top: isMobile ? 175 : 200, left: isMobile ? 50 : 350 },
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Skills" })
         },
         {

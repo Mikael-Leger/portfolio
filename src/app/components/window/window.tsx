@@ -83,6 +83,12 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const windowRef = useRef<HTMLDivElement>(null);
 
+	useEffect(() => {
+		if (isReduced) {
+			desktopOpenActions?.("reduce", window_id);
+		}
+	}, [isReduced]);
+
 	const animateCreateWindow = () => {
 		const timeline = gsap.timeline();
 		if (!portfolioLogic.isNotPortfolio) {
@@ -124,7 +130,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			if (isReducedFromRef) {
 				return increaseWindow();
 			} else {
-				return animateCreateWindow();
+				return 0;
+				// return animateCreateWindow();
 			}
 		}
 
@@ -183,6 +190,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			zIndex,
 			tabs,
 			lines,
+			hide,
 			animateOpenWindow,
 			animateHideWindow
 		}
@@ -193,7 +201,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			setWindowRef(window_id, { windowLogic, browserLogic, commandLogic, pdfLogic });
 		}
 
-	}, [window_id, type, zIndex, tabs, lines, setWindowRef, windowRefs]);
+	}, [window_id, type, zIndex, tabs, hide, lines, setWindowRef, windowRefs]);
+
+	useEffect(() => {
+		if (hide || window_id == null || windowIconPath == "") {
+			return;
+		}
+		animateCreateWindow();
+
+	}, [window_id, windowIconPath, hide]);
 
 	// const generatedId = useMemo(() => {
 	// 	if (process.env.NODE_ENV == 'production') return idCounter++;
@@ -388,11 +404,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const commandLogic = useCommand(animateCreateWindow, type, lines, window_id, onFinish, preferences, ip) as WindowRef["commandLogic"];
 
-	const pdfLogic = usePdf(animateCreateWindow, type, hide, windowIconPath, window_id);
+	const pdfLogic = usePdf(type);
 
-	const mailLogic = useMail(animateCreateWindow, type, hide, windowIconPath, window_id);
+	const mailLogic = useMail(type);
 
-	const portfolioLogic = usePortfolio(animateCreateWindow, type, hide, windowIconPath, window_id);
+	const portfolioLogic = usePortfolio(type);
 
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
@@ -428,7 +444,6 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		if (!isReduced) {
 			return;
 		}
-		// e.stopPropagation();
 		increaseWindow();
 	}
 
@@ -436,6 +451,14 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		if (isReduced) {
 			return;
 		}
+
+		const target = e.target as HTMLElement;
+
+		if (target.closest(".portfolio-content-sections-section")) {
+			e.stopPropagation();
+			return;
+		}
+
 		onAction("putWindowOnTop");
 	}
 

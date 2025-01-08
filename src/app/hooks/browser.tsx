@@ -36,18 +36,18 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
 
     const animatePortfolioPage = (delay: number) => {
         const timeline = gsap.timeline();
-        timeline.from(".portfolio-container-group-title", {
-            duration: 1,
+        timeline.from(".projects-container-group-title", {
+            duration: .5,
             opacity: 0,
             x: 600,
-            stagger: 1.6,
+            stagger: .8,
         });
 
         gsap.from(".project", {
-            duration: .4,
+            duration: .2,
             opacity: 0,
             y: 100,
-            stagger: .3,
+            stagger: .1,
             ease: "sine.in"
         });
     }
@@ -88,7 +88,6 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
         if (preferences == null || preferences.color == null || id == null || hide) {
             return;
         }
-
         const iconPath = getBrowserIconPath();
         setBrowserIconPath(iconPath);
     }, [preferences, id, hide]);

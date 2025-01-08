@@ -17,6 +17,7 @@ import UserSession from "./components/user-session/user-session";
 import Skills from "./components/skills/skills";
 import Dekstop from "./components/desktop/dekstop";
 import { useIsAnyReduced } from "./contexts/is-reduced";
+import { useBodyOverflow } from "./contexts/body-overflow";
 
 import "./home.scss";
 
@@ -30,6 +31,7 @@ const speedMap: { [key: string]: number } = {
 const BASE_TIME_STARTING = speedMap[process.env.DEV_ANIMATION_SPEED || ""] ?? 4000;
 
 export default function Home() {
+    const { setOverflowY } = useBodyOverflow();
     const { listOfReduced } = useIsAnyReduced();
 
     const [currentLocation, setCurrentLocation] = useState<string>("");
@@ -42,6 +44,7 @@ export default function Home() {
     const windowRefs = useRef<Record<number, WindowRef>>({});
     const lastUpdatedWindowRef = useRef<{ id: number } | null>(null);
     const lastOpenedWindowRef = useRef<{ id: number } | null>(null);
+    const lastClosedWindowRef = useRef<{ id: number } | null>(null);
     const newTabIndex = useRef<number>(-1);
     const usedDefaultTabs = useRef<boolean>(false);
 
@@ -55,7 +58,7 @@ export default function Home() {
         if (windowRef) {
             switch (action) {
                 case "putWindowOnTop":
-                    putWindowOnTop(id);
+                    refreshWindows(id);
                     break;
                 case "addTab":
                     addTab(payload);
@@ -71,14 +74,6 @@ export default function Home() {
                     break;
                 default:
                     break;
-            }
-        } else if (action == "openWindow") {
-            if (id == 2) {
-                addPDF();
-
-            } else if (id == 3) {
-                addMail();
-
             }
         } else {
             console.warn(`No ref found for window ${id}`);
@@ -114,23 +109,39 @@ export default function Home() {
             });
 
         } else {
-            const defaultWindows: WindowProps[] = [];
-            defaultWindows.push({
-                window_id: 0,
-                type: "browser",
-                tabs: tabs,
-                removeTab: removeTab,
-                hide: true,
-                zIndex: 0,
-                onAction: (action: string, payload?: any) => handleAction(0, action, payload)
-            });
-            defaultWindows.push({
-                window_id: 4,
-                type: "portfolio",
-                zIndex: 0,
-                hide: true,
-                onAction: (action: string, payload?: any) => handleAction(4, action, payload)
-            })
+            const defaultWindows: WindowProps[] = [
+                {
+                    window_id: 0,
+                    type: "browser",
+                    tabs: tabs,
+                    removeTab: removeTab,
+                    zIndex: 300,
+                    hide: true,
+                    onAction: (action: string, payload?: any) => handleAction(0, action, payload)
+                },
+                {
+                    window_id: 2,
+                    type: "pdf",
+                    zIndex: 200,
+                    hide: true,
+                    onAction: (action: string, payload?: any) => handleAction(2, action, payload)
+                },
+                {
+                    window_id: 3,
+                    type: "mail",
+                    zIndex: 100,
+                    hide: true,
+                    onAction: (action: string, payload?: any) => handleAction(3, action, payload)
+                },
+                {
+                    window_id: 4,
+                    type: "portfolio",
+                    zIndex: 400,
+                    hide: true,
+                    onAction: (action: string, payload?: any) => handleAction(4, action, payload)
+                }
+            ];
+
             lastUpdatedWindowRef.current = { id: 4 };
             setWindows(defaultWindows);
 
@@ -195,13 +206,24 @@ export default function Home() {
     useEffect(() => {
         setWindowsOrder();
 
-        const browserWindow = windows.find(window => window.type == "browser");
+        if (windows[0]) {
+            const higherIndexWindow = windows.reduce((max, current) => (current.zIndex > max.zIndex ? current : max), windows[0]);
+            const newOverflowY = (higherIndexWindow.window_id === 4) ? "auto" : "hidden";
+            setOverflowY(newOverflowY);
+        }
+
+        const browserWindow = windows.find(window => window.window_id == 0);
 
         // TODO: use better condition
         if (browserWindow && newTabIndex.current >= 0) {
 
             handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
             newTabIndex.current = -1;
+        }
+        const lastClosedId = lastClosedWindowRef.current?.id;
+        if (lastClosedId) {
+            removeLastFromOrder(lastClosedId);
+            lastClosedWindowRef.current = null;
         }
 
         const window_id = lastOpenedWindowRef.current?.id;
@@ -210,10 +232,7 @@ export default function Home() {
         }
         const windowRef = windowRefs.current[window_id];
 
-        if (windowRef == null) {
-            showBrowser();
-
-        }
+        windowRef?.windowLogic?.animateOpenWindow?.(listOfReduced.includes(window_id));
 
         lastOpenedWindowRef.current = null;
 
@@ -228,6 +247,7 @@ export default function Home() {
                     window_id: id,
                     type: "browser",
                     zIndex: windowLogic.zIndex,
+                    hide: windowLogic.hide,
                     tabs: windowLogic.tabs as TabInterface[],
                     removeTab: removeTab,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
@@ -237,6 +257,7 @@ export default function Home() {
                     window_id: id,
                     type: "pdf",
                     zIndex: windowLogic.zIndex,
+                    hide: windowLogic.hide,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
             } else if (windowLogic.type == "mail") {
@@ -244,6 +265,7 @@ export default function Home() {
                     window_id: id,
                     type: "mail",
                     zIndex: windowLogic.zIndex,
+                    hide: windowLogic.hide,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
             } else if (windowLogic.type == "portfolio") {
@@ -251,6 +273,7 @@ export default function Home() {
                     window_id: id,
                     type: "portfolio",
                     zIndex: windowLogic.zIndex,
+                    hide: windowLogic.hide,
                     onAction: (action: string, payload?: any) => handleAction(id, action, payload)
                 }
             }
@@ -258,34 +281,50 @@ export default function Home() {
                 window_id: id,
                 type: "command",
                 zIndex: windowLogic.zIndex,
-                lines: windowLogic.lines as CommandLine[],
                 hide: windowLogic.hide,
+                lines: windowLogic.lines as CommandLine[],
                 onAction: (action: string, payload?: any) => handleAction(id, action, payload)
             }
         });
     }
 
-    const putWindowOnTop = (window_id: number) => {
+    const refreshWindows = (window_id: number) => {
         lastUpdatedWindowRef.current = { id: window_id };
 
-        const windowsByRefs = getWindowsByRefs();
+        setWindows(prevWindows => {
+            return [...prevWindows];
+        })
+    }
 
-        setWindows(windowsByRefs);
+    const removeLastFromOrder = (window_id: number) => {
+        setWindows(prevWindows => {
+            let currentWindows = [...prevWindows];
+
+            const updatedWindows = currentWindows.map(item =>
+                ({ ...item, zIndex: Math.max(item.zIndex + 100, 0) })
+            );
+
+            const windowIndex = updatedWindows.findIndex(window => window.window_id == window_id);
+            updatedWindows[windowIndex].zIndex = 0;
+
+            return updatedWindows;
+        });
     }
 
     const setWindowsOrder = () => {
         if (!lastUpdatedWindowRef.current) {
             return;
         }
+
         const { id } = lastUpdatedWindowRef.current;
+
         lastUpdatedWindowRef.current = null;
 
         const higherWindow = windows.reduce((max, current) => (current.zIndex > max.zIndex ? current : max), windows[0]);
 
-        if (higherWindow.zIndex != 0 && higherWindow.window_id == id) {
+        if (higherWindow && higherWindow.zIndex != 0 && higherWindow.window_id == id) {
             return;
         }
-
         setWindows(prevWindows => {
             let currentWindows = [...prevWindows];
 
@@ -294,7 +333,9 @@ export default function Home() {
             );
 
             const windowIndex = updatedWindows.findIndex(window => window.window_id == id);
-            updatedWindows[windowIndex].zIndex = windows.length * 100;
+            if (windowIndex != -1) {
+                updatedWindows[windowIndex].zIndex = windows.length * 100;
+            }
 
             return updatedWindows;
         });
@@ -315,59 +356,6 @@ export default function Home() {
             return updatedWindows;
         });
     }
-
-    const showBrowser = () => {
-        lastUpdatedWindowRef.current = { id: 0 };
-
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.findIndex(window => window.window_id == 0);
-            updatedWindows[windowFound].hide = false;
-            return updatedWindows;
-        });
-    }
-
-    const addPDF = () => {
-        lastUpdatedWindowRef.current = { id: 2 };
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            updatedWindows.push({
-                window_id: 2,
-                type: "pdf",
-                zIndex: 0,
-                onAction: (action: string, payload?: any) => handleAction(2, action, payload)
-            });
-
-            return updatedWindows;
-        });
-    }
-
-    const addMail = () => {
-        lastUpdatedWindowRef.current = { id: 3 };
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            updatedWindows.push({
-                window_id: 3,
-                type: "mail",
-                zIndex: 0,
-                onAction: (action: string, payload?: any) => handleAction(3, action, payload)
-            });
-
-            return updatedWindows;
-        });
-    }
-
-    const showPortfolio = () => {
-        lastUpdatedWindowRef.current = { id: 4 };
-
-        setWindows(prevWindows => {
-            const updatedWindows = [...prevWindows];
-            const windowFound = updatedWindows.findIndex(window => window.window_id == 4);
-            updatedWindows[windowFound].hide = false;
-            return updatedWindows;
-        });
-    }
-
 
     const addPortfolio = () => {
         lastUpdatedWindowRef.current = { id: 4 };
@@ -435,7 +423,6 @@ export default function Home() {
 
     useEffect(() => {
         if (isBooted) {
-
             initializeTabs();
 
             const firstAnimation = localStorage.getItem("first-animation");
@@ -445,9 +432,7 @@ export default function Home() {
                 }, 1000);
             } else {
                 setTimeout(() => {
-                    showPortfolio();
-                    // addPortfolio();
-                    // showBrowser();
+                    openWindow(4);
                 }, 1000);
             }
         }
@@ -593,12 +578,15 @@ export default function Home() {
     }
 
     const onFirstAnimationFinish = () => {
-        showBrowser();
+        openWindow(0);
     }
 
     const openWindow = (window_id: number, tabName: string | null = null) => {
+        lastOpenedWindowRef.current = { id: window_id };
+
         setWindows(prevWindows => {
             const updatedWindows = [...prevWindows];
+
             const windowFound = updatedWindows.find(window => window.window_id == window_id);
 
             if (windowFound) {
@@ -618,21 +606,39 @@ export default function Home() {
                     }
                 }
             }
+            lastUpdatedWindowRef.current = { id: window_id };
 
             return updatedWindows;
         });
-        putWindowOnTop(window_id);
+    }
 
+    const deleteWindow = (window_id: number) => {
         const windowRef = windowRefs.current[window_id];
+        windowRef.windowLogic.animateHideWindow?.();
+        delete windowRefs.current[window_id];
 
-        windowRef?.windowLogic?.animateOpenWindow?.(listOfReduced.includes(window_id));
-
-        lastOpenedWindowRef.current = { id: window_id };
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const windowIndex = windows.findIndex(window => window.window_id === window_id);
+            if (windowIndex != -1) {
+                updatedWindows.splice(windowIndex, 1);
+            }
+            return updatedWindows;
+        });
     }
 
     const closeWindow = (window_id: number) => {
         const windowRef = windowRefs.current[window_id];
         windowRef.windowLogic.animateHideWindow?.();
+        setWindows(prevWindows => {
+            const updatedWindows = [...prevWindows];
+            const windowIndex = windows.findIndex(window => window.window_id === window_id);
+            if (windowIndex != -1) {
+                updatedWindows[windowIndex].hide = true;
+            }
+            lastClosedWindowRef.current = { id: window_id };
+            return updatedWindows;
+        })
     }
 
     const desktopOpenActions = (action: string, payload?: any) => {
@@ -646,17 +652,8 @@ export default function Home() {
 
                 } else {
                     switch (id) {
-                        case 0:
-                            showBrowser();
-                            break;
                         case 1:
                             showCommand();
-                            break;
-                        case 2:
-                            addPDF();
-                            break;
-                        case 3:
-                            addMail();
                             break;
                         case 4:
                             addPortfolio();
@@ -668,7 +665,14 @@ export default function Home() {
                 }
                 break;
             case "closeWindow":
-                closeWindow(payload);
+                if (payload === 4) {
+                    deleteWindow(payload);
+                } else {
+                    closeWindow(payload);
+                }
+                break;
+            case "reduce":
+                removeLastFromOrder(payload);
                 break;
             default:
                 break;

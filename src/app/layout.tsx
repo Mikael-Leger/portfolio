@@ -6,18 +6,10 @@ import { PreferencesProvider } from "./contexts/preferences-context";
 import { IsMobileProvider } from "./contexts/mobile-context";
 import { UsernameProvider } from "./contexts/username-context";
 import { IsAnyReducedProvider } from "./contexts/is-reduced";
+import { BodyOverflowProvider } from "./contexts/body-overflow";
+import Body from "./components/body/body";
 
 import "./styles/globals.scss";
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
 
 export default function RootLayout({
 	children,
@@ -26,21 +18,21 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
-				<IPProvider>
-					<PreferencesProvider>
-						<IsMobileProvider>
-							<UsernameProvider>
-								<IsAnyReducedProvider>
-									{children}
-								</IsAnyReducedProvider>
-							</UsernameProvider>
-						</IsMobileProvider>
-					</PreferencesProvider>
-				</IPProvider>
-			</body>
+			<BodyOverflowProvider>
+				<Body>
+					<IPProvider>
+						<PreferencesProvider>
+							<IsMobileProvider>
+								<UsernameProvider>
+									<IsAnyReducedProvider>
+										{children}
+									</IsAnyReducedProvider>
+								</UsernameProvider>
+							</IsMobileProvider>
+						</PreferencesProvider>
+					</IPProvider>
+				</Body>
+			</BodyOverflowProvider>
 		</html>
 	);
 }
