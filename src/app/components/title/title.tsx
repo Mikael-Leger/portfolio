@@ -9,11 +9,12 @@ type TitleProps = {
     transform?: "upper";
     decoration?: "underline";
     color?: string;
+    futurist?: boolean;
 };
 
-export default function Title({ text, effect, transform, decoration, color = "", size = "normal" }: TitleProps) {
+export default function Title({ text, effect, transform, decoration, futurist, color = "", size = "normal" }: TitleProps) {
     return (
-        <div className={`title title-${size} ${effect ? `title-${effect}${color}` : ''} ${transform ? `title-${transform}` : ''} ${decoration ? `title-${decoration}` : ''}`}>
+        <div className={`title title-${size} ${effect ? `title-${effect}${color}` : ''} ${transform ? `title-${transform}` : ''} ${decoration ? `title-${decoration}` : ''} ${futurist ? `title-futurist` : ''}`}>
             {text}
         </div>
     );

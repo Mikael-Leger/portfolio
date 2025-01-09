@@ -1,6 +1,7 @@
 .title {
     font-size: 32px;
-    font-family: 'Venite Adoremus', serif;
+    font-family: 'Playfair Display', serif;
+    padding: 0 20px;
 
     &-upper {
         text-transform: uppercase;
@@ -10,8 +11,12 @@
         text-decoration: underline;
     }
 
+    &-futurist {
+        font-family: 'Venite Adoremus', serif;
+    }
+
     &-small {
-        font-size: 32px;
+        font-size: 46px;
         font-weight: 500;
     }
 
@@ -23,7 +28,6 @@
     &-big {
         font-size: 104px;
         font-weight: 700;
-        font-family: 'Playfair Display', serif;
     }
 
     &-neon {

@@ -1,9 +1,14 @@
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-lg-minus-1: $breakpoint-lg - 1px;
+$breakpoint-xl: 1200px;
+
 .parallax {
     height: 110vh;
     width: 100%;
     position: relative;
     z-index: 2;
-
 
     &-outer {
         overflow: hidden;
@@ -24,45 +29,41 @@
             align-items: center;
 
             height: 70vh;
+            text-align: center;
+
+            .title {
+                padding: 0 40px;
+                font-size: 85px;
+
+                @media (min-width: $breakpoint-xl) {
+                    font-size: 110px;
+                }
+            }
         }
 
         &-second {
             scale: .2;
             opacity: 0;
+
+            .title {
+                font-size: 65px;
+
+                @media (min-width: $breakpoint-sm) {
+                    font-size: 55px;
+                }
+
+                @media (min-width: $breakpoint-md) {
+                    font-size: 65px;
+                }
+
+                @media (min-width: $breakpoint-lg) {
+                    font-size: 80px;
+                }
+
+                @media (min-width: $breakpoint-xl) {
+                    font-size: 95px;
+                }
+            }
         }
-    }
-
-    .earth {
-        width: 1500px;
-        bottom: -100%;
-        z-index: 7;
-    }
-
-    .jupiter {
-        width: 800px;
-        bottom: -60%;
-        right: 10%;
-        z-index: 5;
-    }
-
-    .mars {
-        width: 300px;
-        bottom: 45%;
-        left: -10%;
-        z-index: 6;
-    }
-
-    .pluto {
-        width: 100px;
-        bottom: 75%;
-        right: 0%;
-        z-index: 3;
-    }
-
-    .uranus {
-        width: 300px;
-        bottom: -20%;
-        right: -25%;
-        z-index: 2;
     }
 }

@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import Title from "../title/title";
+import { Breakpoint, useIsMobile } from "@/app/contexts/mobile-context";
+import { PlanetBaseStyle, Planets } from "@/app/interfaces/planet.interface";
 
 import "./parallax.scss";
 
@@ -12,6 +14,8 @@ type ParallaxProps = {
 };
 
 function Parallax({ firstText, secondText }: ParallaxProps) {
+    const { isMobile, breakpoint, getBreakpointValue } = useIsMobile();
+
     const [background, setBackground] = useState(20);
     const [shootingStarOffset, setShootingStarLength] = useState(-500);
 
@@ -29,6 +33,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
             const timeline = gsap.timeline({
                 defaults: { duration: 1 },
                 scrollTrigger: {
@@ -46,7 +51,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
             timeline.to(
                 firstTextRef.current,
                 {
-                    y: "+=500",
+                    y: () => getTextHeight("first"),
                     scale: .2,
                     opacity: 0
                 },
@@ -55,7 +60,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
             timeline.to(
                 secondTextRef.current,
                 {
-                    y: "-=500",
+                    y: () => getTextHeight("second"),
                     scale: 1,
                     opacity: 1
                 },
@@ -75,10 +80,15 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                 },
                 0
             );
-            timeline.to(
+            timeline.fromTo(
                 earth.current,
                 {
-                    rotate: 90
+                    translateX: "-50%",
+                    rotate: 0
+                },
+                {
+                    translateX: "-50%",
+                    rotate: "+=90"
                 },
                 0
             );
@@ -109,7 +119,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     motionPath: {
                         path: [
                             { x: 100, y: -150 },
-                            { x: 600, y: -300 }
+                            { x: 800, y: -450 }
                         ],
                         curviness: 1.5,
                     },
@@ -131,6 +141,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                 0
             );
             const rocketTimeline = gsap.timeline();
+            // First details
             rocketTimeline.fromTo(
                 "#rocket",
                 {
@@ -155,6 +166,10 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     opacity: 1
                 }
             );
+            let tmpX = isMobile ? -40 : 100;
+            let tmpX2 = isMobile ? 10 : 150;
+            let tmpX3 = isMobile ? 150 : 400;
+            // Image
             rocketTimeline.fromTo(
                 "#rocket",
                 {
@@ -171,18 +186,19 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     motionPath: {
                         path: [
-                            { x: 100, y: 420 },
-                            { x: 100, y: 900 },
+                            { x: tmpX, y: 420 },
+                            { x: tmpX, y: 1500 },
                         ],
                         curviness: 0,
                     },
                 }
             );
+            // Moon below
             rocketTimeline.fromTo(
                 "#rocket",
                 {
-                    x: 100,
-                    y: 900
+                    x: tmpX,
+                    y: 1500
                 },
                 {
                     scrollTrigger: {
@@ -194,19 +210,20 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     motionPath: {
                         path: [
-                            { x: 150, y: 1200 },
-                            { x: 400, y: 1400 },
+                            { x: tmpX2 + 50, y: 1600 },
+                            { x: tmpX3, y: 1900 },
                         ],
                         curviness: 1.5,
                     },
                 }
             );
+            // Backflip
             rocketTimeline.fromTo(
                 "#rocket",
                 {
                     rotate: 135,
-                    x: 400,
-                    y: 1400
+                    x: tmpX3,
+                    y: 1900
                 },
                 {
                     scrollTrigger: {
@@ -218,18 +235,20 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     motionPath: {
                         path: [
-                            { x: 400, y: 1700 },
+                            { x: tmpX3, y: 2100 },
                         ],
                         curviness: 0,
                     },
                     rotate: "+=180"
                 }
             );
+            // Land on moon
             rocketTimeline.fromTo(
                 "#rocket",
                 {
-                    x: 400,
-                    y: 1700
+                    x: tmpX3,
+                    y: 2100,
+                    zIndex: 0
                 },
                 {
                     scrollTrigger: {
@@ -241,17 +260,21 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     motionPath: {
                         path: [
-                            { x: 400, y: 1900 },
+                            { x: tmpX3, y: 2300 },
                         ],
                         curviness: 0,
-                    }
+                    },
+                    zIndex: 1
                 }
             );
+            // Rocket pin
             rocketTimeline.fromTo(
                 "#rocket",
                 {
-                    x: 400,
-                    y: 1900
+                    x: tmpX3,
+                    y: 2300,
+                    opacity: 1,
+                    zIndex: 1
                 },
                 {
                     scrollTrigger: {
@@ -263,11 +286,15 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                         pin: "#rocket",
                         pinSpacing: false
                     },
+                    opacity: .5
                 }
             );
-
-            rocketTimeline.to(
+            // Moon pin
+            rocketTimeline.fromTo(
                 "#moon",
+                {
+                    opacity: 1
+                },
                 {
                     scrollTrigger: {
                         trigger: ".portfolio-header",
@@ -278,6 +305,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                         pin: "#moon",
                         pinSpacing: false
                     },
+                    opacity: .5
                 }
             );
 
@@ -309,7 +337,8 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                 x: 300,
                 opacity: 0
             });
-            animateTexts(4, 6, 1300, 85, {
+
+            animateTexts(4, 6, 1400, 85, {
                 y: 100,
                 clipPath: "inset(100% 0 0 0)",
                 opacity: 0
@@ -321,8 +350,16 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
 
     const animateTexts = (length: number, start: number, base: number, gap: number, from: { x?: number; y?: number; clipPath?: string; opacity?: number }) => {
         [...Array(length)].forEach((_, i) => {
-            gsap.fromTo(`.portfolio-content-text-${i + start}`,
-                from,
+            const selector = `portfolio-content-text-${i + start}`;
+            const elem = document.getElementsByClassName(selector)[0];
+            const newFrom = { ...from };
+
+            if (elem && elem.classList.contains("text-reversed") && from.x != null) {
+                newFrom.x = -from.x;
+            }
+
+            gsap.fromTo(elem,
+                newFrom,
                 {
                     scrollTrigger: {
                         trigger: ".portfolio-header",
@@ -332,11 +369,172 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                     },
                     y: 0,
                     x: 0,
-                    clipPath: "inset(0% 0 0 0)",
+                    clipPath: "inset(-50% -50px -50px -50px)",
                     opacity: 1
                 }
             );
         });
+    }
+
+    const responsivePlanetsStyle: Planets[] = [
+        {
+            name: "earth",
+            base: {
+                width: {
+                    default: 400,
+                    unit: "px",
+                    gap: 250,
+                },
+                bottom: {
+                    default: -10,
+                    unit: "%",
+                    gap: -23,
+                },
+                left: {
+                    default: 50,
+                    unit: "%",
+                },
+                transform: "translateX(-50%)"
+            },
+            zIndex: 7
+        },
+        {
+            name: "jupiter",
+            base: {
+                width: {
+                    default: 400,
+                    unit: "px",
+                    gap: 100,
+                },
+                bottom: {
+                    default: -20,
+                    unit: "%",
+                    gap: -12,
+                },
+                right: {
+                    default: 60,
+                    unit: "%",
+                    gap: -10,
+                }
+            },
+            zIndex: 5
+        },
+        {
+            name: "mars",
+            base: {
+                width: {
+                    default: 300,
+                    unit: "px",
+                    gap: 50,
+                },
+                bottom: {
+                    default: 32,
+                    unit: "%",
+                },
+                left: {
+                    default: -10,
+                    unit: "%",
+                }
+            },
+            zIndex: 6
+        },
+        {
+            name: "pluto",
+            base: {
+                width: {
+                    default: 100,
+                    unit: "px",
+                    gap: 10,
+                },
+                bottom: {
+                    default: 85,
+                    unit: "%",
+                    gap: -5,
+                },
+                right: {
+                    default: 0,
+                    unit: "%",
+                }
+            },
+            zIndex: 3
+        },
+        {
+            name: "uranus",
+            base: {
+                width: {
+                    default: 150,
+                    unit: "px",
+                    gap: 50,
+                },
+                bottom: {
+                    default: -20,
+                    unit: "%",
+                },
+                right: {
+                    default: -20,
+                    unit: "%",
+                    gap: 0,
+                }
+            },
+            zIndex: 2
+        },
+    ];
+
+    const getTextHeight = (text: string): string => {
+        const gapIndex = getBreakpointValue();
+
+        let height = 500;
+        if (gapIndex == 0) {
+            height += 150;
+        } else if (gapIndex == 1) {
+            height += 50;
+        } else if (gapIndex == 2) {
+            height += 150;
+        } else if (gapIndex == 3) {
+            height -= 10;
+        } else if (gapIndex == 4) {
+            height += 50;
+        }
+
+        let indent = "0";
+        if (text === "first") {
+            indent = `+=${height}`;
+        } else {
+            indent = `-=${height}`;
+        }
+
+        return indent;
+    }
+
+    const getPlanetStyle = (name: string) => {
+        const planet = responsivePlanetsStyle.find(planet => planet.name === name);
+        if (!planet) return;
+
+        const gapIndex = getBreakpointValue();
+
+        const style: PlanetBaseStyle = {
+            width: `${planet.base.width.default as number + ((planet.base.width.gap ?? 0) * gapIndex)
+                }${planet.base.width.unit}`,
+            zIndex: planet.zIndex ?? 0,
+        }
+
+        if (planet.base.bottom != null) {
+            style.bottom = `${planet.base.bottom.default as number + ((planet.base.bottom.gap ?? 0) * gapIndex)
+                }${planet.base.bottom.unit}`
+        }
+        if (planet.base.left != null) {
+            style.left = `${planet.base.left.default as number + ((planet.base.left.gap ?? 0) * gapIndex)
+                }${planet.base.left.unit}`
+        }
+        if (planet.base.right != null) {
+            style.right = `${planet.base.right.default as number + ((planet.base.right.gap ?? 0) * gapIndex)
+                }${planet.base.right.unit}`
+        }
+        if (planet.base.transform != null) {
+            style.transform = planet.base.transform;
+        }
+
+        return style;
     }
 
     return (
@@ -356,19 +554,22 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                 </svg>
                 {firstText && (
                     <div className="parallax-text-first" ref={firstTextRef}>
-                        <Title text={firstText} size="big" transform="upper" decoration="underline" effect="shadow" />
+                        <Title text={firstText} size="big" transform="upper" effect="shadow" futurist />
                     </div>
                 )}
                 {secondText && (
                     <div className="parallax-text-second" ref={secondTextRef}>
-                        <Title text={secondText} size="medium" transform="upper" effect="shadow" />
+                        <Title text={secondText} size="medium" transform="upper" effect="shadow" futurist />
                     </div>
                 )}
-                <img ref={earth} className='earth' src="/parallax/planets/earth.png" />
-                <img ref={jupiter} className='jupiter' src="/parallax/planets/jupiter.png" />
-                <img ref={mars} className='mars' src="/parallax/planets/mars.png" />
-                <img ref={pluto} className='pluto' src="/parallax/planets/pluto.png" />
-                <img ref={uranus} className='uranus' src="/parallax/planets/uranus.png" />
+                <div className="planet-container">
+                    <img ref={earth} className='earth' src="/parallax/planets/earth.png" style={getPlanetStyle("earth")} />
+
+                </div>
+                <img ref={jupiter} className='jupiter' src="/parallax/planets/jupiter.png" style={getPlanetStyle("jupiter")} />
+                <img ref={mars} className='mars' src="/parallax/planets/mars.png" style={getPlanetStyle("mars")} />
+                <img ref={pluto} className='pluto' src="/parallax/planets/pluto.png" style={getPlanetStyle("pluto")} />
+                <img ref={uranus} className='uranus' src="/parallax/planets/uranus.png" style={getPlanetStyle("uranus")} />
             </div>
         </div>
     )

@@ -6,6 +6,8 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import TabInterface from "@/app/interfaces/tab.interface";
 import Parallax from "../parallax/parallax";
 import Title from "../title/title";
+import { useIsMobile } from "@/app/contexts/mobile-context";
+import { PlanetBaseStyle, Planets } from "@/app/interfaces/planet.interface";
 
 import "./portfolio.scss";
 
@@ -14,6 +16,8 @@ type PortfolioMainPageProps = {
 };
 
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
+    const { isMobile, getBreakpointValue } = useIsMobile();
+
     const mainSections = [
         {
             name: "Projects",
@@ -45,21 +49,26 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
         callback();
     }
 
+    const getMoonWidth = () => {
+        const value = isMobile ? 300 : 500;
+        return `${value}px`;
+    }
+
     return (
         <div className="portfolio">
             <Parallax firstText="Mikaël Léger" secondText="Full-Stack Developer Junior" />
             <div className="portfolio-header">
-                <Title text="Welcome to my portfolio!" size="medium" />
+                <Title text="Welcome to my portfolio!" size={isMobile ? "small" : "medium"} futurist />
             </div>
             <div id="rocket" className="rocket-ship">
                 <img src="parallax/rocket.png" />
             </div>
-            <div className="portfolio-content">
-                <div className="portfolio-content-text">
-                    <div className="portfolio-content-text-1">
+            <div className="portfolio-content first-content">
+                <div className="portfolio-content-text" style={{ marginTop: isMobile ? "-150px" : "0" }}>
+                    <div className={`portfolio-content-text-1 ${isMobile ? "text-reversed" : ""}`}>
                         French developer<img className="logo-icon" src="/icons/baguette.png" />
                     </div>
-                    <div className="portfolio-content-text-2">
+                    <div className={`portfolio-content-text-2 ${isMobile ? "text-reversed" : ""}`}>
                         Based in Belgium<img className="logo-icon" src="/icons/fries.png" />
                     </div>
                 </div>
@@ -80,22 +89,22 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                         Loves creativity<img className="logo-icon" src="/icons/creativity.png" />
                     </div>
                 </div>
-                <div className="portfolio-content-moon">
+                <div className="portfolio-content-moon" style={{ width: getMoonWidth() }}>
                     <img id="moon" className='moon' src="/parallax/planets/moon.png" />
                 </div>
             </div>
-            <div className="portfolio-content">
+            <div className="portfolio-content second-content">
                 <div className="portfolio-content-text">
-                    <div className="portfolio-content-text-6">
+                    <div className={`portfolio-content-text-6`}>
                         Always aim for the moon!
                     </div>
-                    <div className="portfolio-content-text-7">
+                    <div className={`portfolio-content-text-7`}>
                         Likes acquiring new knowledge
                     </div>
-                    <div className="portfolio-content-text-8">
+                    <div className={`portfolio-content-text-8`}>
                         Fast-learner
                     </div>
-                    <div className="portfolio-content-text-9">
+                    <div className={`portfolio-content-text-9`}>
                         Altruist
                     </div>
                 </div>
