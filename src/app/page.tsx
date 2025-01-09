@@ -559,7 +559,7 @@ export default function Home() {
             result: "Project Portfolio served on port 443"
         },
         {
-            command: `xdg-open ${currentLocation}`,
+            command: `locate portfolio`,
         },
         {
             command: '',
@@ -577,7 +577,7 @@ export default function Home() {
     }
 
     const onFirstAnimationFinish = () => {
-        openWindow(0);
+        openWindow(4);
     }
 
     const openWindow = (window_id: number, tabName: string | null = null) => {

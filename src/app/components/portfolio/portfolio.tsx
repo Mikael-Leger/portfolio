@@ -16,7 +16,9 @@ type PortfolioMainPageProps = {
 };
 
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
-    const { isMobile, getBreakpointValue } = useIsMobile();
+    const { isMobile } = useIsMobile();
+
+    const moon = useRef(null);
 
     const mainSections = [
         {
@@ -56,7 +58,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
 
     return (
         <div className="portfolio">
-            <Parallax firstText="Mikaël Léger" secondText="Full-Stack Developer Junior" />
+            <Parallax firstText="Mikaël Léger" secondText="Full-Stack Developer Junior" moon={moon} />
             <div className="portfolio-header">
                 <Title text="Welcome to my portfolio!" size={isMobile ? "small" : "medium"} futurist />
             </div>
@@ -90,7 +92,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                     </div>
                 </div>
                 <div className="portfolio-content-moon" style={{ width: getMoonWidth() }}>
-                    <img id="moon" className='moon' src="/parallax/planets/moon.png" />
+                    <img ref={moon} className='moon' src="/parallax/planets/moon.png" />
                 </div>
             </div>
             <div className="portfolio-content second-content">

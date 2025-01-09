@@ -11,10 +11,11 @@ import "./parallax.scss";
 type ParallaxProps = {
     firstText?: string;
     secondText?: string;
+    moon: RefObject<null>;
 };
 
-function Parallax({ firstText, secondText }: ParallaxProps) {
-    const { isMobile, breakpoint, getBreakpointValue } = useIsMobile();
+function Parallax({ firstText, secondText, moon }: ParallaxProps) {
+    const { isMobile, getBreakpointValue } = useIsMobile();
 
     const [background, setBackground] = useState(20);
     const [shootingStarOffset, setShootingStarLength] = useState(-500);
@@ -31,6 +32,9 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
     const uranus = useRef(null);
 
     useEffect(() => {
+        if (moon.current == null) {
+            return;
+        }
         const ctx = gsap.context(() => {
             gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -291,7 +295,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
             );
             // Moon pin
             rocketTimeline.fromTo(
-                "#moon",
+                moon.current,
                 {
                     opacity: 1
                 },
@@ -302,7 +306,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
                         end: "1900% center",
                         toggleActions: "restart none reverse none",
                         scrub: true,
-                        pin: "#moon",
+                        pin: moon.current,
                         pinSpacing: false
                     },
                     opacity: .5
@@ -346,7 +350,7 @@ function Parallax({ firstText, secondText }: ParallaxProps) {
 
         });
         return () => ctx.revert();
-    }, []);
+    }, [moon.current]);
 
     const animateTexts = (length: number, start: number, base: number, gap: number, from: { x?: number; y?: number; clipPath?: string; opacity?: number }) => {
         [...Array(length)].forEach((_, i) => {
