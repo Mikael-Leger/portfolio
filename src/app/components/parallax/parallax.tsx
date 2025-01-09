@@ -149,6 +149,9 @@ function Parallax({ firstText, secondText, moon }: ParallaxProps) {
             rocketTimeline.fromTo(
                 "#rocket",
                 {
+                    x: 0,
+                    y: 0,
+                    opacity: 0,
                     rotate: 50
                 },
                 {
@@ -567,13 +570,13 @@ function Parallax({ firstText, secondText, moon }: ParallaxProps) {
                     </div>
                 )}
                 <div className="planet-container">
-                    <img ref={earth} className='earth' src="/parallax/planets/earth.png" style={getPlanetStyle("earth")} />
+                    <img ref={earth} className='earth' src="/parallax/planets/earth.webp" style={getPlanetStyle("earth")} />
 
                 </div>
-                <img ref={jupiter} className='jupiter' src="/parallax/planets/jupiter.png" style={getPlanetStyle("jupiter")} />
-                <img ref={mars} className='mars' src="/parallax/planets/mars.png" style={getPlanetStyle("mars")} />
-                <img ref={pluto} className='pluto' src="/parallax/planets/pluto.png" style={getPlanetStyle("pluto")} />
-                <img ref={uranus} className='uranus' src="/parallax/planets/uranus.png" style={getPlanetStyle("uranus")} />
+                <img ref={jupiter} className='jupiter' src="/parallax/planets/jupiter.webp" style={getPlanetStyle("jupiter")} />
+                <img ref={mars} className='mars' src="/parallax/planets/mars.webp" style={getPlanetStyle("mars")} />
+                <img ref={pluto} className='pluto' src="/parallax/planets/pluto.webp" style={getPlanetStyle("pluto")} />
+                <img ref={uranus} className='uranus' src="/parallax/planets/uranus.webp" style={getPlanetStyle("uranus")} />
             </div>
         </div>
     )
