@@ -44,7 +44,6 @@ export default function Home() {
     const windowRefs = useRef<Record<number, WindowRef>>({});
     const lastUpdatedWindowRef = useRef<{ id: number } | null>(null);
     const lastOpenedWindowRef = useRef<{ id: number } | null>(null);
-    const lastClosedWindowRef = useRef<{ id: number } | null>(null);
     const newTabIndex = useRef<number>(-1);
     const usedDefaultTabs = useRef<boolean>(false);
 
@@ -220,11 +219,6 @@ export default function Home() {
             handleWindowAction(0, "switchTab", "browser", newTabIndex.current);
             newTabIndex.current = -1;
         }
-        const lastClosedId = lastClosedWindowRef.current?.id;
-        if (lastClosedId) {
-            removeLastFromOrder(lastClosedId);
-            lastClosedWindowRef.current = null;
-        }
 
         const window_id = lastOpenedWindowRef.current?.id;
         if (window_id == null) {
@@ -300,15 +294,16 @@ export default function Home() {
         setWindows(prevWindows => {
             let currentWindows = [...prevWindows];
 
+            const windowIndex = currentWindows.findIndex(window => window.window_id == window_id);
+            const tmpZIndex = currentWindows[windowIndex].zIndex - 100;
+
             const updatedWindows = currentWindows.map(item =>
-                ({ ...item, zIndex: Math.max(item.zIndex + 100, 0) })
+                ({ ...item, zIndex: item.zIndex == tmpZIndex ? item.zIndex + 100 : item.zIndex })
             );
 
-            const windowIndex = updatedWindows.findIndex(window => window.window_id == window_id);
             if (windowIndex != -1) {
-                updatedWindows[windowIndex].zIndex = 0;
+                updatedWindows[windowIndex].zIndex -= 100;
             }
-
             return updatedWindows;
         });
     }
@@ -327,18 +322,20 @@ export default function Home() {
         if (higherWindow && higherWindow.zIndex != 0 && higherWindow.window_id == id) {
             return;
         }
+
         setWindows(prevWindows => {
             let currentWindows = [...prevWindows];
 
+            const windowIndex = currentWindows.findIndex(window => window.window_id == id);
+            const tmpZIndex = currentWindows[windowIndex].zIndex;
+
             const updatedWindows = currentWindows.map(item =>
-                ({ ...item, zIndex: Math.max(item.zIndex - 100, 0) })
+                ({ ...item, zIndex: item.zIndex <= tmpZIndex ? item.zIndex : Math.max(item.zIndex - 100, 0) })
             );
 
-            const windowIndex = updatedWindows.findIndex(window => window.window_id == id);
             if (windowIndex != -1) {
                 updatedWindows[windowIndex].zIndex = windows.length * 100;
             }
-
             return updatedWindows;
         });
     }
@@ -642,7 +639,6 @@ export default function Home() {
                 if (windowIndex != -1) {
                     updatedWindows[windowIndex].hide = true;
                 }
-                lastClosedWindowRef.current = { id: window_id };
                 return updatedWindows;
             })
         }, duration * 1000);
