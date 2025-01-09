@@ -32,6 +32,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
     const pluto = useRef(null);
     const uranus = useRef(null);
 
+    const imagesLoaded = useRef(0);
+
     useEffect(() => {
         if (moon.current == null || portfolioRef.current == null) {
             return;
@@ -45,14 +47,15 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             const images = Array.from(
                 (portfolioRef.current as HTMLDivElement).querySelectorAll("img.planet")
             ) as HTMLImageElement[];
-            let imagesLoaded = 0;
 
             images?.forEach((img) => {
                 img.onload = () => {
-                    imagesLoaded++;
+                    imagesLoaded.current++;
                     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+                    console.log({ imagesLoaded: imagesLoaded.current, length: images.length });
 
-                    if (imagesLoaded === images.length) {
+
+                    if (imagesLoaded.current === images.length) {
                         const timeline = gsap.timeline({
                             defaults: { duration: 1 },
                             scrollTrigger: {
@@ -102,11 +105,11 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         timeline.fromTo(
                             earth.current,
                             {
-                                translateX: "-50%",
+                                translate: "(-50%, 0)",
                                 rotate: 0
                             },
                             {
-                                translateX: "-50%",
+                                translate: "(-50%, 0)",
                                 rotate: "+=90"
                             },
                             0
