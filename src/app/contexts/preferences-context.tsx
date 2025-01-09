@@ -30,76 +30,32 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
     };
 
     const getPreferredColor = async (theme: string) => {
-        try {
-            let r = 0, g = 0, b = 0;
-            const response = await fetch('/api/getColorizationColor');
-
-            if (response.status == 200) {
-                const data = await response.json();
-                r = data.r;
-                g = data.g;
-                b = data.b;
-            } else if (theme == 'dark') {
-                r = 33;
-                g = 33;
-                b = 33;
-            } else {
-                r = 222;
-                g = 222;
-                b = 222;
-            }
-
-            const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-            const factorAbs = 30;
-            const factor = luminance < 128 ? -factorAbs : factorAbs;
-
-            const rShaded = shadeColorValue(r, factor);
-            const gShaded = shadeColorValue(g, factor);
-            const bShaded = shadeColorValue(b, factor);
-
-            setPreferences({
-                theme,
-                color: {
-                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
-                    textColor: luminance < 128 ? "white" : "black",
-                    backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
-                }
-            });
-
-        } catch (error) {
-            console.error('Error fetching accent color:', error);
-
-            let r, g, b;
-            let rShaded, gShaded, bShaded;
-            if (theme == "dark") {
-                r = 220;
-                g = 220;
-                b = 220;
-                rShaded = 200;
-                gShaded = 200;
-                bShaded = 200;
-            } else {
-                r = 20;
-                g = 20;
-                b = 20;
-                rShaded = 40;
-                gShaded = 40;
-                bShaded = 40;
-            }
-            setPreferences({
-                theme,
-                color: {
-                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
-                    textColor: theme == "dark" ? "white" : "black",
-                    backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
-                }
-            });
+        let r, g, b;
+        let rShaded, gShaded, bShaded;
+        if (theme == "dark") {
+            r = 220;
+            g = 220;
+            b = 220;
+            rShaded = 200;
+            gShaded = 200;
+            bShaded = 200;
+        } else {
+            r = 20;
+            g = 20;
+            b = 20;
+            rShaded = 40;
+            gShaded = 40;
+            bShaded = 40;
         }
+        setPreferences({
+            theme,
+            color: {
+                backgroundColor: `rgb(${r}, ${g}, ${b})`,
+                textColor: theme == "dark" ? "white" : "black",
+                backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
+            }
+        });
     };
-
-    const shadeColorValue = (colorValue: number, factor: number) => {
-        return Math.min(255, Math.max(0, colorValue + factor));
-    }
 
     return (
         <PreferencesContext.Provider value={preferences}>

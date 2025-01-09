@@ -52,8 +52,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 img.onload = () => {
                     imagesLoaded.current++;
                     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-                    console.log({ imagesLoaded: imagesLoaded.current, length: images.length });
-
 
                     if (imagesLoaded.current === images.length) {
                         const timeline = gsap.timeline({

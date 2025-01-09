@@ -14,22 +14,7 @@ export const UsernameProvider: React.FC<UsernameProviderProps> = ({ children }) 
 	const [username, setUsername] = useState<UsernameContextType>(null);
 
 	useEffect(() => {
-		const fetchUsername = async () => {
-			try {
-				const response = await fetch('/api/getUsername');
-
-				if (response.status == 200) {
-					const data = await response.json();
-					setUsername(data.username);
-				}
-
-			} catch (e) {
-				console.error(`Fetch error: ${e}`);
-				setUsername("dev-user");
-			}
-		};
-
-		fetchUsername();
+		setUsername("dev-user");
 	}, []);
 
 	return (
