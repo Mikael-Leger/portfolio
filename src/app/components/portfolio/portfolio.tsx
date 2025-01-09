@@ -112,8 +112,9 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                     </div>
                 </div>
                 <div className="portfolio-content-linear" >
-                    <div className="portfolio-content-text">
-                        Explore and learn more about me below
+                    <div className="portfolio-content-linear-text">
+                        {/* <Title text="Welcome to my portfolio!" size={isMobile ? "small" : "medium"} futurist /> */}
+                        <Title text="Explore and learn more about me below" futurist />
                     </div>
                 </div>
             </div>

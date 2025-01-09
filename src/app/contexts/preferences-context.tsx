@@ -32,7 +32,7 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
     const getPreferredColor = async (theme: string) => {
         let r, g, b;
         let rShaded, gShaded, bShaded;
-        if (theme == "dark") {
+        if (theme == "light") {
             r = 220;
             g = 220;
             b = 220;
