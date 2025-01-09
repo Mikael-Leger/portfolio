@@ -12,9 +12,10 @@ type ParallaxProps = {
     firstText?: string;
     secondText?: string;
     moon: RefObject<null>;
+    portfolioRef: RefObject<null>;
 };
 
-function Parallax({ firstText, secondText, moon }: ParallaxProps) {
+function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) {
     const { isMobile, getBreakpointValue } = useIsMobile();
 
     const [background, setBackground] = useState(20);
@@ -32,328 +33,345 @@ function Parallax({ firstText, secondText, moon }: ParallaxProps) {
     const uranus = useRef(null);
 
     useEffect(() => {
-        if (moon.current == null) {
+        if (moon.current == null || portfolioRef.current == null) {
             return;
         }
+
         const ctx = gsap.context(() => {
-            gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+            if (moon.current == null || portfolioRef.current == null) {
+                return;
+            }
 
-            const timeline = gsap.timeline({
-                defaults: { duration: 1 },
-                scrollTrigger: {
-                    trigger: parallaxRef.current,
-                    start: "top top",
-                    end: "2000 bottom",
-                    scrub: true,
-                    pin: true,
-                    onUpdate: (self) => {
-                        setBackground(Math.ceil(self.progress * 100 + 20))
-                        setShootingStarLength(-500 - (self.progress * 3000));
-                    },
-                },
+            const images = Array.from(
+                (portfolioRef.current as HTMLDivElement).querySelectorAll("img.planet")
+            ) as HTMLImageElement[];
+            let imagesLoaded = 0;
+
+            images?.forEach((img) => {
+                img.onload = () => {
+                    imagesLoaded++;
+                    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+                    if (imagesLoaded === images.length) {
+                        const timeline = gsap.timeline({
+                            defaults: { duration: 1 },
+                            scrollTrigger: {
+                                trigger: parallaxRef.current,
+                                start: "top top",
+                                end: "2000 bottom",
+                                scrub: true,
+                                pin: true,
+                                onUpdate: (self) => {
+                                    setBackground(Math.ceil(self.progress * 100 + 20))
+                                    setShootingStarLength(-500 - (self.progress * 3000));
+                                },
+                            },
+                        });
+                        timeline.to(
+                            firstTextRef.current,
+                            {
+                                y: () => getTextHeight("first"),
+                                scale: .2,
+                                opacity: 0
+                            },
+                            0
+                        );
+                        timeline.to(
+                            secondTextRef.current,
+                            {
+                                y: () => getTextHeight("second"),
+                                scale: 1,
+                                opacity: 1
+                            },
+                            0
+                        );
+                        timeline.set(
+                            shootingStar.current,
+                            {
+                                strokeDasharray: 200,
+                                strokeDashoffset: 500
+                            })
+                        timeline.to(
+                            shootingStar.current,
+                            {
+                                duration: 2,
+                                ease: "power2.out"
+                            },
+                            0
+                        );
+                        timeline.fromTo(
+                            earth.current,
+                            {
+                                translateX: "-50%",
+                                rotate: 0
+                            },
+                            {
+                                translateX: "-50%",
+                                rotate: "+=90"
+                            },
+                            0
+                        );
+                        timeline.to(
+                            jupiter.current,
+                            {
+                                y: "-=300",
+                                x: "+=600",
+                            },
+                            0
+                        );
+                        timeline.to(
+                            pluto.current,
+                            {
+                                motionPath: {
+                                    path: [
+                                        { x: -600, y: 350 },
+                                        { x: -1200, y: -50 }
+                                    ],
+                                    curviness: 1.5,
+                                },
+                            },
+                            0
+                        );
+                        timeline.to(
+                            mars.current,
+                            {
+                                motionPath: {
+                                    path: [
+                                        { x: 100, y: -150 },
+                                        { x: 800, y: -450 }
+                                    ],
+                                    curviness: 1.5,
+                                },
+                            },
+                            0
+                        );
+                        timeline.to(
+                            uranus.current,
+                            {
+                                motionPath: {
+                                    path: [
+                                        { x: -650, y: -650 },
+                                        { x: -150, y: -300 }
+                                    ],
+                                    curviness: 1.5,
+                                },
+                                zIndex: 4
+                            },
+                            0
+                        );
+                        const rocketTimeline = gsap.timeline();
+                        // First details
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                x: 0,
+                                y: 0,
+                                opacity: 0,
+                                rotate: 50
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "center center",
+                                    end: "300% center",
+                                    toggleActions: "restart none none none",
+                                    scrub: true
+                                },
+                                motionPath: {
+                                    path: [
+                                        { x: 200, y: -50 },
+                                        { x: 285, y: 210 }
+                                    ],
+                                    curviness: 1.5,
+                                },
+                                rotate: "+=85",
+                                opacity: 1
+                            }
+                        );
+                        let tmpX = isMobile ? -40 : 100;
+                        let tmpX2 = isMobile ? 10 : 150;
+                        let tmpX3 = isMobile ? 150 : 400;
+                        // Image
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                x: 285,
+                                y: 210
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "300% center",
+                                    end: "900% center",
+                                    toggleActions: "restart none none none",
+                                    scrub: true,
+                                },
+                                motionPath: {
+                                    path: [
+                                        { x: tmpX, y: 420 },
+                                        { x: tmpX, y: 1500 },
+                                    ],
+                                    curviness: 0,
+                                },
+                            }
+                        );
+                        // Moon below
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                x: tmpX,
+                                y: 1500
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "900% center",
+                                    end: "1100% center",
+                                    toggleActions: "restart none none none",
+                                    scrub: true,
+                                },
+                                motionPath: {
+                                    path: [
+                                        { x: tmpX2 + 50, y: 1600 },
+                                        { x: tmpX3, y: 1900 },
+                                    ],
+                                    curviness: 1.5,
+                                },
+                            }
+                        );
+                        // Backflip
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                rotate: 135,
+                                x: tmpX3,
+                                y: 1900
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "1100% center",
+                                    end: "1300% center",
+                                    toggleActions: "restart none none none",
+                                    scrub: true,
+                                },
+                                motionPath: {
+                                    path: [
+                                        { x: tmpX3, y: 2100 },
+                                    ],
+                                    curviness: 0,
+                                },
+                                rotate: "+=180"
+                            }
+                        );
+                        // Land on moon
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                x: tmpX3,
+                                y: 2100,
+                                zIndex: 0
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "1300% center",
+                                    end: "1400% center",
+                                    toggleActions: "restart none none none",
+                                    scrub: true,
+                                },
+                                motionPath: {
+                                    path: [
+                                        { x: tmpX3, y: 2300 },
+                                    ],
+                                    curviness: 0,
+                                },
+                                zIndex: 1
+                            }
+                        );
+                        // Rocket pin
+                        rocketTimeline.fromTo(
+                            "#rocket",
+                            {
+                                x: tmpX3,
+                                y: 2300,
+                                opacity: 1,
+                                zIndex: 1
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "1400% center",
+                                    end: "1900% center",
+                                    toggleActions: "restart none reverse none",
+                                    scrub: true,
+                                    pin: "#rocket",
+                                    pinSpacing: false
+                                },
+                                opacity: .5
+                            }
+                        );
+                        // Moon pin
+                        rocketTimeline.fromTo(
+                            moon.current,
+                            {
+                                opacity: 1
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: "1400% center",
+                                    end: "1900% center",
+                                    toggleActions: "restart none reverse none",
+                                    scrub: true,
+                                    pin: moon.current,
+                                    pinSpacing: false
+                                },
+                                opacity: .5
+                            }
+                        );
+
+                        gsap.fromTo(
+                            "#me",
+                            {
+                                opacity: 0,
+                                y: 300
+                            },
+                            {
+                                scrollTrigger: {
+                                    trigger: ".portfolio-header",
+                                    start: `300% center`,
+                                    end: `500% center`,
+                                    toggleActions: "restart none reverse none",
+                                    scrub: true,
+                                },
+                                opacity: .7,
+                                y: 0
+                            }
+                        );
+
+                        animateTexts(2, 1, 150, 100, {
+                            x: 300,
+                            opacity: 0
+                        });
+
+                        animateTexts(3, 3, 700, 100, {
+                            x: 300,
+                            opacity: 0
+                        });
+
+                        animateTexts(4, 6, 1400, 85, {
+                            y: 100,
+                            clipPath: "inset(100% 0 0 0)",
+                            opacity: 0
+                        });
+                    }
+                };
             });
-            timeline.to(
-                firstTextRef.current,
-                {
-                    y: () => getTextHeight("first"),
-                    scale: .2,
-                    opacity: 0
-                },
-                0
-            );
-            timeline.to(
-                secondTextRef.current,
-                {
-                    y: () => getTextHeight("second"),
-                    scale: 1,
-                    opacity: 1
-                },
-                0
-            );
-            timeline.set(
-                shootingStar.current,
-                {
-                    strokeDasharray: 200,
-                    strokeDashoffset: 500
-                })
-            timeline.to(
-                shootingStar.current,
-                {
-                    duration: 2,
-                    ease: "power2.out"
-                },
-                0
-            );
-            timeline.fromTo(
-                earth.current,
-                {
-                    translateX: "-50%",
-                    rotate: 0
-                },
-                {
-                    translateX: "-50%",
-                    rotate: "+=90"
-                },
-                0
-            );
-            timeline.to(
-                jupiter.current,
-                {
-                    y: "-=300",
-                    x: "+=600",
-                },
-                0
-            );
-            timeline.to(
-                pluto.current,
-                {
-                    motionPath: {
-                        path: [
-                            { x: -600, y: 350 },
-                            { x: -1200, y: -50 }
-                        ],
-                        curviness: 1.5,
-                    },
-                },
-                0
-            );
-            timeline.to(
-                mars.current,
-                {
-                    motionPath: {
-                        path: [
-                            { x: 100, y: -150 },
-                            { x: 800, y: -450 }
-                        ],
-                        curviness: 1.5,
-                    },
-                },
-                0
-            );
-            timeline.to(
-                uranus.current,
-                {
-                    motionPath: {
-                        path: [
-                            { x: -650, y: -650 },
-                            { x: -150, y: -300 }
-                        ],
-                        curviness: 1.5,
-                    },
-                    zIndex: 4
-                },
-                0
-            );
-            const rocketTimeline = gsap.timeline();
-            // First details
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    x: 0,
-                    y: 0,
-                    opacity: 0,
-                    rotate: 50
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "center center",
-                        end: "300% center",
-                        toggleActions: "restart none none none",
-                        scrub: true
-                    },
-                    motionPath: {
-                        path: [
-                            { x: 200, y: -50 },
-                            { x: 285, y: 210 }
-                        ],
-                        curviness: 1.5,
-                    },
-                    rotate: "+=85",
-                    opacity: 1
-                }
-            );
-            let tmpX = isMobile ? -40 : 100;
-            let tmpX2 = isMobile ? 10 : 150;
-            let tmpX3 = isMobile ? 150 : 400;
-            // Image
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    x: 285,
-                    y: 210
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "300% center",
-                        end: "900% center",
-                        toggleActions: "restart none none none",
-                        scrub: true,
-                    },
-                    motionPath: {
-                        path: [
-                            { x: tmpX, y: 420 },
-                            { x: tmpX, y: 1500 },
-                        ],
-                        curviness: 0,
-                    },
-                }
-            );
-            // Moon below
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    x: tmpX,
-                    y: 1500
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "900% center",
-                        end: "1100% center",
-                        toggleActions: "restart none none none",
-                        scrub: true,
-                    },
-                    motionPath: {
-                        path: [
-                            { x: tmpX2 + 50, y: 1600 },
-                            { x: tmpX3, y: 1900 },
-                        ],
-                        curviness: 1.5,
-                    },
-                }
-            );
-            // Backflip
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    rotate: 135,
-                    x: tmpX3,
-                    y: 1900
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "1100% center",
-                        end: "1300% center",
-                        toggleActions: "restart none none none",
-                        scrub: true,
-                    },
-                    motionPath: {
-                        path: [
-                            { x: tmpX3, y: 2100 },
-                        ],
-                        curviness: 0,
-                    },
-                    rotate: "+=180"
-                }
-            );
-            // Land on moon
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    x: tmpX3,
-                    y: 2100,
-                    zIndex: 0
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "1300% center",
-                        end: "1400% center",
-                        toggleActions: "restart none none none",
-                        scrub: true,
-                    },
-                    motionPath: {
-                        path: [
-                            { x: tmpX3, y: 2300 },
-                        ],
-                        curviness: 0,
-                    },
-                    zIndex: 1
-                }
-            );
-            // Rocket pin
-            rocketTimeline.fromTo(
-                "#rocket",
-                {
-                    x: tmpX3,
-                    y: 2300,
-                    opacity: 1,
-                    zIndex: 1
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "1400% center",
-                        end: "1900% center",
-                        toggleActions: "restart none reverse none",
-                        scrub: true,
-                        pin: "#rocket",
-                        pinSpacing: false
-                    },
-                    opacity: .5
-                }
-            );
-            // Moon pin
-            rocketTimeline.fromTo(
-                moon.current,
-                {
-                    opacity: 1
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: "1400% center",
-                        end: "1900% center",
-                        toggleActions: "restart none reverse none",
-                        scrub: true,
-                        pin: moon.current,
-                        pinSpacing: false
-                    },
-                    opacity: .5
-                }
-            );
-
-            gsap.fromTo(
-                "#me",
-                {
-                    opacity: 0,
-                    y: 300
-                },
-                {
-                    scrollTrigger: {
-                        trigger: ".portfolio-header",
-                        start: `300% center`,
-                        end: `500% center`,
-                        toggleActions: "restart none reverse none",
-                        scrub: true,
-                    },
-                    opacity: .7,
-                    y: 0
-                }
-            );
-
-            animateTexts(2, 1, 150, 100, {
-                x: 300,
-                opacity: 0
-            });
-
-            animateTexts(3, 3, 700, 100, {
-                x: 300,
-                opacity: 0
-            });
-
-            animateTexts(4, 6, 1400, 85, {
-                y: 100,
-                clipPath: "inset(100% 0 0 0)",
-                opacity: 0
-            });
-
         });
+
         return () => ctx.revert();
-    }, [moon.current]);
+    }, [moon.current, portfolioRef.current]);
 
     const animateTexts = (length: number, start: number, base: number, gap: number, from: { x?: number; y?: number; clipPath?: string; opacity?: number }) => {
         [...Array(length)].forEach((_, i) => {
@@ -570,13 +588,13 @@ function Parallax({ firstText, secondText, moon }: ParallaxProps) {
                     </div>
                 )}
                 <div className="planet-container">
-                    <img ref={earth} className='earth' src="/parallax/planets/earth.webp" style={getPlanetStyle("earth")} />
+                    <img ref={earth} className='planet earth' src="/parallax/planets/earth.webp" style={getPlanetStyle("earth")} />
 
                 </div>
-                <img ref={jupiter} className='jupiter' src="/parallax/planets/jupiter.webp" style={getPlanetStyle("jupiter")} />
-                <img ref={mars} className='mars' src="/parallax/planets/mars.webp" style={getPlanetStyle("mars")} />
-                <img ref={pluto} className='pluto' src="/parallax/planets/pluto.webp" style={getPlanetStyle("pluto")} />
-                <img ref={uranus} className='uranus' src="/parallax/planets/uranus.webp" style={getPlanetStyle("uranus")} />
+                <img ref={jupiter} className='planet jupiter' src="/parallax/planets/jupiter.webp" style={getPlanetStyle("jupiter")} />
+                <img ref={mars} className='planet mars' src="/parallax/planets/mars.webp" style={getPlanetStyle("mars")} />
+                <img ref={pluto} className='planet pluto' src="/parallax/planets/pluto.webp" style={getPlanetStyle("pluto")} />
+                <img ref={uranus} className='planet uranus' src="/parallax/planets/uranus.webp" style={getPlanetStyle("uranus")} />
             </div>
         </div>
     )
