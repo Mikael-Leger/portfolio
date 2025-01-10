@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export interface PlanetProperty {
     default: number | string;
     unit: string;
@@ -30,5 +32,6 @@ export interface PlanetBaseStyle {
 export interface Planets {
     name: string;
     base: PlanetBase;
+    ref: RefObject<null>;
     zIndex?: number;
 }

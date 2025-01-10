@@ -52,6 +52,9 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 img.onload = () => {
                     imagesLoaded.current++;
                     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+                    if (isMobile) {
+                        ScrollTrigger.normalizeScroll(true);
+                    }
 
                     if (imagesLoaded.current === images.length) {
                         const timeline = gsap.timeline({
@@ -115,8 +118,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         timeline.to(
                             jupiter.current,
                             {
-                                y: "-=300",
-                                x: "+=600",
+                                y: "-=50",
+                                x: "+=50",
                             },
                             0
                         );
@@ -403,28 +406,30 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
     }
 
     const responsivePlanetsStyle: Planets[] = [
+        // {
+        //     ref: earth,
+        //     name: "earth",
+        //     base: {
+        //         width: {
+        //             default: 400,
+        //             unit: "px",
+        //             gap: 250,
+        //         },
+        //         bottom: {
+        //             default: -10,
+        //             unit: "%",
+        //             gap: -23,
+        //         },
+        //         left: {
+        //             default: 50,
+        //             unit: "%",
+        //         },
+        //         transform: "translateX(-50%)"
+        //     },
+        //     zIndex: 7
+        // },
         {
-            name: "earth",
-            base: {
-                width: {
-                    default: 400,
-                    unit: "px",
-                    gap: 250,
-                },
-                bottom: {
-                    default: -10,
-                    unit: "%",
-                    gap: -23,
-                },
-                left: {
-                    default: 50,
-                    unit: "%",
-                },
-                transform: "translateX(-50%)"
-            },
-            zIndex: 7
-        },
-        {
+            ref: jupiter,
             name: "jupiter",
             base: {
                 width: {
@@ -433,7 +438,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     gap: 100,
                 },
                 bottom: {
-                    default: -20,
+                    default: 20,
                     unit: "%",
                     gap: -12,
                 },
@@ -446,6 +451,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             zIndex: 5
         },
         {
+            ref: mars,
             name: "mars",
             base: {
                 width: {
@@ -465,6 +471,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             zIndex: 6
         },
         {
+            ref: pluto,
             name: "pluto",
             base: {
                 width: {
@@ -484,26 +491,27 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             },
             zIndex: 3
         },
-        {
-            name: "uranus",
-            base: {
-                width: {
-                    default: 150,
-                    unit: "px",
-                    gap: 50,
-                },
-                bottom: {
-                    default: -20,
-                    unit: "%",
-                },
-                right: {
-                    default: -20,
-                    unit: "%",
-                    gap: 0,
-                }
-            },
-            zIndex: 2
-        },
+        // {
+        //     ref: uranus,
+        //     name: "uranus",
+        //     base: {
+        //         width: {
+        //             default: 150,
+        //             unit: "px",
+        //             gap: 50,
+        //         },
+        //         bottom: {
+        //             default: -20,
+        //             unit: "%",
+        //         },
+        //         right: {
+        //             default: -20,
+        //             unit: "%",
+        //             gap: 0,
+        //         }
+        //     },
+        //     zIndex: 2
+        // },
     ];
 
     const getTextHeight = (text: string): string => {
@@ -563,9 +571,23 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
         return style;
     }
 
+    const getPlanets = () => {
+        return responsivePlanetsStyle.map(responsivePlanetsStyle => {
+            return <img
+                ref={responsivePlanetsStyle.ref}
+                className={`planet ${responsivePlanetsStyle.name}`}
+                src={`/parallax/planets/${responsivePlanetsStyle.name}.webp`}
+                style={getPlanetStyle(`${responsivePlanetsStyle.name}`)}
+                key={responsivePlanetsStyle.name} />
+        })
+    }
+
     return (
         <div className="parallax-outer">
-            <div ref={parallaxRef} style={{ background: `linear-gradient(#030512, #0e1e5c ${background}%, #6d74ff,rgb(216, 208, 102))` }} className='parallax'>
+            <div
+                ref={parallaxRef}
+                className='parallax'
+                style={{ background: `linear-gradient(#030512, #0e1e5c ${background}%, #6d74ff,rgb(216, 208, 102))` }}>
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute" }}>
                     <line
                         ref={shootingStar}
@@ -589,13 +611,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     </div>
                 )}
                 <div className="planet-container">
-                    <img ref={earth} className='planet earth' src="/parallax/planets/earth.webp" style={getPlanetStyle("earth")} />
-
+                    {getPlanets()}
                 </div>
-                <img ref={jupiter} className='planet jupiter' src="/parallax/planets/jupiter.webp" style={getPlanetStyle("jupiter")} />
-                <img ref={mars} className='planet mars' src="/parallax/planets/mars.webp" style={getPlanetStyle("mars")} />
-                <img ref={pluto} className='planet pluto' src="/parallax/planets/pluto.webp" style={getPlanetStyle("pluto")} />
-                <img ref={uranus} className='planet uranus' src="/parallax/planets/uranus.webp" style={getPlanetStyle("uranus")} />
             </div>
         </div>
     )
