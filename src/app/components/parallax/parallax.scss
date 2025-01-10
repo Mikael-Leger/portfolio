@@ -10,6 +10,17 @@ $breakpoint-xl: 1200px;
     position: relative;
     z-index: 2;
 
+    .planet-container {
+        >* {
+            filter: drop-shadow(10px 10px 3px rgba(0, 0, 0, .5));
+
+        }
+
+        .earth {
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, .5));
+        }
+    }
+
     &-outer {
         overflow: hidden;
         width: 100%;

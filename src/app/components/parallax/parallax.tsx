@@ -412,7 +412,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 bottom: {
                     default: -15,
                     unit: "%",
-                    gap: -20,
+                    gap: -22,
                 },
                 left: {
                     default: 50,
