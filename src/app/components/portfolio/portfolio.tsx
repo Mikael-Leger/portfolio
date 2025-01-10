@@ -67,7 +67,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                 <img src="parallax/rocket.png" />
             </div>
             <div className="portfolio-content first-content">
-                <div className="portfolio-content-text" style={{ marginTop: isMobile ? "-150px" : "0" }}>
+                <div className="portfolio-content-text" style={{ marginTop: isMobile ? "-180px" : "0" }}>
                     <div className={`portfolio-content-text-1 ${isMobile ? "text-reversed" : ""}`}>
                         French developer<img className="logo-icon" src="/icons/baguette.png" />
                     </div>

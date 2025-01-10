@@ -67,15 +67,41 @@ $breakpoint-lg: 992px;
         padding: 0 20vw;
 
         @media (max-width: $breakpoint-mobile) {
-            padding: 0 15vw;
+            padding: 0 5vw;
         }
 
         &.first-content {
             height: 2400px;
+
+            .portfolio-content-text:first-of-type {
+                @media (max-width: $breakpoint-mobile) {
+                    align-self: start;
+
+                }
+            }
+
+            .portfolio-content-text {
+                @media (max-width: $breakpoint-mobile) {
+
+                    &-1,
+                    &-2 {
+                        justify-content: start;
+
+                        padding: 0;
+                        height: 114px;
+                    }
+                }
+            }
         }
 
         &.second-content {
             z-index: 2;
+
+            .portfolio-content-text {
+                @media (max-width: $breakpoint-mobile) {
+                    align-self: center;
+                }
+            }
         }
 
         &-text {

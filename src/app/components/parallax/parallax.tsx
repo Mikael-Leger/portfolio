@@ -56,13 +56,15 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         ScrollTrigger.normalizeScroll(true);
                     }
 
+                    const endParallax = isMobile ? "1600" : "2000";
+
                     if (imagesLoaded.current === images.length) {
                         const timeline = gsap.timeline({
                             defaults: { duration: 1 },
                             scrollTrigger: {
                                 trigger: parallaxRef.current,
                                 start: "top top",
-                                end: "2000 bottom",
+                                end: `${endParallax} bottom`,
                                 scrub: true,
                                 pin: true,
                                 onUpdate: (self) => {
@@ -111,15 +113,15 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             },
                             {
                                 translate: "(-50%, 0)",
-                                rotate: "+=90"
+                                rotate: "+=120"
                             },
                             0
                         );
                         timeline.to(
                             jupiter.current,
                             {
-                                y: "-=50",
-                                x: "+=50",
+                                y: "+=50",
+                                x: "-=50",
                             },
                             0
                         );
@@ -128,38 +130,28 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             {
                                 motionPath: {
                                     path: [
-                                        { x: -600, y: 350 },
-                                        { x: -1200, y: -50 }
+                                        { x: vwToPx(-35), y: -50 },
+                                        { x: vwToPx(-70), y: 0 }
                                     ],
                                     curviness: 1.5,
                                 },
+                                rotate: -45
                             },
                             0
                         );
                         timeline.to(
                             mars.current,
                             {
-                                motionPath: {
-                                    path: [
-                                        { x: 100, y: -150 },
-                                        { x: 800, y: -450 }
-                                    ],
-                                    curviness: 1.5,
-                                },
+                                y: "+=300",
+                                x: "+=150",
                             },
                             0
                         );
                         timeline.to(
                             uranus.current,
                             {
-                                motionPath: {
-                                    path: [
-                                        { x: -650, y: -650 },
-                                        { x: -150, y: -300 }
-                                    ],
-                                    curviness: 1.5,
-                                },
-                                zIndex: 4
+                                y: "+=50",
+                                x: "+=50",
                             },
                             0
                         );
@@ -377,6 +369,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
         return () => ctx.revert();
     }, [moon.current, portfolioRef.current]);
 
+    const vwToPx = (vw: number) => (window.innerWidth * vw) / 100;
+
     const animateTexts = (length: number, start: number, base: number, gap: number, from: { x?: number; y?: number; clipPath?: string; opacity?: number }) => {
         [...Array(length)].forEach((_, i) => {
             const selector = `portfolio-content-text-${i + start}`;
@@ -406,28 +400,28 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
     }
 
     const responsivePlanetsStyle: Planets[] = [
-        // {
-        //     ref: earth,
-        //     name: "earth",
-        //     base: {
-        //         width: {
-        //             default: 400,
-        //             unit: "px",
-        //             gap: 250,
-        //         },
-        //         bottom: {
-        //             default: -10,
-        //             unit: "%",
-        //             gap: -23,
-        //         },
-        //         left: {
-        //             default: 50,
-        //             unit: "%",
-        //         },
-        //         transform: "translateX(-50%)"
-        //     },
-        //     zIndex: 7
-        // },
+        {
+            ref: earth,
+            name: "earth",
+            base: {
+                width: {
+                    default: 400,
+                    unit: "px",
+                    gap: 250,
+                },
+                bottom: {
+                    default: -15,
+                    unit: "%",
+                    gap: -20,
+                },
+                left: {
+                    default: 50,
+                    unit: "%",
+                },
+                transform: "translateX(-50%)"
+            },
+            zIndex: 7
+        },
         {
             ref: jupiter,
             name: "jupiter",
@@ -438,15 +432,14 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     gap: 100,
                 },
                 bottom: {
-                    default: 20,
+                    default: 0,
                     unit: "%",
-                    gap: -12,
+                    gap: -5,
                 },
-                right: {
-                    default: 60,
-                    unit: "%",
-                    gap: -10,
-                }
+                left: {
+                    default: -20,
+                    unit: "%"
+                },
             },
             zIndex: 5
         },
@@ -460,12 +453,14 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     gap: 50,
                 },
                 bottom: {
-                    default: 32,
+                    default: 35,
                     unit: "%",
+                    gap: -1,
                 },
                 left: {
-                    default: -10,
+                    default: -25,
                     unit: "%",
+                    gap: 3,
                 }
             },
             zIndex: 6
@@ -482,36 +477,38 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 bottom: {
                     default: 85,
                     unit: "%",
-                    gap: -5,
+                    gap: -2,
                 },
                 right: {
-                    default: 0,
+                    default: 5,
                     unit: "%",
+                    gap: 1
                 }
             },
             zIndex: 3
         },
-        // {
-        //     ref: uranus,
-        //     name: "uranus",
-        //     base: {
-        //         width: {
-        //             default: 150,
-        //             unit: "px",
-        //             gap: 50,
-        //         },
-        //         bottom: {
-        //             default: -20,
-        //             unit: "%",
-        //         },
-        //         right: {
-        //             default: -20,
-        //             unit: "%",
-        //             gap: 0,
-        //         }
-        //     },
-        //     zIndex: 2
-        // },
+        {
+            ref: uranus,
+            name: "uranus",
+            base: {
+                width: {
+                    default: 150,
+                    unit: "px",
+                    gap: 50,
+                },
+                bottom: {
+                    default: 35,
+                    unit: "%",
+                    gap: -2,
+                },
+                right: {
+                    default: -5,
+                    unit: "%",
+                    gap: -1,
+                }
+            },
+            zIndex: 2
+        },
     ];
 
     const getTextHeight = (text: string): string => {
@@ -519,13 +516,13 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
 
         let height = 500;
         if (gapIndex == 0) {
-            height += 150;
+            height += 0;
         } else if (gapIndex == 1) {
             height += 50;
         } else if (gapIndex == 2) {
-            height += 150;
+            height += 100;
         } else if (gapIndex == 3) {
-            height -= 10;
+            height += 100;
         } else if (gapIndex == 4) {
             height += 50;
         }
