@@ -19,16 +19,18 @@ import Favorites from "../favorites/favorites";
 import usePdf from "@/app/hooks/pdf";
 import useMail from "@/app/hooks/mail";
 import usePortfolio from "@/app/hooks/portfolio";
+import useNotepad from "@/app/hooks/notepad";
 import Mail from "../mail/mail";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 import PortfolioMainPage from "../portfolio/portfolio";
+import Notepad from "../notepad/notepad";
 
 import "./window.scss";
 
 export type WindowProps =
 	| {
 		window_id: number;
-		type: "browser" | "command" | "pdf" | "mail" | "portfolio";
+		type: "browser" | "command" | "pdf" | "mail" | "portfolio" | "notepad";
 		zIndex: number;
 		onAction: (action: string, payload?: any) => void;
 		tabs?: TabInterface[];
@@ -410,6 +412,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const portfolioLogic = usePortfolio(type);
 
+	const notepadLogic = useNotepad(type);
+
 	useEffect(() => {
 		if (browserLogic && !browserLogic.isNotBrowser && browserLogic.browserIconPath != null) {
 			setWindowIconPath(browserLogic.browserIconPath);
@@ -426,8 +430,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		} else if (portfolioLogic && !portfolioLogic.isNotPortfolio) {
 			setWindowIconPath("/icons/portfolio.png");
 
+		} else if (notepadLogic && !notepadLogic.isNotNotepad) {
+			setWindowIconPath("/icons/notepad.png");
+
 		}
-	}, [browserLogic, commandLogic, pdfLogic, mailLogic, portfolioLogic]);
+	}, [browserLogic, commandLogic, pdfLogic, mailLogic, portfolioLogic, notepadLogic]);
 
 	useEffect(() => {
 		if (commandLogic && !commandLogic.isSimulationStarted && commandLogic.ipFormatted != null && window_id != null) {
@@ -590,6 +597,14 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 								</div>
 							</>
 						)}
+						{!notepadLogic.isNotNotepad && (
+							<>
+								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
+								<div className="window-header-head-left-text" >
+									Licenses
+								</div>
+							</>
+						)}
 					</div>
 					<div className="window-header-head-actions" style={{ marginRight: !portfolioLogic.isNotPortfolio ? "18px" : 0 }}>
 						{
@@ -662,8 +677,14 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			{
 				!portfolioLogic.isNotPortfolio && (
 					<div style={{ width: "100%" }}>
-						{/* <div className="window-content portfolio-content"> */}
 						<PortfolioMainPage desktopOpenActions={desktopOpenActions} />
+					</div>
+				)
+			}
+			{
+				!notepadLogic.isNotNotepad && (
+					<div className="window-content notepad-content">
+						<Notepad />
 					</div>
 				)
 			}

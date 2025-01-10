@@ -50,6 +50,12 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             iconPath: "/icons/mail.png",
             position: { top: isMobile ? 425 : 500, right: isMobile ? 50 : 300 },
             onClick: () => desktopOpenActions("openWindow", { id: 3 })
+        },
+        {
+            title: "Licenses.txt",
+            iconPath: "/icons/notepad.png",
+            position: { top: isMobile ? 425 : 500, left: isMobile ? 50 : 200 },
+            onClick: () => desktopOpenActions("openWindow", { id: 5 })
         }
     ];
 

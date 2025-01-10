@@ -1,0 +1,31 @@
+.notepad {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    padding: 20px 10px;
+    color: black;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-sizing: border-box;
+
+    &-images {
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        align-self: start;
+
+        a::before {
+            content: "• ";
+        }
+    }
+
+    &-copyright {
+        font-size: 1.2em;
+    }
+}

@@ -75,6 +75,14 @@
         }
     }
 
+    &-notepad {
+        .notepad-content {
+            position: relative;
+            overflow-y: scroll;
+            background-color: white;
+        }
+    }
+
     &-header {
         width: 100%;
 

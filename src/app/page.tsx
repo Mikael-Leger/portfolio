@@ -138,6 +138,13 @@ export default function Home() {
                     zIndex: 400,
                     hide: true,
                     onAction: (action: string, payload?: any) => handleAction(4, action, payload)
+                },
+                {
+                    window_id: 5,
+                    type: "notepad",
+                    zIndex: 400,
+                    hide: true,
+                    onAction: (action: string, payload?: any) => handleAction(5, action, payload)
                 }
             ];
 
@@ -231,56 +238,6 @@ export default function Home() {
         lastOpenedWindowRef.current = null;
 
     }, [windows]);
-
-    const getWindowsByRefs = (): WindowProps[] => {
-        return Object.entries(windowRefs.current).map(([key, value]) => {
-            const id = parseInt(key);
-            const windowLogic = handleWindowAction(id, "windowLogic") as WindowRef["windowLogic"];
-            if (windowLogic.type == "browser") {
-                return {
-                    window_id: id,
-                    type: "browser",
-                    zIndex: windowLogic.zIndex,
-                    hide: windowLogic.hide,
-                    tabs: windowLogic.tabs as TabInterface[],
-                    removeTab: removeTab,
-                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
-                }
-            } else if (windowLogic.type == "pdf") {
-                return {
-                    window_id: id,
-                    type: "pdf",
-                    zIndex: windowLogic.zIndex,
-                    hide: windowLogic.hide,
-                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
-                }
-            } else if (windowLogic.type == "mail") {
-                return {
-                    window_id: id,
-                    type: "mail",
-                    zIndex: windowLogic.zIndex,
-                    hide: windowLogic.hide,
-                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
-                }
-            } else if (windowLogic.type == "portfolio") {
-                return {
-                    window_id: id,
-                    type: "portfolio",
-                    zIndex: windowLogic.zIndex,
-                    hide: windowLogic.hide,
-                    onAction: (action: string, payload?: any) => handleAction(id, action, payload)
-                }
-            }
-            return {
-                window_id: id,
-                type: "command",
-                zIndex: windowLogic.zIndex,
-                hide: windowLogic.hide,
-                lines: windowLogic.lines as CommandLine[],
-                onAction: (action: string, payload?: any) => handleAction(id, action, payload)
-            }
-        });
-    }
 
     const refreshWindows = (window_id: number) => {
         lastUpdatedWindowRef.current = { id: window_id };
