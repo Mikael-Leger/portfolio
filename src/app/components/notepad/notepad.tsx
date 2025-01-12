@@ -41,6 +41,7 @@ export default function Notepad({ }: NotepadProps) {
                 <a href="https://www.flaticon.com/free-icons/code" title="code icons">Code icons created by Royyan Wijaya - Flaticon</a>
                 <a href="https://www.flaticon.com/free-icons/linkedin" title="linkedin icons">Linkedin icons created by riajulislam - Flaticon</a>
                 <a href="https://www.flaticon.com/free-icons/notepad" title="notepad icons">Notepad icons created by Freepik - Flaticon</a>
+                <a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
                 <a href="https://fr.freepik.com/search?format=search&last_filter=query&last_value=treenode&query=treenode" title="Freepik">Treenode image provided by Freepik</a>
                 <a href="https://pixabay.com/" title="planet images">Planet images provided by Pixabay</a>
             </div>

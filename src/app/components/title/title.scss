@@ -37,12 +37,12 @@
 
     &-shadow {
         color: var(--color);
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px var(--background-node);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
         position: relative;
         display: inline-block;
 
         &purple {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px var(--purple);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
         }
 
         &::after {

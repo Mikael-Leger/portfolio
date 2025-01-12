@@ -2,266 +2,401 @@
     {
         "type": "Natural languages",
         "name": "French",
-        "rating": 10
+        "text": "Native"
     },
     {
         "type": "Natural languages",
         "name": "English",
-        "rating": 8
+        "text": "B2 - TOEIC 865 points"
     },
     {
         "type": "Programming languages",
         "name": "HTML",
-        "rating": 8
+        "context": {
+            "academic": "Multiple projects",
+            "professional": "2.5 years",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "CSS",
-        "rating": 7
+        "context": {
+            "academic": "Multiple projects",
+            "professional": "2.5 years",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "Sass",
-        "rating": 4
+        "context": {
+            "professional": "3 months",
+            "personal": "1 project"
+        }
     },
     {
         "type": "Programming languages",
         "name": "JavaScript",
-        "rating": 8
+        "favorite": true,
+        "context": {
+            "academic": "Multiple projects",
+            "professional": "2.5 years",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "TypeScript",
-        "rating": 6
+        "context": {
+            "professional": "1.5 year",
+            "personal": "4 projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "Python",
-        "rating": 4
+        "context": {
+            "academic": "1 project",
+            "professional": "3 months",
+            "personal": "1 project"
+        }
     },
     {
         "type": "Programming languages",
         "name": "Java",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "1 year"
+        }
     },
     {
         "type": "Programming languages",
         "name": "PHP",
-        "rating": 1
+        "context": {
+            "academic": "1 project"
+        }
     },
     {
         "type": "Programming languages",
         "name": "C#",
-        "rating": 3
+        "context": {
+            "academic": "1 project",
+            "personal": "2 projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "SQL",
-        "rating": 5
+        "context": {
+            "academic": "Multiple projects",
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Programming languages",
         "name": "Shell",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "1.5 year",
+            "personal": "2 projects"
+        }
     },
     {
         "type": "Operating Systems",
         "name": "Windows",
-        "rating": 10
+        "favorite": true
     },
     {
         "type": "Operating Systems",
-        "name": "Linux",
-        "rating": 4
+        "name": "Linux"
     },
     {
         "type": "Operating Systems",
-        "name": "MacOS",
-        "rating": 4
+        "name": "MacOS"
     },
     {
         "type": "Framework",
         "name": "React",
-        "rating": 8
+        "favorite": true,
+        "context": {
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Framework",
         "name": "Next.js",
-        "rating": 5
+        "context": {
+            "personal": "1 project"
+        }
     },
     {
         "type": "Framework",
         "name": "Express",
-        "rating": 8
+        "context": {
+            "academic": "1 project"
+        }
     },
     {
         "type": "Framework",
         "name": "NestJS",
-        "rating": 5
+        "context": {
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Framework",
         "name": "Vue.js",
-        "rating": 3
+        "context": {
+            "academic": "1 project",
+            "professional": "3 monthsr"
+        }
     },
     {
         "type": "Framework",
         "name": "Angular",
-        "rating": 4
+        "context": {
+            "professional": "1 year",
+            "personal": "1 project"
+        }
     },
     {
         "type": "Framework",
         "name": "Django",
-        "rating": 2
+        "context": {
+            "professional": "3 months",
+            "personal": "1 project"
+        }
     },
     {
         "type": "Framework",
         "name": "JEE",
-        "rating": 2
+        "context": {
+            "professional": "2 months"
+        }
     },
     {
         "type": "Framework",
         "name": "Spring Boot",
-        "rating": 3
+        "context": {
+            "professional": "1 year"
+        }
     },
     {
         "type": "CMS",
         "name": "Wagtail",
-        "rating": 1
+        "context": {
+            "professional": "1 month"
+        }
     },
     {
         "type": "Tools",
         "name": "Postman",
-        "rating": 7
+        "context": {
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Tools",
         "name": "Putty",
-        "rating": 5
+        "context": {
+            "professional": "6 months",
+            "personal": "2 projects"
+        }
     },
     {
         "type": "Tools",
         "name": "WinSCP",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "6 months",
+            "personal": "2 projects"
+        }
     },
     {
         "type": "IDE",
         "name": "Visual Studio Code",
-        "rating": 9
+        "favorite": true
     },
     {
         "type": "IDE",
-        "name": "Eclipse",
-        "rating": 6
+        "name": "Eclipse"
     },
     {
         "type": "IDE",
-        "name": "IntelliJ",
-        "rating": 5
+        "name": "IntelliJ"
     },
     {
         "type": "DevOps",
         "name": "Docker",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "6 months"
+        }
     },
     {
         "type": "DevOps",
         "name": "Jenkins",
-        "rating": 3
+        "context": {
+            "academic": "1 project",
+            "professional": "6 months"
+        }
     },
     {
         "type": "DevOps",
         "name": "Terraform",
-        "rating": 2
+        "context": {
+            "professional": "1 month"
+        }
     },
     {
         "type": "Runtimes",
         "name": "Node.js",
-        "rating": 8
+        "context": {
+            "academic": "2 projects",
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
+    },
+    {
+        "type": "Build Tool",
+        "name": "Maven",
+        "context": {
+            "academic": "1 project",
+            "professional": "1 year"
+        }
     },
     {
         "type": "Versionning",
         "name": "Git",
-        "rating": 8
+        "context": {
+            "academic": "Multiple projects",
+            "professional": "2.5 years",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Versionning",
         "name": "Github",
-        "rating": 7
+        "context": {
+            "academic": "Multiple projects",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Versionning",
         "name": "Gitlab",
-        "rating": 5
+        "context": {
+            "academic": "1 project"
+        }
     },
     {
         "type": "Versionning",
         "name": "Gitkraken",
-        "rating": 6
+        "context": {
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Methodology",
         "name": "Scrum",
-        "rating": 8
+        "context": {
+            "professional": "1.5 year"
+        }
     },
     {
         "type": "Methodology",
         "name": "Kanban",
-        "rating": 8
+        "context": {
+            "professional": "1 year"
+        }
     },
     {
         "type": "Tools",
         "name": "Jira",
-        "rating": 8
+        "context": {
+            "professional": "2.5 years"
+        }
     },
     {
         "type": "Tools",
         "name": "Confluence",
-        "rating": 8
+        "context": {
+            "professional": "2.5 years"
+        }
     },
     {
         "type": "Tools",
         "name": "Figma",
-        "rating": 4
+        "context": {
+            "professional": "3 months"
+        }
     },
     {
         "type": "Tools",
         "name": "ESlint",
-        "rating": 7
+        "context": {
+            "academic": "1 project",
+            "professional": "1.5 year",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Databases",
         "name": "MySQL",
-        "rating": 6
+        "context": {
+            "academic": "Multiple projects",
+            "personal": "Multiple projects"
+        }
     },
     {
         "type": "Databases",
         "name": "PostgreSQL",
-        "rating": 4
+        "context": {
+            "professional": "2.5 years"
+        }
     },
     {
         "type": "Deployment",
         "name": "AWS EC2",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "1 month",
+            "personal": "2 projects"
+        }
     },
     {
         "type": "Deployment",
         "name": "AWS S3",
-        "rating": 5
+        "context": {
+            "academic": "1 project",
+            "professional": "1 month"
+        }
     },
     {
         "type": "Deployment",
         "name": "AWS RDS",
-        "rating": 4
+        "context": {
+            "personal": "2 projects"
+        }
     },
     {
         "type": "Deployment",
         "name": "AWS Lambda",
-        "rating": 2
+        "context": {
+            "professional": "1 month"
+        }
     },
     {
         "type": "Game engines",
         "name": "Unity",
-        "rating": 5
+        "context": {
+            "personal": "2 projects"
+        }
     }
 ]

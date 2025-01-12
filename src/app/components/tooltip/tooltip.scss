@@ -1,0 +1,122 @@
+.hint {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        .hint-radius {
+            opacity: 1;
+            visibility: visible;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .hint-content {
+            color: #fff;
+            position: absolute;
+            z-index: 5;
+            background-color: var(--background-node-tooltip);
+            border-radius: 15px 15px 0 0;
+            opacity: 1;
+            visibility: visible !important;
+            -webkit-transition: opacity 0.7s ease, visibility 0.7s ease, background 0.7s ease;
+            transition: opacity 0.7s ease, visibility 0.7s ease, background 0.7s ease;
+            pointer-events: none;
+            color: #fff;
+            visibility: hidden;
+            pointer-events: none;
+
+            &:before {
+                width: 100%;
+                transition: width 0.4s;
+            }
+
+            &:after {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    &[data-position="1"] .hint-content {
+        top: 68px;
+        left: 50%;
+        margin-left: 56px;
+    }
+
+    &[data-position="4"] .hint-content {
+        bottom: 68px;
+        left: 50%;
+        margin-left: 56px;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        width: 2px;
+        height: 2px;
+        z-index: 1;
+        -webkit-transition: opacity 0.5s ease;
+        transition: opacity 0.5s ease;
+    }
+
+    &-content {
+        color: #fff;
+        min-width: 50px;
+        width: fit-content;
+        white-space: nowrap;
+        max-width: 300px;
+        position: absolute;
+        z-index: 5;
+        padding: 10px 20px;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: opacity 0.7s ease, visibility 0.7s ease;
+        transition: opacity 0.7s ease, visibility 0.7s ease;
+        pointer-events: none;
+        color: #fff;
+        visibility: hidden;
+        pointer-events: none;
+
+        &:before {
+            width: 0px;
+            bottom: 0;
+            left: 0;
+            content: "";
+            background-color: #fff;
+            height: 1px;
+            position: absolute;
+            transition: width 0.4s;
+        }
+
+        &:after {
+            -webkit-transform-origin: 0 50%;
+            transform-origin: 0 50%;
+            -webkit-transform: rotate(-225deg);
+            transform: rotate(-225deg);
+            bottom: 0;
+            left: 0;
+            width: 72px;
+            content: "";
+            background-color: #fff;
+            height: 1px;
+            position: absolute;
+            opacity: 1;
+            -webkit-transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
+            transition-delay: 0s;
+            -webkit-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+
+        p {
+            font-size: .9em;
+        }
+    }
+}

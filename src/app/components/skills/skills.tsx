@@ -1,10 +1,10 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Title from "../title/title";
-import TabInterface from "@/app/interfaces/tab.interface";
 
 import skillsData from "@/app/data/skills.json";
-import SkillInterface from "@/app/interfaces/skill.interface";
+import SkillInterface, { Context } from "@/app/interfaces/skill.interface";
+import Tooltip from "../tooltip/tooltip";
 
 import "./skills.scss";
 
@@ -33,9 +33,9 @@ export default function Skills({ }: SkillsProps) {
 
         for (let group in groupedSkills) {
             groupedSkills[group].sort((a, b) => {
-                if (a.rating === undefined) return 1;
-                if (b.rating === undefined) return -1;
-                return b.rating - a.rating;
+                const favoriteA = a.favorite ? 1 : 0;
+                const favoriteB = b.favorite ? 1 : 0;
+                return favoriteB - favoriteA;
             });
         }
 
@@ -246,24 +246,12 @@ export default function Skills({ }: SkillsProps) {
                                     return (
                                         <div className={`skills-content-groups-group-container-skill skill-${formatteString(skill.name)}`} key={skill.name}>
                                             <div className="skills-content-groups-group-container-skill-name">
+                                                {skill.favorite && (
+                                                    <img className="logo-icon" src="icons/star.png" />
+                                                )}
                                                 {highlightText(skill.name)}
                                             </div>
-                                            <div className="skills-content-groups-group-container-skill-rating">
-                                                {
-                                                    [...Array(5)].map((_, i) => {
-                                                        const result = skill.rating / 2;
-
-                                                        if (i < Math.floor(result)) {
-                                                            return <img src="/icons/star.png" key={i} />;
-                                                        }
-                                                        if (!Number.isInteger(result) && i === Math.floor(result)) {
-                                                            return <img src="/icons/star_half.png" key={i} />;
-                                                        }
-                                                        return <img src="/icons/star_empty.png" key={i} />;
-
-                                                    })
-                                                }
-                                            </div>
+                                            <Tooltip text={skill.text as string} context={skill.context as Context} />
                                         </div>
                                     )
                                 })}
