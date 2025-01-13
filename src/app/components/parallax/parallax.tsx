@@ -130,8 +130,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             {
                                 motionPath: {
                                     path: [
-                                        { x: vwToPx(-35), y: -50 },
-                                        { x: vwToPx(-70), y: 0 }
+                                        { x: -50, y: -250 },
+                                        { x: 0, y: -500 }
                                     ],
                                     curviness: 1.5,
                                 },
@@ -494,9 +494,9 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     gap: 10,
                 },
                 bottom: {
-                    default: 85,
+                    default: 30,
                     unit: "%",
-                    gap: -2,
+                    gap: 1,
                 },
                 right: {
                     default: 5,
