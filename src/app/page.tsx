@@ -2,6 +2,7 @@
 
 import { createRef, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CSSRulePlugin } from "gsap/CSSRulePlugin";
 
 import PageLayout from "./layouts/page-layout";
@@ -18,6 +19,8 @@ import Skills from "./components/skills/skills";
 import Dekstop from "./components/desktop/dekstop";
 import { useIsAnyReduced } from "./contexts/is-reduced";
 import { useBodyOverflow } from "./contexts/body-overflow";
+import { useIsMobile } from "./contexts/mobile-context";
+import { OverflowY } from "./types/overflow";
 
 import "./home.scss";
 
@@ -33,6 +36,7 @@ const BASE_TIME_STARTING = speedMap[process.env.DEV_ANIMATION_SPEED || ""] ?? 40
 export default function Home() {
     const { setOverflowY } = useBodyOverflow();
     const { listOfReduced } = useIsAnyReduced();
+    const { isMobile } = useIsMobile();
 
     const [currentLocation, setCurrentLocation] = useState<string>("");
     const [tabs, setTabs] = useState<TabInterface[]>([]);
@@ -214,7 +218,11 @@ export default function Home() {
 
         if (windows[0]) {
             const higherIndexWindow = windows.reduce((max, current) => (current.zIndex > max.zIndex ? current : max), windows[0]);
-            const newOverflowY = (higherIndexWindow.window_id === 4) ? "auto" : "hidden";
+            let newOverflowY: OverflowY = "hidden";
+            if (higherIndexWindow.window_id === 4) {
+                newOverflowY = "auto";
+            }
+
             setOverflowY(newOverflowY);
         }
 

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState } from "react";
+import { OverflowY } from "../types/overflow";
 
 interface BodyOverflowContextProps {
     overflowY: OverflowY;
@@ -10,8 +11,6 @@ interface BodyOverflowContextProps {
 const BodyOverflowContext = createContext<BodyOverflowContextProps | undefined>(
     undefined
 );
-
-type OverflowY = "visible" | "hidden" | "scroll" | "auto" | "clip" | undefined
 
 export const BodyOverflowProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [overflowY, setOverflowY] = useState<OverflowY>("auto");

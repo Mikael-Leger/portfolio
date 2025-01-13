@@ -44,7 +44,11 @@ $breakpoint-xl: 1200px;
 
             .title {
                 padding: 0 40px;
-                font-size: 85px;
+                font-size: 80px;
+
+                @media (max-width: $breakpoint-md) {
+                    font-size: 50px;
+                }
 
                 @media (min-width: $breakpoint-xl) {
                     font-size: 110px;
@@ -57,18 +61,10 @@ $breakpoint-xl: 1200px;
             opacity: 0;
 
             .title {
-                font-size: 65px;
+                font-size: 80px;
 
-                @media (min-width: $breakpoint-sm) {
-                    font-size: 55px;
-                }
-
-                @media (min-width: $breakpoint-md) {
-                    font-size: 65px;
-                }
-
-                @media (min-width: $breakpoint-lg) {
-                    font-size: 80px;
+                @media (max-width: $breakpoint-md) {
+                    font-size: 50px;
                 }
 
                 @media (min-width: $breakpoint-xl) {

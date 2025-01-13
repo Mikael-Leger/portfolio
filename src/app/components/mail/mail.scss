@@ -1,6 +1,7 @@
+$breakpoint-mobile: 768px;
+
 .mail {
     display: flex;
-    align-items: center;
     gap: 10px;
     flex: 1;
 
@@ -17,6 +18,10 @@
         height: 100%;
         padding: 20px;
         color: var(--black);
+
+        @media (max-width: $breakpoint-mobile) {
+            height: 90%;
+        }
 
         >* {
             display: flex;

@@ -53,7 +53,11 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     imagesLoaded.current++;
                     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
                     if (isMobile) {
-                        ScrollTrigger.normalizeScroll(true);
+                        ScrollTrigger.normalizeScroll({
+                            allowNestedScroll: true,
+                            lockAxis: false,
+                            type: "touch,wheel,pointer",
+                        });
                     }
 
                     const endParallax = isMobile ? "1600" : "2000";
@@ -156,12 +160,16 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             0
                         );
                         const rocketTimeline = gsap.timeline();
+                        let tmpY = 0;
+                        let tmpY2 = -50;
+                        let tmpY3 = 210;
+                        let tmpGap = isMobile ? 200 : 0;
                         // First details
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 x: 0,
-                                y: 0,
+                                y: tmpY,
                                 opacity: 0,
                                 rotate: 50
                             },
@@ -175,8 +183,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                                 motionPath: {
                                     path: [
-                                        { x: 200, y: -50 },
-                                        { x: 285, y: 210 }
+                                        { x: 200, y: tmpY2 },
+                                        { x: 285, y: tmpY3 }
                                     ],
                                     curviness: 1.5,
                                 },
@@ -184,15 +192,18 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 opacity: 1
                             }
                         );
+                        tmpY = tmpY3;
+                        tmpY2 = tmpY + 210;
+                        tmpY3 = tmpY2 + 880 - tmpGap;
                         let tmpX = isMobile ? -40 : 100;
                         let tmpX2 = isMobile ? 10 : 150;
-                        let tmpX3 = isMobile ? 150 : 400;
+                        let tmpX3 = isMobile ? 110 : 400;
                         // Image
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 x: 285,
-                                y: 210
+                                y: tmpY
                             },
                             {
                                 scrollTrigger: {
@@ -204,19 +215,23 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                                 motionPath: {
                                     path: [
-                                        { x: tmpX, y: 420 },
-                                        { x: tmpX, y: 1500 },
+                                        { x: tmpX, y: tmpY2 },
+                                        { x: tmpX, y: tmpY3 },
                                     ],
                                     curviness: 0,
                                 },
                             }
                         );
+                        tmpY = tmpY3;
+                        let tmpY4 = tmpY + tmpGap;
+                        tmpY2 = tmpY4 + 100;
+                        tmpY3 = tmpY2 + 300;
                         // Moon below
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 x: tmpX,
-                                y: 1500
+                                y: tmpY
                             },
                             {
                                 scrollTrigger: {
@@ -228,20 +243,24 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                                 motionPath: {
                                     path: [
-                                        { x: tmpX2 + 50, y: 1600 },
-                                        { x: tmpX3, y: 1900 },
+                                        { x: tmpX, y: tmpY4 },
+                                        { x: tmpX2 + 50, y: tmpY2 },
+                                        { x: tmpX3, y: tmpY3 },
                                     ],
                                     curviness: 1.5,
                                 },
                             }
                         );
+                        tmpY = tmpY3;
+                        tmpY2 = tmpY + 400 - tmpGap;
+                        tmpY3 = tmpY2;
                         // Backflip
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 rotate: 135,
                                 x: tmpX3,
-                                y: 1900
+                                y: tmpY
                             },
                             {
                                 scrollTrigger: {
@@ -253,19 +272,22 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                                 motionPath: {
                                     path: [
-                                        { x: tmpX3, y: 2100 },
+                                        { x: tmpX3, y: tmpY2 },
                                     ],
                                     curviness: 0,
                                 },
                                 rotate: "+=180"
                             }
                         );
+                        tmpY = tmpY3;
+                        tmpY2 = tmpY + 200 + tmpGap;
+                        tmpY3 = tmpY2;
                         // Land on moon
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 x: tmpX3,
-                                y: 2100,
+                                y: tmpY,
                                 zIndex: 0
                             },
                             {
@@ -278,19 +300,20 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                                 motionPath: {
                                     path: [
-                                        { x: tmpX3, y: 2300 },
+                                        { x: tmpX3, y: tmpY2 },
                                     ],
                                     curviness: 0,
                                 },
                                 zIndex: 1
                             }
                         );
+                        tmpY = tmpY3;
                         // Rocket pin
                         rocketTimeline.fromTo(
                             "#rocket",
                             {
                                 x: tmpX3,
-                                y: 2300,
+                                y: tmpY,
                                 opacity: 1,
                                 zIndex: 1
                             },

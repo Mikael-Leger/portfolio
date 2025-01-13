@@ -10,7 +10,6 @@ $breakpoint-lg: 992px;
 .portfolio {
     background-color: $bg_color;
     color: var(--white);
-    font-family: 'Cormorant Garamond', serif;
 
     .rocket-ship {
         width: 200px;
@@ -23,6 +22,12 @@ $breakpoint-lg: 992px;
 
         padding: 30px 0;
         height: 200px;
+
+        .title {
+            @media (max-width: $breakpoint-mobile) {
+                font-size: 30px;
+            }
+        }
     }
 
     &-content {
@@ -33,6 +38,8 @@ $breakpoint-lg: 992px;
         position: relative;
         height: 1856px;
         padding: 0 20vw;
+        font-weight: 400;
+        font-family: sans-serif;
 
         @media (max-width: $breakpoint-mobile) {
             padding: 0 5vw;
@@ -56,7 +63,7 @@ $breakpoint-lg: 992px;
                         justify-content: start;
 
                         padding: 0;
-                        height: 114px;
+                        // height: 114px;
                     }
                 }
             }
@@ -77,10 +84,10 @@ $breakpoint-lg: 992px;
             width: 50vw;
             text-shadow: 5px 5px 3px rgba(0, 0, 0, 0.9);
             font-size: 36px;
-            font-weight: 700;
 
             @media (max-width: $breakpoint-mobile) {
-                width: 70vw;
+                width: 90vw;
+                font-size: 28px;
             }
 
             >* {
@@ -116,7 +123,7 @@ $breakpoint-lg: 992px;
                 @media (max-width: $breakpoint-mobile) {
                     justify-content: center;
                     text-align: center;
-                    width: 70vw;
+                    width: 90vw;
                 }
             }
         }
@@ -127,7 +134,8 @@ $breakpoint-lg: 992px;
             align-self: center;
             gap: 10px;
 
-            width: 500px;
+            width: 100%;
+            max-width: 500px;
 
             &-quote {
                 display: flex;
@@ -145,8 +153,7 @@ $breakpoint-lg: 992px;
 
             @media (max-width: $breakpoint-mobile) {
                 bottom: -130px;
-                left: 105px;
-
+                left: 65px;
             }
         }
 
@@ -178,11 +185,9 @@ $breakpoint-lg: 992px;
             background-color: $bg_color_2;
 
             @media (max-width: $breakpoint-mobile) {
-                height: 600px;
-            }
-
-            @media (min-width: $breakpoint-lg) {
-                height: 600px;
+                justify-content: start;
+                height: 1000px;
+                padding: 0 20px;
             }
 
             .portfolio-content-text {
@@ -196,6 +201,7 @@ $breakpoint-lg: 992px;
             align-items: center;
             flex-wrap: wrap;
             gap: 30px;
+            z-index: 2;
 
             &-section {
                 width: 200px;
@@ -204,6 +210,7 @@ $breakpoint-lg: 992px;
                 border: 1px solid $border_color_1;
                 border-radius: 10px;
                 cursor: pointer;
+                user-select: none;
 
                 @media (max-width: $breakpoint-mobile) {
                     width: 150px;

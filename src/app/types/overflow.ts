@@ -1,0 +1,1 @@
+export type OverflowY = "visible" | "hidden" | "scroll" | "auto" | "clip" | undefined;
