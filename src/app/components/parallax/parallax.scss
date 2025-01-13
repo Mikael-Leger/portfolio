@@ -51,24 +51,7 @@ $breakpoint-xl: 1200px;
                 }
 
                 @media (min-width: $breakpoint-xl) {
-                    font-size: 110px;
-                }
-            }
-        }
-
-        &-second {
-            scale: .2;
-            opacity: 0;
-
-            .title {
-                font-size: 80px;
-
-                @media (max-width: $breakpoint-md) {
-                    font-size: 50px;
-                }
-
-                @media (min-width: $breakpoint-xl) {
-                    font-size: 95px;
+                    font-size: 100px;
                 }
             }
         }

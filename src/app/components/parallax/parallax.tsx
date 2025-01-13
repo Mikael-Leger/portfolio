@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { TextPlugin } from "gsap/dist/TextPlugin";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import Title from "../title/title";
 import { Breakpoint, useIsMobile } from "@/app/contexts/mobile-context";
@@ -51,7 +52,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             images?.forEach((img) => {
                 img.onload = () => {
                     imagesLoaded.current++;
-                    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+                    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin);
                     if (isMobile) {
                         ScrollTrigger.normalizeScroll({
                             allowNestedScroll: true,
@@ -77,24 +78,19 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                             },
                         });
-                        timeline.to(
-                            firstTextRef.current,
-                            {
-                                y: () => getTextHeight("first"),
-                                scale: .2,
-                                opacity: 0
-                            },
-                            0
-                        );
-                        timeline.to(
-                            secondTextRef.current,
-                            {
-                                y: () => getTextHeight("second"),
-                                scale: 1,
-                                opacity: 1
-                            },
-                            0
-                        );
+                        if (firstTextRef.current != null) {
+                            const titleText = (firstTextRef.current as HTMLDivElement).getElementsByClassName("title")[0];
+                            timeline.to(
+                                titleText,
+                                {
+                                    // y: () => getTextHeight("first"),
+                                    // scale: .2,
+                                    // opacity: 0
+                                    text: secondText
+                                },
+                                0
+                            );
+                        }
                         timeline.set(
                             shootingStar.current,
                             {
@@ -623,11 +619,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 {firstText && (
                     <div className="parallax-text-first" ref={firstTextRef}>
                         <Title text={firstText} size="big" transform="upper" effect="shadow" futurist />
-                    </div>
-                )}
-                {secondText && (
-                    <div className="parallax-text-second" ref={secondTextRef}>
-                        <Title text={secondText} size="medium" transform="upper" effect="shadow" futurist />
                     </div>
                 )}
                 <div className="planet-container">
