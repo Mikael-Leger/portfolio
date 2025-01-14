@@ -22,9 +22,21 @@ export default function Skills({ }: SkillsProps) {
     const [skillsGroups, setSkillsGroups] = useState<GroupedSkills>();
     const [skillsGroupsFiltered, setSkillsGroupsFiltered] = useState<GroupedSkills>();
     const [searchFilter, setSearchFilter] = useState<string>("");
+    const [mobileTooltip, setMobileTooltip] = useState(null);
 
     const groupsAdded = useRef<string[]>([]);
     const textIndex = useRef(0);
+    const mobileTooltipRef = useRef<HTMLDivElement | null>(null);
+
+    const clickedOnTooltip = useRef<boolean>(false);
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutsideMobileTooltip);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideMobileTooltip);
+        };
+    }, [mobileTooltip]);
 
     useEffect(() => {
         const groupedSkills = skillsData.reduce<GroupedSkills>((acc, skillData) => {
@@ -235,6 +247,66 @@ export default function Skills({ }: SkillsProps) {
         return text;
     }
 
+    const setMobileTooltipData = (data: any) => {
+        const timeline = gsap.timeline();
+        if (mobileTooltip != null) {
+            timeline.to(".skills-content-details-content-text", {
+                duration: .2,
+                opacity: 0
+            });
+        } else {
+            timeline.set(".skills-content-details", {
+                opacity: 1,
+                zIndex: 999,
+            });
+            timeline.to(".skills-content-details-line", {
+                duration: .4,
+                width: "100%"
+            });
+            timeline.to(".skills-content-details-content", {
+                duration: .4,
+                clipPath: "inset(0% 0 0 0)"
+            });
+        }
+        const duration = timeline.totalDuration();
+        setTimeout(() => {
+            setMobileTooltip(data);
+            timeline.to(".skills-content-details-content-text", {
+                duration: .2,
+                opacity: 1
+            });
+        }, duration * 1000);
+    }
+
+    const handleClickOutsideMobileTooltip = (event: MouseEvent) => {
+        if (mobileTooltip == null || clickedOnTooltip.current == true) {
+            clickedOnTooltip.current = false;
+            return
+        };
+
+        if (mobileTooltipRef.current && !mobileTooltipRef.current.contains(event.target as Node)) {
+            const timeline = gsap.timeline();
+            timeline.to(".skills-content-details-content-text", {
+                duration: .2,
+                opacity: 0
+            });
+            timeline.to(".skills-content-details-content", {
+                duration: .4,
+                clipPath: "inset(100% 0 0 0)"
+            });
+            timeline.to(".skills-content-details-line", {
+                duration: .4,
+                width: "0%"
+            });
+            timeline.set(".skills-content-details", {
+                opacity: 0,
+                zIndex: -1
+            });
+            const duration = timeline.totalDuration();
+            setTimeout(() => setMobileTooltip(null), duration * 1000);
+        }
+    };
+
     textIndex.current = 0;
 
     return (
@@ -278,7 +350,11 @@ export default function Skills({ }: SkillsProps) {
                                             </div>
                                             {
                                                 (skillText != "" || skillContext != null) && (
-                                                    <Tooltip text={skillText} context={skillContext} />
+                                                    <Tooltip
+                                                        text={skillText}
+                                                        context={skillContext}
+                                                        setMobileTooltipData={setMobileTooltipData}
+                                                        clickedOnTooltip={clickedOnTooltip} />
                                                 )
                                             }
                                         </div>
@@ -287,6 +363,14 @@ export default function Skills({ }: SkillsProps) {
                             </div>
                         </div>
                     ))}
+                </div>
+                <div className="skills-content-details" ref={mobileTooltipRef}>
+                    <div className="skills-content-details-content">
+                        <div className="skills-content-details-content-text">
+                            {mobileTooltip}
+                        </div>
+                    </div>
+                    <div className="skills-content-details-line" />
                 </div>
             </div>
         </div>

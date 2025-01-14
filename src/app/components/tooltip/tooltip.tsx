@@ -2,16 +2,20 @@ import { RefObject, useEffect, useState } from "react";
 import { Context } from "@/app/interfaces/skill.interface";
 import { useLanguage } from "@/app/contexts/language-context";
 import { TextByLanguage } from "@/app/types/language";
+import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./tooltip.scss";
 
 type TooltipProps = {
     text: string;
     context: Context;
+    setMobileTooltipData: (data: any) => void;
+    clickedOnTooltip: RefObject<boolean>
 };
 
-export default function Tooltip({ text, context }: TooltipProps) {
+export default function Tooltip({ text, context, setMobileTooltipData, clickedOnTooltip }: TooltipProps) {
     const { language, getTextsByComponent } = useLanguage();
+    const { isMobile } = useIsMobile();
 
     const [texts, setTexts] = useState<TextByLanguage[]>([]);
 
@@ -68,25 +72,39 @@ export default function Tooltip({ text, context }: TooltipProps) {
         return `${valueNumber} ${endStr}`;
     }
 
+    const getData = () => {
+        return (<>
+            {text != "" && (
+                <p>{text}</p>
+            )}
+            {context != null && Object.entries(context).map(([key, value], idx) =>
+                value && (
+                    <p key={getTranslatedText(key)}>
+                        {getTranslatedText(key)}: {getDataDetails(value, key)}
+                    </p>
+                )
+            )}
+        </>);
+    }
+
+    const handleImgClick = () => {
+        if (!isMobile) return;
+        clickedOnTooltip.current = true;
+        setMobileTooltipData(getData());
+    }
+
     if ((text == null && context == null) || texts.length === 0) {
         return;
     }
 
     return (
-        <div className="hint" data-position="4">
+        <div className="hint" data-position="4" onMouseDown={handleImgClick}>
             <img className="logo-icon invert" src="/icons/help.png" />
-            <div className="hint-content do--split-children">
-                {text != "" && (
-                    <p>{text}</p>
-                )}
-                {context != null && Object.entries(context).map(([key, value], idx) =>
-                    value && (
-                        <p key={getTranslatedText(key)}>
-                            {getTranslatedText(key)}: {getDataDetails(value, key)}
-                        </p>
-                    )
-                )}
-            </div>
+            {!isMobile && (
+                <div className="hint-content do--split-children">
+                    {getData()}
+                </div>
+            )}
         </div>
     );
 }
