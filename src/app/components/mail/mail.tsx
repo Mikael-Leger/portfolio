@@ -184,7 +184,7 @@ export default function Mail({ onAction }: MailProps) {
                     </button>
                 </div>
             </form>
-            <div className="mail-message">
+            <div className="mail-message" style={{ width: mailStatus != null ? "100%" : 0 }}>
                 {isLoading && (
                     <Loading />
                 )}
