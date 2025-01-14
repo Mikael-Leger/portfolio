@@ -248,9 +248,7 @@ export default function Home() {
 
     const setWindowsToLocal = () => {
         const filteredList = windows.map(({ window_id, zIndex, hide }) => {
-            const isLocallyReduced = windowRefs.current[window_id].windowLogic.isReduced;
-            const isLocallyMaximized = windowRefs.current[window_id].windowLogic.isMaximized;
-            return ({ window_id, zIndex, hide, isLocallyReduced, isLocallyMaximized })
+            return ({ window_id, zIndex, hide })
         });
 
         const filteredListStr = JSON.stringify(filteredList);

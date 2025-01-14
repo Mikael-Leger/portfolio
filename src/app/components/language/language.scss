@@ -20,8 +20,10 @@
         clip-path: inset(0 0 0 100%);
 
         &-option {
+            cursor: pointer;
+
             &.active {
-                border: 2px solid var(--blue);
+                outline: 2px solid var(--blue);
                 border-radius: 5px;
             }
         }

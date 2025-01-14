@@ -37,17 +37,10 @@ export default function Projects({ addTab }: ProjectsProps) {
         if (modalData.isVisible) {
             const timeline = gsap.timeline();
             timeline.from(".modal", {
-                duration: .4,
+                duration: .2,
                 opacity: 0,
-                scale: .4,
-                ease: "sine.in"
-            });
-            timeline.from(".stack-group", {
-                duration: 1.5,
-                opacity: 0,
-                scale: .4,
-                stagger: .2,
-                ease: "elastic.out"
+                scale: .9,
+                ease: "power2.in"
             });
         }
     }, [modalData.isVisible]);
@@ -85,10 +78,10 @@ export default function Projects({ addTab }: ProjectsProps) {
         }
         if (!show) {
             gsap.to(".modal", {
-                duration: .4,
+                duration: .2,
                 opacity: 0,
-                scale: .4,
-                ease: "sine.in"
+                scale: .9,
+                ease: "power2.out"
             });
             await new Promise(r => setTimeout(r, 400));
         }
