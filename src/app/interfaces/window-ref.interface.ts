@@ -8,6 +8,8 @@ export default interface WindowRef {
         tabs?: TabInterface[];
         lines?: CommandLine[];
         hide?: boolean;
+        isReduced?: boolean;
+        isMaximized?: boolean;
         removeTab?: (index: number) => void;
         animateHideWindow?: () => number;
         animateOpenWindow?: (isReduced?: boolean) => void;

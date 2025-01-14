@@ -39,11 +39,11 @@ const BASE_TIME_STARTING = speedMap[process.env.DEV_ANIMATION_SPEED || ""] ?? 40
 export default function Home() {
     const { setOverflowY } = useBodyOverflow();
     const { listOfReduced } = useIsAnyReduced();
-    const { isMobile } = useIsMobile();
 
     const [currentLocation, setCurrentLocation] = useState<string>("");
     const [tabs, setTabs] = useState<TabInterface[]>([]);
     const [windows, setWindows] = useState<WindowProps[]>([]);
+    const [windowsLocal, setWindowsLocal] = useState<Partial<WindowProps[]>>([]);
     const [newTab, setNewTab] = useState<TabInterface | null>();
     const [isBooting, setIsBooting] = useState<boolean>(true);
     const [isBooted, setIsBooted] = useState<boolean>(false);
@@ -87,13 +87,22 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        const firstAnimation = localStorage.getItem("first-animation");
-        setCurrentLocation(window.location.href);
+        const windowsLocalStr = localStorage.getItem("windows");
+        if (windowsLocalStr) {
+            setWindowsLocal(JSON.parse(windowsLocalStr));
+        }
 
+        const firstAnimation = localStorage.getItem("first-animation");
         if (firstAnimation) {
             setIsBooting(false);
         }
     }, []);
+
+    useEffect(() => {
+        if (windowsLocal != null) {
+            setCurrentLocation(window.location.href);
+        }
+    }, [windowsLocal]);
 
     useEffect(() => {
         if (tabs.length === 0) {
@@ -116,43 +125,11 @@ export default function Home() {
 
         } else {
             const defaultWindows: WindowProps[] = [
-                {
-                    window_id: 0,
-                    type: "browser",
-                    tabs: tabs,
-                    removeTab: removeTab,
-                    zIndex: 300,
-                    hide: true,
-                    onAction: (action: string, payload?: any) => handleAction(0, action, payload)
-                },
-                {
-                    window_id: 2,
-                    type: "pdf",
-                    zIndex: 200,
-                    hide: true,
-                    onAction: (action: string, payload?: any) => handleAction(2, action, payload)
-                },
-                {
-                    window_id: 3,
-                    type: "mail",
-                    zIndex: 100,
-                    hide: true,
-                    onAction: (action: string, payload?: any) => handleAction(3, action, payload)
-                },
-                {
-                    window_id: 4,
-                    type: "portfolio",
-                    zIndex: 400,
-                    hide: true,
-                    onAction: (action: string, payload?: any) => handleAction(4, action, payload)
-                },
-                {
-                    window_id: 5,
-                    type: "notepad",
-                    zIndex: 400,
-                    hide: true,
-                    onAction: (action: string, payload?: any) => handleAction(5, action, payload)
-                }
+                createDefaultWindow(0, "browser"),
+                createDefaultWindow(2, "pdf"),
+                createDefaultWindow(3, "mail"),
+                createDefaultWindow(4, "portfolio"),
+                createDefaultWindow(5, "notepad")
             ];
 
             lastUpdatedWindowRef.current = { id: 4 };
@@ -174,6 +151,24 @@ export default function Home() {
             });
         }
     }, [tabs]);
+
+    const createDefaultWindow = (windowId: number, type: "pdf" | "browser" | "command" | "mail" | "portfolio" | "notepad"): WindowProps => {
+        const windowLocal = windowsLocal.find(windowLocal => windowLocal?.window_id === windowId);
+
+        const defaultWindow: WindowProps = {
+            window_id: windowId,
+            type: type,
+            tabs: type === "browser" ? tabs : undefined,
+            removeTab: type === "browser" ? removeTab : undefined,
+            zIndex: windowLocal?.zIndex ?? 300 - windowId * 50,
+            hide: windowLocal?.hide ?? true,
+            onAction: (action: string, payload?: any) => handleAction(windowId, action, payload),
+            // ...(windowLocal?.isLocallyReduced != null && { isLocallyReduced: windowLocal.isLocallyReduced }),
+            // ...(windowLocal?.isLocallyMaximized != null && { isLocallyMaximized: windowLocal.isLocallyMaximized })
+        };
+
+        return defaultWindow;
+    };
 
     const handleWindowAction = (id: number, action: string, type: string = "", payload: any = {}) => {
         const windowRef = windowRefs.current[id];
@@ -217,6 +212,7 @@ export default function Home() {
     }
 
     useEffect(() => {
+        setWindowsToLocal();
         setWindowsOrder();
 
         if (windows[0]) {
@@ -249,6 +245,17 @@ export default function Home() {
         lastOpenedWindowRef.current = null;
 
     }, [windows]);
+
+    const setWindowsToLocal = () => {
+        const filteredList = windows.map(({ window_id, zIndex, hide }) => {
+            const isLocallyReduced = windowRefs.current[window_id].windowLogic.isReduced;
+            const isLocallyMaximized = windowRefs.current[window_id].windowLogic.isMaximized;
+            return ({ window_id, zIndex, hide, isLocallyReduced, isLocallyMaximized })
+        });
+
+        const filteredListStr = JSON.stringify(filteredList);
+        localStorage.setItem("windows", filteredListStr);
+    }
 
     const refreshWindows = (window_id: number) => {
         lastUpdatedWindowRef.current = { id: window_id };
@@ -302,8 +309,9 @@ export default function Home() {
             );
 
             if (windowIndex != -1) {
-                updatedWindows[windowIndex].zIndex = windows.length * 100;
+                updatedWindows[windowIndex].zIndex = 500;
             }
+
             return updatedWindows;
         });
     }
@@ -400,6 +408,7 @@ export default function Home() {
                     showCommand();
                 }, 1000);
             } else {
+                if (windowsLocal != null) return;
                 setTimeout(() => {
                     openWindow(4);
                 }, 1000);

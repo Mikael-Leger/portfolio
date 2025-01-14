@@ -42,6 +42,9 @@ export type WindowProps =
 		windowRefs?: React.RefObject<Record<number, WindowRef>>;
 		getDefaultTabs?: () => TabInterface[];
 		desktopOpenActions?: (action: string, payload?: any) => void;
+		isLocallyReduced?: boolean;
+		isLocallyMaximized?: boolean;
+		// local windowDetails
 	};
 
 
@@ -57,17 +60,17 @@ const WindowDiv = styled.div<WindowDivProps>`
 
 let idCounter = 0;
 
-export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, desktopOpenActions, hide = false }: WindowProps) {
+export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, desktopOpenActions, isLocallyReduced = false, isLocallyMaximized = true, hide = false }: WindowProps) {
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
 
 	// const [window_id, setId] = useState<number>();
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
-	const [isMaximized, setIsMaximized] = useState<boolean>(true);
+	const [isMaximized, setIsMaximized] = useState<boolean>(isLocallyMaximized);
 	const [isMaximizing, setIsMaximizing] = useState<boolean>(false);
 	const [isReducing, setIsReducing] = useState<boolean>(false);
-	const [isReduced, setIsReduced] = useState<boolean>(false);
+	const [isReduced, setIsReduced] = useState<boolean>(isLocallyReduced);
 	const [isIncreasing, setIsIncreasing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [windowDetails, setWindowDetails] = useState<WindowDetails>({
@@ -84,6 +87,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const { isMobile } = useIsMobile();
 
 	const windowRef = useRef<HTMLDivElement>(null);
+	const locallyReduced = useRef<boolean>(false);
 
 	useEffect(() => {
 		if (isReduced) {
@@ -193,6 +197,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			tabs,
 			lines,
 			hide,
+			isReduced,
 			animateOpenWindow,
 			animateHideWindow
 		}
@@ -209,6 +214,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		if (hide || window_id == null || windowIconPath == "") {
 			return;
 		}
+
 		animateCreateWindow();
 
 	}, [window_id, windowIconPath, hide]);
@@ -657,9 +663,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 						<object data="/pdf/CV_LEGER_Mikael.pdf" type="application/pdf">
 							<div className="pdf-content-error">
 								<div className="pdf-content-error-text">
+									{/* TODO: lang */}
 									Your browser has some issues to visualize this PDF
 								</div>
 								<div className="pdf-content-error-text">
+									{/* TODO: lang */}
 									<a className="pdf-content-error-text-link" href="/pdf/CV_LEGER_Mikael.pdf" download="CV_LEGER_Mikael.pdf">Download my CV here</a>
 								</div>
 							</div>
