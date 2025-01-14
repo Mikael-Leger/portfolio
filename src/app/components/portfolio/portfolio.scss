@@ -24,6 +24,8 @@ $breakpoint-lg: 992px;
         height: 200px;
 
         .title {
+            font-size: 55px;
+
             @media (max-width: $breakpoint-mobile) {
                 font-size: 30px;
             }
@@ -262,6 +264,7 @@ $breakpoint-lg: 992px;
                                 color: var(--grey);
                                 font-size: .8em;
                                 font-family: 'Playfair Display', serif;
+                                letter-spacing: 1px;
                             }
                         }
                     }

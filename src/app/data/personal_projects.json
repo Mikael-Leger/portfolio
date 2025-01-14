@@ -8,7 +8,10 @@
         "img": "/projects/exchange.png",
         "url": "https://ex-change-currency.vercel.app/",
         "logo": "/projects/logo_exchange.png",
-        "description": "Convert an amount of a currency to a another one",
+        "description": {
+            "baguette": "Convertissez facilement des montants entre différentes devises avec des taux de change précis et à jour. Cette application est conçue pour offrir une conversion de devises fluide, en prenant en charge un large éventail de devises mondiales.",
+            "en": "Easily convert amounts between different currencies with accurate and up-to-date exchange rates. This application is designed to provide seamless currency conversion, supporting a wide range of global currencies."
+        },
         "stack": [
             {
                 "name": "TypeScript",
@@ -58,7 +61,10 @@
         "img": "/projects/scrimcheck.png",
         "url": "https://scrim-check.vercel.app/",
         "logo": "/projects/logo_scrimcheck.png",
-        "description": "Fetch League of legends games of players to show their historic and statistics",
+        "description": {
+            "baguette": "Récupérez les historiques de jeux détaillés et les statistiques des joueurs de League of Legends. Cette application permet aux utilisateurs d'explorer facilement les données des matchs, d'analyser les performances et d'obtenir des informations sur l'évolution des joueurs au fil du temps. Conçue pour les passionnés et les joueurs compétitifs, elle offre une vue d'ensemble complète de l'historique des parties, de l'utilisation des champions et des principaux indicateurs de performance, le tout présenté dans une interface intuitive et visuellement attrayante.",
+            "en": "Retrieve detailed game histories and player statistics for League of Legends. This application allows users to effortlessly explore match data, analyze performance metrics, and gain insights into player progress over time. Designed for enthusiasts and competitive players alike, it provides a comprehensive overview of gameplay history, champion usage, and key performance indicators, all presented in an intuitive and visually engaging interface."
+        },
         "stack": [
             {
                 "name": "React",
@@ -102,7 +108,10 @@
         },
         "img": "/projects/portfolio.png",
         "logo": "/logo_portfolio.png",
-        "description": "Portfolio",
+        "description": {
+            "baguette": "Un portfolio unique et interactif conçu sous la forme d'une reproduction d'une interface informatique. Le système virtuel démarre avec un lancement de type Windows, offrant une expérience immersive et engageante. Plusieurs fenêtres s'ouvrent, chacune dévoilant des informations détaillées sur mes compétences, mes projets et mon expérience. Cette présentation créative et dynamique permet aux visiteurs d'explorer mon travail à travers une interface intuitive et un design réfléchi, mettant en valeur mon parcours professionnel.",
+            "en": "A unique and interactive portfolio designed as a reproduction of a computer interface. The virtual system boots up with a Windows-style startup, providing an engaging and immersive experience. Multiple windows open, each revealing detailed information about my skills, projects, and experience. This creative and dynamic presentation allows visitors to explore my work through an intuitive interface and design for my professional background."
+        },
         "stack": [
             {
                 "name": "TypeScript",
@@ -132,7 +141,10 @@
         "img": "/projects/gameoflife.png",
         "url": "https://github.com/Mikael-Leger/game-of-life",
         "logo": "/logo_gameoflife.png",
-        "description": "Reproduction of Game of Life",
+        "description": {
+            "baguette": "Vivez une reproduction captivante du Jeu de la Vie de Conway, un automate cellulaire classique. Cette simulation interactive permet aux joueurs d'explorer l'émergence de comportements semblables à la vie, d'expérimenter avec des configurations initiales, de les gérer tout au long du processus et d'observer leur évolution au fil du temps. Parfait pour les passionnés de logique, de mathématiques et de simulation, ce jeu offre un mélange engageant de stratégie, de curiosité et de découverte.",
+            "en": "Experience a captivating reproduction of Conway's Game of Life, a classic cellular automaton. This interactive simulation allows players to explore the emergence of life-like behavior, experiment with initial configurations, manage them during the process, and observe how they evolve over time. Perfect for enthusiasts of logic, mathematics, and simulation, this game offers an engaging blend of strategy, curiosity, and discovery."
+        },
         "stack": [
             {
                 "name": "Unity",
@@ -151,7 +163,10 @@
         },
         "img": "/projects/cookmii.png",
         "logo": "/logo_cookmii.png",
-        "description": "List recipes with its ingredients and instructions",
+        "description": {
+            "baguette": "Découvrez une collection soigneusement sélectionnée de recettes, complètes avec des listes d'ingrédients détaillées et des instructions étape par étape. Cette application facilite l'exploration de nouveaux plats, la planification des repas et le suivi d'indications claires pour créer des résultats délicieux. Trouvez de l'inspiration pour toutes les occasions grâce à une interface conviviale, conçue pour simplifier votre expérience culinaire.",
+            "en": "Discover a curated collection of recipes complete with detailed ingredient lists and step-by-step instructions. This application makes it easy to explore new dishes, plan meals, and follow clear guidance to create delicious results. Find inspiration for every occasion with a user-friendly interface designed to simplify your cooking experience."
+        },
         "stack": [
             {
                 "name": "TypeScript",
@@ -180,7 +195,10 @@
         },
         "img": "/projects/monostock.png",
         "logo": "/logo_monostock.png",
-        "description": "Stock management for a self-service employee in a supermarket",
+        "description": {
+            "baguette": "Solution de gestion des stocks efficace conçue pour les employés en libre-service dans les supermarchés. Cette application simplifie le suivi des inventaires, garantissant des mises à jour en temps réel sur les niveaux de stock, la disponibilité des produits et les besoins de réapprovisionnement. Grâce à une interface intuitive, les employés peuvent rapidement gérer les données produits, suivre les mouvements de stock et effectuer des contrôles d'inventaire, optimisant ainsi les opérations du supermarché et assurant que les clients ont toujours accès aux produits dont ils ont besoin.",
+            "en": "Efficient stock management solution designed for self-service employees in supermarkets. This application streamlines inventory tracking, ensuring real-time updates on stock levels, product availability, and restocking needs. With an intuitive interface, employees can quickly manage product data, monitor stock movement, and perform inventory checks, ultimately optimizing the supermarket’s operations and ensuring customers always have access to the products they need."
+        },
         "stack": [
             {
                 "name": "Next.js",
@@ -204,7 +222,10 @@
         },
         "img": "/projects/majority.png",
         "logo": "/logo_majority.png",
-        "description": "Game online represented by a quiz and random answers, majority wins",
+        "description": {
+            "baguette": "Participez à un jeu en ligne passionnant sous forme de quiz où les joueurs répondent à des questions aléatoires, et le résultat est déterminé par le vote de la majorité. Ce jeu interactif encourage la réflexion rapide et la compétition ludique. Idéal pour les groupes ou les équipes, il met au défi les participants de répondre à des questions sur divers sujets, avec une décision collective qui façonne les résultats. Profitez d'une expérience dynamique et divertissante, parfaite pour les rassemblements sociaux ou les jeux informels.",
+            "en": "Engage in an exciting online game featuring a quiz format where players answer random questions, and the majority vote determines the outcome. This interactive game encourages quick thinking and fun competition. Ideal for groups or teams, it challenges participants to answer questions on various topics, with the collective decision shaping the results. Enjoy a dynamic and entertaining experience, perfect for social gatherings or casual play."
+        },
         "stack": [
             {
                 "name": "Angular",

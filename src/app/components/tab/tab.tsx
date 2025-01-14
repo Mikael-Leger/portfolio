@@ -2,6 +2,9 @@ import Preferences from "@/app/interfaces/preferences.interface";
 import styled from "styled-components";
 
 import { useIsMobile } from "@/app/contexts/mobile-context";
+import { useLanguage } from "@/app/contexts/language-context";
+import { useEffect, useState } from "react";
+import { TextByLanguage } from "@/app/types/language";
 
 interface Tabprops {
     preferences: Preferences;
@@ -27,10 +30,40 @@ const TabDiv = styled.div<TabDivProps>`
 
 export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onClick, onAction }: Tabprops) {
     const { isMobile } = useIsMobile();
+    const { language, getTextsByComponent } = useLanguage();
+
+    const [texts, setTexts] = useState<TextByLanguage[]>([]);
+
+    useEffect(() => {
+        getTexts();
+    }, []);
+
+    const getTexts = () => {
+        const texts = getTextsByComponent("page");
+        setTexts(texts);
+    }
+
+    const getText = (index: number) => {
+        return texts[index][language];
+    }
 
     const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
         event.stopPropagation();
         onAction("removeTab", index);
+    }
+
+    const translateTitle = (value: string) => {
+        if (value === "Projects") {
+            return getText(0);
+        }
+        if (value === "Skills") {
+            return getText(1);
+        }
+        return value;
+    }
+
+    if (texts.length === 0) {
+        return;
     }
 
     return (
@@ -43,7 +76,7 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             <div className="window-header-head-left-tabs-tab-header">
                 <img className="window-header-head-left-tabs-tab-header-logo logo-icon" src={logoPath} />
                 <div className="window-header-head-left-tabs-tab-header-text">
-                    {title}
+                    {translateTitle(title)}
                 </div>
             </div>
             {index != 0 && !isMobile && (

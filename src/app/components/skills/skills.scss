@@ -35,6 +35,10 @@
 
         clip-path: inset(100% 0 0 0);
         text-align: center;
+
+        .title {
+            font-size: 60px;
+        }
     }
 
     &-content {
@@ -117,7 +121,10 @@
 
                         &-name {
                             @include flexAligned;
-                            gap: 5px;
+
+                            img {
+                                margin-right: 5px;
+                            }
                         }
 
                         &-help {

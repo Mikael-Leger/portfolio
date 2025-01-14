@@ -7,6 +7,7 @@ import { IsMobileProvider } from "./contexts/mobile-context";
 import { UsernameProvider } from "./contexts/username-context";
 import { IsAnyReducedProvider } from "./contexts/is-reduced";
 import { BodyOverflowProvider } from "./contexts/body-overflow";
+import { LanguageProvider } from "./contexts/language-context";
 import Body from "./components/body/body";
 
 import "./styles/globals.scss";
@@ -21,15 +22,17 @@ export default function RootLayout({
 			<BodyOverflowProvider>
 				<Body>
 					<IPProvider>
-						<PreferencesProvider>
-							<IsMobileProvider>
-								<UsernameProvider>
-									<IsAnyReducedProvider>
-										{children}
-									</IsAnyReducedProvider>
-								</UsernameProvider>
-							</IsMobileProvider>
-						</PreferencesProvider>
+						<LanguageProvider>
+							<PreferencesProvider>
+								<IsMobileProvider>
+									<UsernameProvider>
+										<IsAnyReducedProvider>
+											{children}
+										</IsAnyReducedProvider>
+									</UsernameProvider>
+								</IsMobileProvider>
+							</PreferencesProvider>
+						</LanguageProvider>
 					</IPProvider>
 				</Body>
 			</BodyOverflowProvider>

@@ -1,7 +1,9 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect, useRef } from 'react';
 
 import Loading from "../loading/loading";
 import FormContact from '@/app/interfaces/form-contact.interface';
+import { useLanguage } from '@/app/contexts/language-context';
+import { TextByLanguage } from '@/app/types/language';
 
 import "./mail.scss";
 
@@ -10,6 +12,8 @@ type MailProps = {
 };
 
 export default function Mail({ onAction }: MailProps) {
+    const { language, getTextsByComponent } = useLanguage();
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [mailStatus, setMailStatus] = useState<{ status: string } | null>(null);
     const [formData, setFormData] = useState<FormContact>({
@@ -17,11 +21,26 @@ export default function Mail({ onAction }: MailProps) {
         email: '',
         message: '',
     });
+
     const [errors, setErrors] = useState({
         object: '',
         email: '',
         message: '',
     });
+    const [texts, setTexts] = useState<TextByLanguage[]>([]);
+
+    useEffect(() => {
+        getTexts();
+    }, []);
+
+    const getTexts = () => {
+        const texts = getTextsByComponent("mail");
+        setTexts(texts);
+    }
+
+    const getText = (index: number) => {
+        return texts[index][language];
+    }
 
     useEffect(() => {
         if (mailStatus?.status != null) {
@@ -34,27 +53,27 @@ export default function Mail({ onAction }: MailProps) {
         switch (name) {
             case 'object':
                 if (value.length === 0) {
-                    return 'Please enter an object';
+                    return getText(12);
                 }
                 if (value.length > 50) {
-                    return 'Object cannot exceed 50 characters';
+                    return getText(13);
                 }
                 break;
             case 'email':
                 if (value.length === 0) {
-                    return 'Please enter an email';
+                    return getText(14);
                 }
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(value)) {
-                    return 'Please enter a valid email';
+                    return getText(15);
                 }
                 break;
             case 'message':
                 if (value.length === 0) {
-                    return 'Please write a message';
+                    return getText(16);
                 }
                 if (value.length > 1000) {
-                    return 'Object cannot exceed 1000 characters';
+                    return getText(17);
                 }
                 break;
             default:
@@ -117,20 +136,24 @@ export default function Mail({ onAction }: MailProps) {
         setMailStatus(null)
     }
 
+    if (texts.length === 0) {
+        return;
+    }
+
     return (
         <div className="mail">
             <form className="mail-container" style={{ opacity: isLoading || mailStatus != null ? .5 : 1 }} onSubmit={handleSubmit}>
                 <div className="mail-container-header">
-                    New message
+                    {getText(0)}
                 </div>
                 <div className="mail-container-recipient">
-                    To: <div className="mail-container-recipient-name">Mikaël Léger</div>
+                    {getText(1)} : <div className="mail-container-recipient-name">Mikaël Léger</div>
                 </div>
                 <div className="mail-container-sender" style={{ border: errors.email && "1px solid red" }}>
                     <input
                         type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder={getText(2)}
                         value={formData.email}
                         onChange={handleChange}
                         disabled={isLoading || mailStatus != null} />
@@ -140,7 +163,7 @@ export default function Mail({ onAction }: MailProps) {
                     <input
                         type="text"
                         name="object"
-                        placeholder="Object"
+                        placeholder={getText(3)}
                         value={formData.object}
                         onChange={handleChange}
                         disabled={isLoading || mailStatus != null} />
@@ -157,7 +180,7 @@ export default function Mail({ onAction }: MailProps) {
                 </div>
                 <div className="mail-container-send">
                     <button className="mail-container-send-button" type="submit">
-                        send
+                        {getText(4)}
                     </button>
                 </div>
             </form>
@@ -171,17 +194,17 @@ export default function Mail({ onAction }: MailProps) {
                             <img className="mail-message-container-text-icon" src="/icons/mail.png" />
                             {mailStatus?.status === "ok" && (
                                 <>
-                                    E-mail sent with success
+                                    {getText(5)}
                                     <br />
-                                    I will answer you quicly
+                                    {getText(6)}
                                 </>
 
                             )}
                             {mailStatus?.status === "error" && (
                                 <>
-                                    Error sending e-mail
+                                    {getText(7)}
                                     <br />
-                                    Try to contact me on <span className="blue-link"
+                                    {getText(8)} <span className="blue-link"
                                         onClick={() => window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank')}>
                                         LinkedIn
                                     </span>
@@ -190,15 +213,11 @@ export default function Mail({ onAction }: MailProps) {
                         </div>
                         <div className="mail-message-container-options">
                             <div className="mail-message-container-options-option" onClick={() => setMailStatus(null)}>
-                                {mailStatus?.status === "ok" && (
-                                    "Write another one"
-                                )}
-                                {mailStatus?.status === "error" && (
-                                    "Try again"
-                                )}
+                                {mailStatus?.status === "ok" && getText(9)}
+                                {mailStatus?.status === "error" && getText(10)}
                             </div>
                             <div className="mail-message-container-options-option" onClick={closeMail}>
-                                Close window
+                                {getText(11)}
                             </div>
                         </div>
                     </div>

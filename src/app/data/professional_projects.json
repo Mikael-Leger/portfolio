@@ -8,7 +8,10 @@
         },
         "img": "/projects/ccip.png",
         "logo": "/projects/logo_ccip.png",
-        "description": "Customer Relationship Management (CRM) for internal salesmans of Infotel.",
+        "description": {
+            "baguette": "Une solution de gestion de la relation client (CRM) sur mesure, conçue spécifiquement pour l'équipe de vente interne d'Infotel. Cette application simplifie les processus de vente en centralisant les données clients, en suivant les interactions et en gérant les prospects et opportunités. Grâce à des mises à jour en temps réel et des outils intuitifs, les commerciaux peuvent suivre efficacement les relations avec les clients, surveiller l'avancement et améliorer leurs stratégies de vente, ce qui permet d'augmenter les performances et de renforcer les liens avec les clients.",
+            "en": "A tailored Customer Relationship Management (CRM) solution designed specifically for the internal sales team at Infotel. This application streamlines sales processes by centralizing customer data, tracking interactions, and managing leads and opportunities. With real-time updates and intuitive tools, salespeople can efficiently monitor client relationships, track progress, and enhance their sales strategies, ultimately driving higher performance and stronger customer connections."
+        },
         "stack": [
             {
                 "name": "React",

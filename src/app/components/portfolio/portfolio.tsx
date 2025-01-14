@@ -1,13 +1,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
-import TabInterface from "@/app/interfaces/tab.interface";
 import Parallax from "../parallax/parallax";
 import Title from "../title/title";
 import { useIsMobile } from "@/app/contexts/mobile-context";
-import { PlanetBaseStyle, Planets } from "@/app/interfaces/planet.interface";
+import { useLanguage } from "@/app/contexts/language-context";
 
 import "./portfolio.scss";
 
@@ -17,36 +14,11 @@ type PortfolioMainPageProps = {
 
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
     const { isMobile } = useIsMobile();
+    const { getTextByComponent } = useLanguage();
 
     const portfolioRef = useRef(null);
     const moon = useRef(null);
-
-    const mainSections = [
-        {
-            name: "Projects",
-            description: "Discover my work and expertise",
-            onClick: () => { desktopOpenActions?.("openWindow", { id: 0 }) },
-            logoPath: "/icons/projects.png"
-        },
-        {
-            name: "CV",
-            description: "Prefer a classic PDF format?",
-            onClick: () => { desktopOpenActions?.("openWindow", { id: 2 }) },
-            logoPath: "/icons/pdf.png"
-        },
-        {
-            name: "Contact",
-            description: "Reach me by sending a space-mail",
-            onClick: () => { desktopOpenActions?.("openWindow", { id: 3 }) },
-            logoPath: "/icons/mail.png"
-        },
-        {
-            name: "LinkedIn",
-            description: "Message me on this popular social media",
-            onClick: () => { window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank') },
-            logoPath: "/icons/linkedin.png"
-        },
-    ];
+    const textIndex = useRef(0);
 
     const handleSectionClick = (e: React.MouseEvent<HTMLDivElement>, callback: () => void) => {
         callback();
@@ -57,11 +29,47 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
         return `${value}px`;
     }
 
+    const getText = () => {
+        const text = getTextByComponent("portfolio", textIndex.current);
+        textIndex.current++;
+
+        return text;
+    }
+
+    textIndex.current = 0;
+
+    const mainSections = [
+        {
+            name: getText(),
+            description: getText(),
+            onClick: () => { desktopOpenActions?.("openWindow", { id: 0 }) },
+            logoPath: "/icons/projects.png"
+        },
+        {
+            name: "CV",
+            description: getText(),
+            onClick: () => { desktopOpenActions?.("openWindow", { id: 2 }) },
+            logoPath: "/icons/pdf.png"
+        },
+        {
+            name: "Contact",
+            description: getText(),
+            onClick: () => { desktopOpenActions?.("openWindow", { id: 3 }) },
+            logoPath: "/icons/mail.png"
+        },
+        {
+            name: "LinkedIn",
+            description: getText(),
+            onClick: () => { window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank') },
+            logoPath: "/icons/linkedin.png"
+        },
+    ];
+
     return (
         <div className="portfolio" ref={portfolioRef}>
             <Parallax firstText="Mikaël Léger" secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
             <div className="portfolio-header">
-                <Title text="Welcome to my portfolio!" size={isMobile ? "small" : "medium"} futurist />
+                <Title text={getText()} size={isMobile ? "small" : "medium"} futurist />
             </div>
             <div id="rocket" className="rocket-ship">
                 <img src="parallax/rocket.png" />
@@ -69,27 +77,27 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             <div className="portfolio-content first-content">
                 <div className="portfolio-content-text" style={{ marginTop: isMobile ? "-180px" : "0" }}>
                     <div className={`portfolio-content-text-1 ${isMobile ? "text-reversed" : ""}`}>
-                        French developer<img className="logo-icon" src="/icons/baguette.png" />
+                        {getText()}<img className="logo-icon" src="/icons/baguette.png" />
                     </div>
                     <div className={`portfolio-content-text-2 ${isMobile ? "text-reversed" : ""}`}>
-                        Based in Belgium<img className="logo-icon" src="/icons/fries.png" />
+                        {getText()}<img className="logo-icon" src="/icons/fries.png" />
                     </div>
                 </div>
                 <div className="portfolio-content-me">
                     <img id="me" className='me' src="/parallax/me.png" />
                     <div className="portfolio-content-me-quote">
-                        (Keep scrolling to help me climb!)
+                        ({getText()})
                     </div>
                 </div>
                 <div className="portfolio-content-text">
                     <div className="portfolio-content-text-3">
-                        Master degree in Sofwtare Engineering<img className="logo-icon" src="/icons/degree.png" />
+                        {getText()}<img className="logo-icon" src="/icons/degree.png" />
                     </div>
                     <div className="portfolio-content-text-4">
-                        Passionate about web development<img className="logo-icon" src="/icons/webdev.png" />
+                        {getText()}<img className="logo-icon" src="/icons/webdev.png" />
                     </div>
                     <div className="portfolio-content-text-5">
-                        Loves creativity<img className="logo-icon" src="/icons/creativity.png" />
+                        {getText()}<img className="logo-icon" src="/icons/creativity.png" />
                     </div>
                 </div>
                 <div className="portfolio-content-moon" style={{ width: getMoonWidth() }}>
@@ -99,21 +107,21 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             <div className="portfolio-content second-content">
                 <div className="portfolio-content-text">
                     <div className={`portfolio-content-text-6`}>
-                        Always aim for the moon!
+                        {getText()}
                     </div>
                     <div className={`portfolio-content-text-7`}>
-                        Likes acquiring new knowledge
+                        {getText()}
                     </div>
                     <div className={`portfolio-content-text-8`}>
-                        Fast-learner
+                        {getText()}
                     </div>
                     <div className={`portfolio-content-text-9`}>
-                        Altruist
+                        {getText()}
                     </div>
                 </div>
                 <div className="portfolio-content-linear" >
                     <div className="portfolio-content-linear-text">
-                        <Title text="Explore and learn more about me below" futurist />
+                        <Title text={getText()} futurist />
                     </div>
                 </div>
             </div>

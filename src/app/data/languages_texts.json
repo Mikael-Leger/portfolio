@@ -1,0 +1,283 @@
+[
+    {
+        "component": "portfolio",
+        "texts": [
+            {
+                "baguette": "Projets",
+                "en": "Projects"
+            },
+            {
+                "baguette": "Découvrez mon travail et mes expériences",
+                "en": "Discover my work and expertise"
+            },
+            {
+                "baguette": "Mon CV en format classique PDF",
+                "en": "Prefer a classic PDF format?"
+            },
+            {
+                "baguette": "Envoyez-moi un mail venant de l'espace",
+                "en": "Reach me by sending a space-mail"
+            },
+            {
+                "baguette": "Envoyez-moi un message sur les réseaux",
+                "en": "Message me on this popular social media"
+            },
+            {
+                "baguette": "Bienvenue sur mon portfolio !",
+                "en": "Welcome to my portfolio!"
+            },
+            {
+                "baguette": "Développeur français",
+                "en": "French developer"
+            },
+            {
+                "baguette": "Vit en Belgique",
+                "en": "Based in Belgium"
+            },
+            {
+                "baguette": "Continuez de défiler pour m'aider à grimper !",
+                "en": "Keep scrolling to help me climb!"
+            },
+            {
+                "baguette": "Master Développeur en Informatique",
+                "en": "Master degree in Sofwtare Engineering"
+            },
+            {
+                "baguette": "Passionné par le développement web",
+                "en": "Passionate about web development"
+            },
+            {
+                "baguette": "Adore la créativité",
+                "en": "Loves creativity"
+            },
+            {
+                "baguette": "Vise toujours la lune !",
+                "en": "Always aim for the moon!"
+            },
+            {
+                "baguette": "Aime assimiler de nouvelles connaissances",
+                "en": "Likes acquiring new knowledge"
+            },
+            {
+                "baguette": "Apprend très vite",
+                "en": "Fast-learner"
+            },
+            {
+                "baguette": "Aime aider les autres",
+                "en": "Altruist"
+            },
+            {
+                "baguette": "Découvrez-en plus à mon propos ci-dessous",
+                "en": "Explore and learn more about me below"
+            }
+        ]
+    },
+    {
+        "component": "desktop",
+        "texts": [
+            {
+                "baguette": "Projets",
+                "en": "Projects"
+            },
+            {
+                "baguette": "Compétences",
+                "en": "Skills"
+            },
+            {
+                "baguette": "Me contacter",
+                "en": "Contact me"
+            }
+        ]
+    },
+    {
+        "component": "mail",
+        "texts": [
+            {
+                "baguette": "Nouveau message",
+                "en": "New message"
+            },
+            {
+                "baguette": "À",
+                "en": "To"
+            },
+            {
+                "baguette": "Mail",
+                "en": "Email"
+            },
+            {
+                "baguette": "Objet",
+                "en": "Object"
+            },
+            {
+                "baguette": "Envoyer",
+                "en": "Send"
+            },
+            {
+                "baguette": "Mail envoyé avec succès",
+                "en": "E-mail sent with success"
+            },
+            {
+                "baguette": "Je vous répondrais rapidement",
+                "en": "I will answer you quicly"
+            },
+            {
+                "baguette": "Erreur en envoyant le mail",
+                "en": "Error sending e-mail"
+            },
+            {
+                "baguette": "Essayez de me contacter sur",
+                "en": "Try to contact me on"
+            },
+            {
+                "baguette": "En écrire un autre",
+                "en": "Write another one"
+            },
+            {
+                "baguette": "Essayer encore",
+                "en": "Try again"
+            },
+            {
+                "baguette": "Fermer cette fenêtre",
+                "en": "Close window"
+            },
+            {
+                "baguette": "Veuillez entrer un objet",
+                "en": "Please enter an object"
+            },
+            {
+                "baguette": "L'objet ne peut dépasser 50 charactères",
+                "en": "Object cannot exceed 50 characters"
+            },
+            {
+                "baguette": "Veuillez entrer une adresse mail",
+                "en": "Please enter an email"
+            },
+            {
+                "baguette": "Veuillez entrer une adresse mail valide",
+                "en": "Please enter a valid email"
+            },
+            {
+                "baguette": "Veuillez entrer un message",
+                "en": "Please write a message"
+            },
+            {
+                "baguette": "Le message ne peut dépasser 1000 charactères",
+                "en": "Message cannot exceed 1000 characters"
+            }
+        ]
+    },
+    {
+        "component": "notepad",
+        "texts": [
+            {
+                "baguette": "icônes créées par",
+                "en": "icons created by"
+            },
+            {
+                "baguette": "fournie par",
+                "en": "provided by"
+            },
+            {
+                "baguette": "Tous droits réservés.",
+                "en": "All rights reserved."
+            }
+        ]
+    },
+    {
+        "component": "projects",
+        "texts": [
+            {
+                "baguette": "Projets personnels",
+                "en": "Personal projects"
+            },
+            {
+                "baguette": "Projets professionnels",
+                "en": "Professional projects"
+            },
+            {
+                "baguette": "Projets scolaires",
+                "en": "Academic projects"
+            }
+        ]
+    },
+    {
+        "component": "page",
+        "texts": [
+            {
+                "baguette": "Projets",
+                "en": "Projects"
+            },
+            {
+                "baguette": "Compétences",
+                "en": "Skills"
+            }
+        ]
+    },
+    {
+        "component": "skills",
+        "texts": [
+            {
+                "baguette": "Arbre des compétences",
+                "en": "Tree skills"
+            },
+            {
+                "baguette": "Rechercher une compétence",
+                "en": "Search any skill"
+            }
+        ]
+    },
+    {
+        "component": "task-bar",
+        "texts": [
+            {
+                "baguette": "Redémarrer",
+                "en": "Restart"
+            }
+        ]
+    },
+    {
+        "component": "tooltip",
+        "texts": [
+            {
+                "baguette": "Personnel",
+                "en": "Personal"
+            },
+            {
+                "baguette": "Professionnel",
+                "en": "Professional"
+            },
+            {
+                "baguette": "Scolaire",
+                "en": "Academic"
+            },
+            {
+                "baguette": "projet",
+                "en": "project"
+            },
+            {
+                "baguette": "projets",
+                "en": "projects"
+            },
+            {
+                "baguette": "année",
+                "en": "year"
+            },
+            {
+                "baguette": "années",
+                "en": "years"
+            },
+            {
+                "baguette": "mois",
+                "en": "month"
+            },
+            {
+                "baguette": "mois",
+                "en": "months"
+            },
+            {
+                "baguette": "Plusieurs",
+                "en": "Multiple"
+            }
+        ]
+    }
+]

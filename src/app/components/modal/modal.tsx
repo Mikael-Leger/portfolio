@@ -7,6 +7,7 @@ import Status from "@/app/interfaces/status.interface";
 import { useIsAnyReduced } from "@/app/contexts/is-reduced";
 import TabInterface from "@/app/interfaces/tab.interface";
 import { useIsMobile } from "@/app/contexts/mobile-context";
+import { useLanguage } from "@/app/contexts/language-context";
 
 import "./modal.scss";
 
@@ -20,6 +21,7 @@ type ModalProps = {
 export default function Modal({ modalData, addTab, showModal, ref }: ModalProps) {
     const { isAnyReduced } = useIsAnyReduced();
     const { isMobile } = useIsMobile();
+    const { language } = useLanguage();
 
     if (!modalData.isVisible) return;
 
@@ -89,7 +91,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                                 )}
                             </div>
                             <div className="modal-container-content-details-description">
-                                {modalData.item.description}
+                                {modalData.item.description[language]}
                             </div>
                         </div>
                         {modalData.item.stack && stackTemplate()}

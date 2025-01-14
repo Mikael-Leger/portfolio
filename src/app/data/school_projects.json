@@ -8,7 +8,10 @@
         },
         "img": "/projects/mfc.png",
         "logo": "/projects/logo_mfc.png",
-        "description": "Registration website for trainings with 3 views: candidate, trainer and administrator",
+        "description": {
+            "baguette": "Une plateforme d'enregistrement complète conçue pour la gestion des formations, offrant trois vues distinctes : Candidat, Formateur et Administrateur. Les candidats peuvent facilement parcourir les programmes de formation disponibles, s'inscrire aux cours et suivre leurs progrès. Les formateurs peuvent gérer leurs sessions, suivre la participation des participants et mettre à jour les supports de cours. Les administrateurs ont un contrôle total sur la plateforme, incluant la gestion des utilisateurs, la planification des cours et la génération de rapports. Cette solution garantit une communication fluide, une gestion efficace des formations et une expérience sans faille pour tous les utilisateurs impliqués dans le processus de formation.",
+            "en": "A comprehensive registration platform designed for training management, offering three distinct views: Candidate, Trainer, and Administrator. Candidates can easily browse available training programs, register for courses, and track their progress. Trainers can manage their sessions, track attendee participation, and update course materials. Administrators have full control over the platform, including user management, course scheduling, and reporting. This solution ensures smooth communication, efficient course management, and a seamless experience for all users involved in the training process."
+        },
         "stack": [
             {
                 "name": "JavaScript",

@@ -27,7 +27,6 @@ export default function Stack({ groupsOfItems }: StackProps) {
                 return (
                     <div
                         className={`stack-group group-${groupName}`}
-                        // style={{ minWidth: isMobile ? '50px' : '100px' }}
                         key={groupName}>
                         <div className="stack-group-name">
                             {groupName}

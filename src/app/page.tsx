@@ -21,6 +21,9 @@ import { useIsAnyReduced } from "./contexts/is-reduced";
 import { useBodyOverflow } from "./contexts/body-overflow";
 import { useIsMobile } from "./contexts/mobile-context";
 import { OverflowY } from "./types/overflow";
+import Language from "./components/language/language";
+import { useLanguage } from "./contexts/language-context";
+import { TextByLanguage } from "./types/language";
 
 import "./home.scss";
 
@@ -362,7 +365,9 @@ export default function Home() {
                 const tabsLocalWithContent = tabsLocal.map(tabLocal => {
                     if (tabLocal.defaultTab) {
                         const defaultTabs = getDefaultTabs();
+
                         const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.title === tabLocal.title);
+
                         if (defaultTabFound) return defaultTabFound;
                     }
                     return getNewTab(tabLocal);
@@ -418,6 +423,7 @@ export default function Home() {
             }
         }
     }, [newTab]);
+
     const getDefaultTabs = (): TabInterface[] => ([
         {
             defaultTab: true,
@@ -557,7 +563,7 @@ export default function Home() {
                 windowFound.hide = false;
 
                 if (tabName != null) {
-                    const tabFound = windowFound.tabs?.find(tab => tab.title === tabName)
+                    const tabFound = windowFound.tabs?.find(tab => tab.title === tabName);
 
                     if (tabFound != null) {
                         setNewTab(tabFound);
@@ -654,12 +660,15 @@ export default function Home() {
         return (
             <div className="home">
                 {isBooted ? (
-                    <Dekstop
-                        windows={windows}
-                        setWindowRef={setWindowRef}
-                        windowRefs={windowRefs}
-                        getDefaultTabs={getDefaultTabs}
-                        desktopOpenActions={desktopOpenActions} />
+                    <>
+                        <Dekstop
+                            windows={windows}
+                            setWindowRef={setWindowRef}
+                            windowRefs={windowRefs}
+                            getDefaultTabs={getDefaultTabs}
+                            desktopOpenActions={desktopOpenActions} />
+                        <Language />
+                    </>
                 ) : (
                     <div className="home-session">
                         <UserSession />

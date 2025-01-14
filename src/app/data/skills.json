@@ -1,402 +1,576 @@
 [
     {
-        "type": "Natural languages",
-        "name": "French",
-        "text": "Native"
+        "type": {
+            "baguette": "Langues",
+            "en": "Natural languages"
+        },
+        "name": {
+            "baguette": "Français",
+            "en": "French"
+        },
+        "text": {
+            "baguette": "Natif",
+            "en": "Native"
+        }
     },
     {
-        "type": "Natural languages",
-        "name": "English",
-        "text": "B2 - TOEIC 865 points"
+        "type": {
+            "baguette": "langues",
+            "en": "Natural languages"
+        },
+        "name": {
+            "baguette": "Anglais",
+            "en": "English"
+        },
+        "text": {
+            "baguette": "B2 - TOEIC 865 points",
+            "en": "B2 - TOEIC 865 points"
+        }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "HTML",
         "context": {
-            "academic": "Multiple projects",
-            "professional": "2.5 years",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "professional": "30",
+            "personal": "*"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "CSS",
         "context": {
-            "academic": "Multiple projects",
-            "professional": "2.5 years",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "professional": "30",
+            "personal": "*"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "Sass",
         "context": {
-            "professional": "3 months",
-            "personal": "1 project"
+            "professional": "3s",
+            "personal": "1"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "JavaScript",
         "favorite": true,
         "context": {
-            "academic": "Multiple projects",
-            "professional": "2.5 years",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "professional": "30",
+            "personal": "*"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "TypeScript",
         "context": {
-            "professional": "1.5 year",
-            "personal": "4 projects"
+            "professional": "18",
+            "personal": "4"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "Python",
         "context": {
-            "academic": "1 project",
-            "professional": "3 months",
-            "personal": "1 project"
+            "academic": "1",
+            "professional": "3s",
+            "personal": "1"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "Java",
         "context": {
-            "academic": "1 project",
-            "professional": "1 year"
+            "academic": "1",
+            "professional": "12"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "PHP",
         "context": {
-            "academic": "1 project"
+            "academic": "1"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "C#",
         "context": {
-            "academic": "1 project",
-            "personal": "2 projects"
+            "academic": "1",
+            "personal": "2"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "SQL",
         "context": {
-            "academic": "Multiple projects",
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Programming languages",
+        "type": {
+            "baguette": "Langages de programmation",
+            "en": "Programming languages"
+        },
         "name": "Shell",
         "context": {
-            "academic": "1 project",
-            "professional": "1.5 year",
-            "personal": "2 projects"
+            "academic": "1",
+            "professional": "18",
+            "personal": "2"
         }
     },
     {
-        "type": "Operating Systems",
+        "type": {
+            "baguette": "Système d'exploitation",
+            "en": "Operating Systems"
+        },
         "name": "Windows",
         "favorite": true
     },
     {
-        "type": "Operating Systems",
+        "type": {
+            "baguette": "Système d'exploitation",
+            "en": "Operating Systems"
+        },
         "name": "Linux"
     },
     {
-        "type": "Operating Systems",
+        "type": {
+            "baguette": "Système d'exploitation",
+            "en": "Operating Systems"
+        },
         "name": "MacOS"
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "React",
         "favorite": true,
         "context": {
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Next.js",
         "context": {
-            "personal": "1 project"
+            "personal": "1"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Express",
         "context": {
-            "academic": "1 project"
+            "academic": "1"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "NestJS",
         "context": {
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Vue.js",
         "context": {
-            "academic": "1 project",
-            "professional": "3 monthsr"
+            "academic": "1",
+            "professional": "3sr"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Angular",
         "context": {
-            "professional": "1 year",
-            "personal": "1 project"
+            "professional": "12",
+            "personal": "1"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Django",
         "context": {
-            "professional": "3 months",
-            "personal": "1 project"
+            "professional": "3s",
+            "personal": "1"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "JEE",
         "context": {
-            "professional": "2 months"
+            "professional": "2s"
         }
     },
     {
-        "type": "Framework",
+        "type": {
+            "baguette": "Framework",
+            "en": "Framework"
+        },
         "name": "Spring Boot",
         "context": {
-            "professional": "1 year"
+            "professional": "12"
         }
     },
     {
-        "type": "CMS",
+        "type": {
+            "baguette": "Système de gestion de contenu",
+            "en": "Content Management System"
+        },
         "name": "Wagtail",
         "context": {
-            "professional": "1 month"
+            "professional": "1"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "Postman",
         "context": {
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "Putty",
         "context": {
-            "professional": "6 months",
-            "personal": "2 projects"
+            "professional": "6s",
+            "personal": "2"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "WinSCP",
         "context": {
-            "academic": "1 project",
-            "professional": "6 months",
-            "personal": "2 projects"
+            "academic": "1",
+            "professional": "6s",
+            "personal": "2"
         }
     },
     {
-        "type": "IDE",
+        "type": {
+            "baguette": "Environnement de développement",
+            "en": "Integrated Development Environment"
+        },
         "name": "Visual Studio Code",
         "favorite": true
     },
     {
-        "type": "IDE",
+        "type": {
+            "baguette": "Environnement de développement",
+            "en": "Integrated Development Environment"
+        },
         "name": "Eclipse"
     },
     {
-        "type": "IDE",
+        "type": {
+            "baguette": "Environnement de développement",
+            "en": "Integrated Development Environment"
+        },
         "name": "IntelliJ"
     },
     {
-        "type": "DevOps",
+        "type": {
+            "baguette": "DevOps",
+            "en": "DevOps"
+        },
         "name": "Docker",
         "context": {
-            "academic": "1 project",
-            "professional": "6 months"
+            "academic": "1",
+            "professional": "6s"
         }
     },
     {
-        "type": "DevOps",
+        "type": {
+            "baguette": "DevOps",
+            "en": "DevOps"
+        },
         "name": "Jenkins",
         "context": {
-            "academic": "1 project",
-            "professional": "6 months"
+            "academic": "1",
+            "professional": "6s"
         }
     },
     {
-        "type": "DevOps",
+        "type": {
+            "baguette": "DevOps",
+            "en": "DevOps"
+        },
         "name": "Terraform",
         "context": {
-            "professional": "1 month"
+            "professional": "1"
         }
     },
     {
-        "type": "Runtimes",
+        "type": {
+            "baguette": "Environnements d'exécution",
+            "en": "Runtimes"
+        },
         "name": "Node.js",
         "context": {
-            "academic": "2 projects",
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "academic": "2",
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Build Tool",
+        "type": {
+            "baguette": "Outil de gestion",
+            "en": "Build Tool"
+        },
         "name": "Maven",
         "context": {
-            "academic": "1 project",
-            "professional": "1 year"
+            "academic": "1",
+            "professional": "12"
         }
     },
     {
-        "type": "Versionning",
+        "type": {
+            "baguette": "Versionnage",
+            "en": "Versionning"
+        },
         "name": "Git",
         "context": {
-            "academic": "Multiple projects",
-            "professional": "2.5 years",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "professional": "30",
+            "personal": "*"
         }
     },
     {
-        "type": "Versionning",
+        "type": {
+            "baguette": "Versionnage",
+            "en": "Versionning"
+        },
         "name": "Github",
         "context": {
-            "academic": "Multiple projects",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "personal": "*"
         }
     },
     {
-        "type": "Versionning",
+        "type": {
+            "baguette": "Versionnage",
+            "en": "Versionning"
+        },
         "name": "Gitlab",
         "context": {
-            "academic": "1 project"
+            "academic": "1"
         }
     },
     {
-        "type": "Versionning",
+        "type": {
+            "baguette": "Versionnage",
+            "en": "Versionning"
+        },
         "name": "Gitkraken",
         "context": {
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Methodology",
+        "type": {
+            "baguette": "Méthodologie",
+            "en": "Methodology"
+        },
         "name": "Scrum",
         "context": {
-            "professional": "1.5 year"
+            "professional": "18"
         }
     },
     {
-        "type": "Methodology",
+        "type": {
+            "baguette": "Méthodologie",
+            "en": "Methodology"
+        },
         "name": "Kanban",
         "context": {
-            "professional": "1 year"
+            "professional": "12"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "Jira",
         "context": {
-            "professional": "2.5 years"
+            "professional": "30"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "Confluence",
         "context": {
-            "professional": "2.5 years"
+            "professional": "30"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "Figma",
         "context": {
-            "professional": "3 months"
+            "professional": "3s"
         }
     },
     {
-        "type": "Tools",
+        "type": {
+            "baguette": "Outils",
+            "en": "Tools"
+        },
         "name": "ESlint",
         "context": {
-            "academic": "1 project",
-            "professional": "1.5 year",
-            "personal": "Multiple projects"
+            "academic": "1",
+            "professional": "18",
+            "personal": "*"
         }
     },
     {
-        "type": "Databases",
+        "type": {
+            "baguette": "Base de données",
+            "en": "Database"
+        },
         "name": "MySQL",
         "context": {
-            "academic": "Multiple projects",
-            "personal": "Multiple projects"
+            "academic": "*",
+            "personal": "*"
         }
     },
     {
-        "type": "Databases",
+        "type": {
+            "baguette": "Base de données",
+            "en": "Database"
+        },
         "name": "PostgreSQL",
         "context": {
-            "professional": "2.5 years"
+            "professional": "30"
         }
     },
     {
-        "type": "Deployment",
+        "type": {
+            "baguette": "Déploiement",
+            "en": "Deployment"
+        },
         "name": "AWS EC2",
         "context": {
-            "academic": "1 project",
-            "professional": "1 month",
-            "personal": "2 projects"
+            "academic": "1",
+            "professional": "1",
+            "personal": "2"
         }
     },
     {
-        "type": "Deployment",
+        "type": {
+            "baguette": "Déploiement",
+            "en": "Deployment"
+        },
         "name": "AWS S3",
         "context": {
-            "academic": "1 project",
-            "professional": "1 month"
+            "academic": "1",
+            "professional": "1"
         }
     },
     {
-        "type": "Deployment",
+        "type": {
+            "baguette": "Déploiement",
+            "en": "Deployment"
+        },
         "name": "AWS RDS",
         "context": {
-            "personal": "2 projects"
+            "personal": "2"
         }
     },
     {
-        "type": "Deployment",
+        "type": {
+            "baguette": "Déploiement",
+            "en": "Deployment"
+        },
         "name": "AWS Lambda",
         "context": {
-            "professional": "1 month"
+            "professional": "1"
         }
     },
     {
-        "type": "Game engines",
+        "type": {
+            "baguette": "Moteur de jeu",
+            "en": "Game engine"
+        },
         "name": "Unity",
         "context": {
-            "personal": "2 projects"
+            "personal": "2"
         }
     }
 ]

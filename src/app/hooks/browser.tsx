@@ -35,14 +35,6 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
     }, []);
 
     const animatePortfolioPage = (delay: number) => {
-        const timeline = gsap.timeline();
-        timeline.from(".projects-container-group-title", {
-            duration: .5,
-            opacity: 0,
-            x: 600,
-            stagger: .8,
-        });
-
         gsap.from(".project", {
             duration: .2,
             opacity: 0,

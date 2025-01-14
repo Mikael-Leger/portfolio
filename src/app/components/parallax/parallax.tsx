@@ -83,9 +83,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             timeline.to(
                                 titleText,
                                 {
-                                    // y: () => getTextHeight("first"),
-                                    // scale: .2,
-                                    // opacity: 0
                                     text: secondText
                                 },
                                 0
@@ -388,8 +385,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
         return () => ctx.revert();
     }, [moon.current, portfolioRef.current]);
 
-    const vwToPx = (vw: number) => (window.innerWidth * vw) / 100;
-
     const animateTexts = (length: number, start: number, base: number, gap: number, from: { x?: number; y?: number; clipPath?: string; opacity?: number }) => {
         [...Array(length)].forEach((_, i) => {
             const selector = `portfolio-content-text-${i + start}`;
@@ -529,32 +524,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             zIndex: 2
         },
     ];
-
-    const getTextHeight = (text: string): string => {
-        const gapIndex = getBreakpointValue();
-
-        let height = 500;
-        if (gapIndex == 0) {
-            height += 0;
-        } else if (gapIndex == 1) {
-            height += 50;
-        } else if (gapIndex == 2) {
-            height += 100;
-        } else if (gapIndex == 3) {
-            height += 100;
-        } else if (gapIndex == 4) {
-            height += 50;
-        }
-
-        let indent = "0";
-        if (text === "first") {
-            indent = `+=${height}`;
-        } else {
-            indent = `-=${height}`;
-        }
-
-        return indent;
-    }
 
     const getPlanetStyle = (name: string) => {
         const planet = responsivePlanetsStyle.find(planet => planet.name === name);

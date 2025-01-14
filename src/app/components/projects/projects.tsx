@@ -12,6 +12,7 @@ import personalProjects from "@/app/data/personal_projects.json";
 import professionalProjects from "@/app/data/professional_projects.json";
 import schoolProjects from "@/app/data/school_projects.json";
 import TabInterface from "@/app/interfaces/tab.interface";
+import { useLanguage } from "@/app/contexts/language-context";
 
 import "./projects.scss";
 
@@ -20,10 +21,14 @@ type ProjectsProps = {
 };
 
 export default function Projects({ addTab }: ProjectsProps) {
+    const { isAnyReduced } = useIsAnyReduced();
+    const { getTextByComponent } = useLanguage();
+
     const [modalData, setModalData] = useState<ProjectModal>({
         isVisible: false
     });
-    const { isAnyReduced } = useIsAnyReduced();
+
+    const textIndex = useRef(0);
 
     const projectsRef = useRef(null);
     const modalRef = useRef(null);
@@ -107,17 +112,26 @@ export default function Projects({ addTab }: ProjectsProps) {
         });
     };
 
+    const getText = () => {
+        const text = getTextByComponent("projects", textIndex.current);
+        textIndex.current++;
+
+        return text;
+    }
+
+    textIndex.current = 0;
+
     const groupsOfProjects = [
         {
-            title: "Personal projects",
+            title: getText(),
             projects: personalProjects
         },
         {
-            title: "Professional projects",
+            title: getText(),
             projects: professionalProjects
         },
         {
-            title: "School projects",
+            title: getText(),
             projects: schoolProjects
         },
     ];

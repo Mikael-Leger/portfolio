@@ -5,6 +5,7 @@ import Title from "../title/title";
 import skillsData from "@/app/data/skills.json";
 import SkillInterface, { Context } from "@/app/interfaces/skill.interface";
 import Tooltip from "../tooltip/tooltip";
+import { useLanguage } from "@/app/contexts/language-context";
 
 import "./skills.scss";
 
@@ -16,18 +17,21 @@ type GroupedSkills = {
 };
 
 export default function Skills({ }: SkillsProps) {
+    const { language, getTextByComponent } = useLanguage();
+
     const [skillsGroups, setSkillsGroups] = useState<GroupedSkills>();
     const [skillsGroupsFiltered, setSkillsGroupsFiltered] = useState<GroupedSkills>();
     const [searchFilter, setSearchFilter] = useState<string>("");
 
     const groupsAdded = useRef<string[]>([]);
+    const textIndex = useRef(0);
 
     useEffect(() => {
         const groupedSkills = skillsData.reduce<GroupedSkills>((acc, skillData) => {
-            if (!acc[skillData.type]) {
-                acc[skillData.type] = [];
+            if (!acc[skillData.type[language]]) {
+                acc[skillData.type[language]] = [];
             }
-            acc[skillData.type].push(skillData);
+            acc[skillData.type[language]].push(skillData);
             return acc;
         }, {});
 
@@ -69,8 +73,14 @@ export default function Skills({ }: SkillsProps) {
             Object.entries(skillsGroups).map(([key, skillList]) => {
                 const filteredSkills = skillList.filter(skill => {
                     const searchFilterFormatted = formatteString(searchFilter);
-                    const nameFormatted = formatteString(skill.name);
-                    const typeFormatted = formatteString(skill.type);
+
+                    let skillName = skill.name as string;
+                    if (typeof skill.name === "object") {
+                        skillName = skill.name[language];
+                    }
+                    let skillType = skill.type[language];
+                    const nameFormatted = formatteString(skillName);
+                    const typeFormatted = formatteString(skillType);
                     const groupNameFormatted = formatteString(key);
 
                     const condition = (searchFilter == ""
@@ -79,7 +89,7 @@ export default function Skills({ }: SkillsProps) {
                         || groupNameFormatted.includes(searchFilterFormatted));
 
                     if (!condition) {
-                        skillsDeleted.push(skill.name);
+                        skillsDeleted.push(skillName);
                     }
 
                     return condition;
@@ -218,17 +228,26 @@ export default function Skills({ }: SkillsProps) {
         setSearchFilter("");
     }
 
+    const getText = () => {
+        const text = getTextByComponent("skills", textIndex.current);
+        textIndex.current++;
+
+        return text;
+    }
+
+    textIndex.current = 0;
+
     return (
         <div className="skills">
             <div className="skills-header">
-                <Title text="Tree skills" size="big" transform="upper" effect="shadow" />
+                <Title text={getText()} size="big" transform="upper" effect="shadow" />
             </div>
             <div className="skills-content">
                 <div className="skills-content-search">
                     <input
                         className="skills-content-search-input"
                         type="text"
-                        placeholder="Search any skill"
+                        placeholder={getText()}
                         value={searchFilter}
                         onChange={(e) => setSearchFilter(e.target.value)} />
                     <div className="skills-content-search-icon" onClick={resetFilter}>
@@ -239,19 +258,29 @@ export default function Skills({ }: SkillsProps) {
                     {skillsGroups && Object.keys(skillsGroups).map(key => (
                         <div className={`skills-content-groups-group group-${formatteString(key)}`} key={key}>
                             <div className="skills-content-groups-group-title">
-                                {highlightText(key, true)}
+                                {highlightText(skillsGroups[key][0].type[language], true)}
                             </div>
                             <div className="skills-content-groups-group-container">
                                 {skillsGroups[key].map(skill => {
+                                    let skillName = skill.name as string;
+                                    if (typeof skill.name === "object") {
+                                        skillName = skill.name[language];
+                                    }
+                                    const skillText = skill.text ? skill.text[language] : "";
+                                    const skillContext = skill.context as Context;
                                     return (
-                                        <div className={`skills-content-groups-group-container-skill skill-${formatteString(skill.name)}`} key={skill.name}>
+                                        <div className={`skills-content-groups-group-container-skill skill-${formatteString(skillName)}`} key={skillName}>
                                             <div className="skills-content-groups-group-container-skill-name">
                                                 {skill.favorite && (
                                                     <img className="logo-icon" src="icons/star.png" />
                                                 )}
-                                                {highlightText(skill.name)}
+                                                {highlightText(skillName)}
                                             </div>
-                                            <Tooltip text={skill.text as string} context={skill.context as Context} />
+                                            {
+                                                (skillText != "" || skillContext != null) && (
+                                                    <Tooltip text={skillText} context={skillContext} />
+                                                )
+                                            }
                                         </div>
                                     )
                                 })}

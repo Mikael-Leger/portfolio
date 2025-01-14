@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import TabInterface from "@/app/interfaces/tab.interface";
 import Preferences from "@/app/interfaces/preferences.interface";
+import { TextByLanguage } from "@/app/types/language";
+import { useLanguage } from "@/app/contexts/language-context";
 
 import "./favorites.scss";
 
@@ -12,8 +14,35 @@ type FavoritesProps = {
 };
 
 export default function Favorites({ preferences, getDefaultTabs, onAction }: FavoritesProps) {
-    if (!getDefaultTabs) {
-        return <></>;
+    const { language, getTextsByComponent } = useLanguage();
+
+    const [texts, setTexts] = useState<TextByLanguage[]>([]);
+
+    useEffect(() => {
+        getTexts();
+    }, []);
+
+    const getTexts = () => {
+        const texts = getTextsByComponent("page");
+        setTexts(texts);
+    }
+
+    const getText = (index: number) => {
+        return texts[index][language];
+    }
+
+    const translateTitle = (value: string) => {
+        if (value === "Projects") {
+            return getText(0);
+        }
+        if (value === "Skills") {
+            return getText(1);
+        }
+        return value;
+    }
+
+    if (!getDefaultTabs || texts.length === 0) {
+        return;
     }
 
     return (
@@ -31,7 +60,7 @@ export default function Favorites({ preferences, getDefaultTabs, onAction }: Fav
                         <img className="logo-icon" src={favorite.logoPath} />
                     </div>
                     <div className="favorites-item-title">
-                        {favorite.title}
+                        {translateTitle(favorite.title)}
                     </div>
                 </div>
             ))}
