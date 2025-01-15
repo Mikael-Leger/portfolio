@@ -16,27 +16,27 @@
             {
                 "name": "TypeScript",
                 "groupName": "frontend",
-                "version": "5.6.2"
+                "version": "5.6"
             },
             {
                 "name": "React",
                 "groupName": "frontend",
-                "version": "18.3.12"
+                "version": "18.3"
             },
             {
                 "name": "Vite",
                 "groupName": "frontend",
-                "version": "6.0.1"
+                "version": "6.0"
             },
             {
                 "name": "Python",
                 "groupName": "backend",
-                "version": "3.12.0"
+                "version": "3.12"
             },
             {
                 "name": "Flask",
                 "groupName": "backend",
-                "version": "3.1.0"
+                "version": "3.1"
             },
             {
                 "name": "Vercel",
@@ -69,12 +69,12 @@
             {
                 "name": "React",
                 "groupName": "frontend",
-                "version": "18.2.0"
+                "version": "18.2"
             },
             {
                 "name": "NestJS",
                 "groupName": "backend",
-                "version": "10.4.15"
+                "version": "10.4"
             },
             {
                 "name": "AWS RDS",
@@ -116,17 +116,17 @@
             {
                 "name": "TypeScript",
                 "groupName": "frontend",
-                "version": "5.0.0"
+                "version": "5.7"
             },
             {
                 "name": "React",
                 "groupName": "frontend",
-                "version": "19.0.0"
+                "version": "19.0"
             },
             {
                 "name": "Next.js",
                 "groupName": "frontend & backend",
-                "version": "15.1.0"
+                "version": "15.1"
             }
         ],
         "date": "2024"
@@ -171,12 +171,12 @@
             {
                 "name": "TypeScript",
                 "groupName": "frontend",
-                "version": "5.0.0"
+                "version": "5.0"
             },
             {
                 "name": "Next.js",
                 "groupName": "frontend & backend",
-                "version": "15.0.3"
+                "version": "15.0"
             },
             {
                 "name": "Spoonacular",
@@ -203,7 +203,7 @@
             {
                 "name": "Next.js",
                 "groupName": "frontend & backend",
-                "version": "14.2.3"
+                "version": "14.2"
             },
             {
                 "name": "IndexedDB",
@@ -230,17 +230,17 @@
             {
                 "name": "Angular",
                 "groupName": "frontend",
-                "version": "10.0.0"
+                "version": "10.0"
             },
             {
                 "name": "TypeScript",
                 "groupName": "frontend",
-                "version": "3.9.5"
+                "version": "3.9"
             },
             {
                 "name": "Express",
                 "groupName": "backend",
-                "version": "4.17.3"
+                "version": "4.17"
             },
             {
                 "name": "Heroku",
