@@ -171,7 +171,7 @@ export default function Mail({ onAction }: MailProps) {
                 </div>
                 <div className="mail-container-message" style={{ border: errors.message && "1px solid red" }}>
                     <textarea
-                        placeholder="Message"
+                        placeholder={getText(18)}
                         name="message"
                         value={formData.message}
                         onChange={handleChange}

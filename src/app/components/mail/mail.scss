@@ -20,7 +20,7 @@ $breakpoint-mobile: 768px;
         color: var(--black);
 
         @media (max-width: $breakpoint-mobile) {
-            height: 90%;
+            height: 80%;
         }
 
         >* {
@@ -52,7 +52,11 @@ $breakpoint-mobile: 768px;
         &-recipient {
             &-name {
                 display: inline-block;
-                text-decoration: underline;
+                padding: 0 5px;
+                border: 1px solid var(--grey);
+                border-radius: 6px;
+
+                user-select: none;
             }
         }
 
@@ -85,12 +89,12 @@ $breakpoint-mobile: 768px;
 
         &-send {
             display: flex;
-            justify-content: end;
+            justify-content: center;
             align-items: center;
 
-            height: 50px;
-
             &-button {
+                width: 150px;
+                height: 50px;
                 padding: 8px 16px;
                 border-radius: 15px;
                 color: var(--white);

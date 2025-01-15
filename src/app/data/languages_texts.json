@@ -11,20 +11,32 @@
                 "en": "Discover my work and expertise"
             },
             {
-                "baguette": "Mon CV en format classique PDF",
-                "en": "Prefer a classic PDF format?"
+                "baguette": "Si vous préférez en version PDF",
+                "en": "If you prefer it in PDF"
             },
             {
                 "baguette": "Envoyez-moi un mail venant de l'espace",
-                "en": "Reach me by sending a space-mail"
+                "en": "Reach out by sending a space-mail"
             },
             {
-                "baguette": "Envoyez-moi un message sur les réseaux",
-                "en": "Message me on this popular social media"
+                "baguette": "Regardez mon profil sur LinkedIn",
+                "en": "View my profile on LinkedIn"
+            },
+            {
+                "baguette": "Qui suis-je ?",
+                "en": "Who am I?"
             },
             {
                 "baguette": "Bienvenue sur mon portfolio !",
                 "en": "Welcome to my portfolio!"
+            },
+            {
+                "baguette": "Faites défiler pour en savoir plus",
+                "en": "Scroll down to learn more"
+            },
+            {
+                "baguette": "Revenir en haut",
+                "en": "Back to top"
             },
             {
                 "baguette": "Développeur français",
@@ -52,7 +64,7 @@
             },
             {
                 "baguette": "Vise toujours la lune !",
-                "en": "Always aim for the moon!"
+                "en": "Always aims for the moon!"
             },
             {
                 "baguette": "Aime assimiler de nouvelles connaissances",
@@ -67,8 +79,8 @@
                 "en": "Altruist"
             },
             {
-                "baguette": "Découvrez-en plus à mon propos ci-dessous",
-                "en": "Explore and learn more about me below"
+                "baguette": "Découvrez mon parcours professionnel et prenez contact",
+                "en": "Discover my professional journey and get in touch"
             }
         ]
     },
@@ -101,12 +113,12 @@
                 "en": "To"
             },
             {
-                "baguette": "Mail",
-                "en": "Email"
+                "baguette": "john.doe@example.com",
+                "en": "john.doe@example.com"
             },
             {
                 "baguette": "Objet",
-                "en": "Object"
+                "en": "Subject"
             },
             {
                 "baguette": "Envoyer",
@@ -163,6 +175,10 @@
             {
                 "baguette": "Le message ne peut dépasser 1000 charactères",
                 "en": "Message cannot exceed 1000 characters"
+            },
+            {
+                "baguette": "Écrivez votre message ici...",
+                "en": "Write your message here..."
             }
         ]
     },

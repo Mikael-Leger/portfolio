@@ -11,6 +11,8 @@ $breakpoint-lg: 992px;
     background-color: $bg_color;
     color: var(--white);
 
+    overflow-x: hidden;
+
     .rocket-ship {
         width: 200px;
         opacity: 0;
@@ -25,9 +27,57 @@ $breakpoint-lg: 992px;
 
         .title {
             font-size: 55px;
+            text-align: center;
 
             @media (max-width: $breakpoint-mobile) {
                 font-size: 30px;
+            }
+        }
+    }
+
+    &-scroll {
+        position: fixed;
+        top: 90vh;
+        width: 100vw;
+        height: 10vh;
+        z-index: 10;
+
+        &-down {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, .5) -50%, rgb(31, 31, 31));
+        }
+
+        &-up {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+
+            position: absolute;
+            bottom: 120px;
+            right: 50px;
+            width: 120px;
+            height: 80px;
+            border-radius: 10px;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, .5) -50%, rgb(31, 31, 31));
+            opacity: 0;
+
+            cursor: pointer;
+
+            @media (max-width: $breakpoint-mobile) {
+                bottom: 80px;
+                right: 20px;
             }
         }
     }
@@ -65,7 +115,6 @@ $breakpoint-lg: 992px;
                         justify-content: start;
 
                         padding: 0;
-                        // height: 114px;
                     }
                 }
             }
@@ -88,7 +137,7 @@ $breakpoint-lg: 992px;
             font-size: 36px;
 
             @media (max-width: $breakpoint-mobile) {
-                width: 90vw;
+                width: 70vw;
                 font-size: 28px;
             }
 
@@ -125,7 +174,7 @@ $breakpoint-lg: 992px;
                 @media (max-width: $breakpoint-mobile) {
                     justify-content: center;
                     text-align: center;
-                    width: 90vw;
+                    width: 70vw;
                 }
             }
         }
@@ -138,6 +187,7 @@ $breakpoint-lg: 992px;
 
             width: 100%;
             max-width: 500px;
+            z-index: 1;
 
             &-quote {
                 display: flex;
@@ -150,11 +200,11 @@ $breakpoint-lg: 992px;
 
         &-moon {
             position: absolute;
-            bottom: -320px;
+            bottom: -330px;
             left: 245px;
 
             @media (max-width: $breakpoint-mobile) {
-                bottom: -130px;
+                bottom: -240px;
                 left: 65px;
             }
         }
@@ -187,8 +237,9 @@ $breakpoint-lg: 992px;
             background-color: $bg_color_2;
 
             @media (max-width: $breakpoint-mobile) {
-                justify-content: start;
-                height: 1000px;
+                // TODO: Explore in details why bottom links does weird stuff on mobile
+                // justify-content: start;
+                // height: 1000px;
                 padding: 0 20px;
             }
 
@@ -242,29 +293,34 @@ $breakpoint-lg: 992px;
                         height: 100%;
                         padding: 10px;
 
-                        &-icon {
+                        &-title {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            width: 100%;
+                            font-size: 1.4em;
+                            text-decoration: underline;
+
+                            @media (max-width: $breakpoint-mobile) {
+                                font-size: 1em;
+                            }
+
                             .logo-icon {
                                 width: 48px;
                                 height: 48px;
                             }
                         }
 
-                        &-content {
-                            display: flex;
-                            align-items: center;
-                            flex-direction: column;
-                            gap: 5px;
+                        &-description {
+                            width: 100%;
+                            color: var(--grey);
+                            font-family: 'Playfair Display', serif;
+                            font-size: 1em;
+                            letter-spacing: 1px;
 
-                            &-title {
-                                width: 100%;
-                            }
-
-                            &-description {
-                                width: 100%;
-                                color: var(--grey);
+                            @media (max-width: $breakpoint-mobile) {
                                 font-size: .8em;
-                                font-family: 'Playfair Display', serif;
-                                letter-spacing: 1px;
                             }
                         }
                     }

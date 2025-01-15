@@ -49,27 +49,26 @@
             @include flexAlignedAndCentered;
             gap: 10px;
 
+            position: relative;
+
             &-icon {
-                width: 38px;
+                position: absolute;
+                right: 4px;
+                width: 26px;
                 border-radius: 10px;
                 padding: 3px;
-                opacity: 0;
 
                 cursor: pointer;
 
                 &:hover {
                     background-color: var(--background-weightier-100);
                 }
-
-                img {
-                    filter: var(--invert);
-                }
             }
 
             &-input {
-                padding: 5px 10px;
+                width: 300px;
+                padding: 5px 40px 5px 10px;
                 color: var(--black);
-                opacity: 0
             }
         }
 
@@ -101,18 +100,19 @@
                 &-title {
                     @include flexAlignedAndCentered;
 
-                    font-size: 1.2em;
-                    text-decoration: underline;
+                    font-size: .8em;
                 }
 
                 &-container {
                     display: flex;
                     flex-wrap: wrap;
-                    flex-direction: column;
+                    justify-content: space-between;
                     gap: 10px 25px;
 
-                    min-height: 48px;
+                    min-height: 24px;
                     max-height: 194px;
+
+                    max-width: 230px;
 
                     &-skill {
                         @include flex;
@@ -140,7 +140,7 @@
 
             position: fixed;
             height: 200px;
-            bottom: 0;
+            bottom: 50px;
             opacity: 0;
             z-index: -1;
 
@@ -153,6 +153,7 @@
                 background-color: var(--background-node-tooltip);
                 border-radius: 15px 15px 0 0;
                 clip-path: inset(100% 0 0 0);
+                opacity: .85;
 
                 &-text {
                     @include flexAlignedAndCenteredByColumn;

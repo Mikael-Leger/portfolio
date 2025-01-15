@@ -47,7 +47,14 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
         if (!item.url || isAnyReduced) {
             return;
         }
-        addTab({ title: item.name, url: item.url, logoPath: item.logo, defaultTab: false });
+
+        if (item.url.includes("github")) {
+            window.open(item.url, '_blank');
+
+        } else {
+            addTab({ title: item.name, url: item.url, logoPath: item.logo, defaultTab: false });
+
+        }
     }
 
     const statusTemplate = (status: Status) => {
@@ -66,7 +73,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
             return (
                 <div
                     className="modal-container"
-                    style={{ width: isMobile ? '88vw' : '60vw', maxHeight: isMobile ? '69vh' : '', padding: isMobile ? '36px' : '20px' }}
+                    style={{ width: isMobile ? '88vw' : '60vw', maxHeight: isMobile ? '69vh' : '' }}
                     ref={ref}>
                     <div className="modal-container-header">
                         <div className="modal-container-header-title">
@@ -74,7 +81,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                         </div>
                         {modalData.item.status && statusTemplate(modalData.item.status)}
                     </div>
-                    <div className="modal-container-content" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+                    <div className="modal-container-content" style={{ flexDirection: isMobile ? 'column' : 'row', padding: isMobile ? '36px' : '20px' }}>
                         <div className="modal-container-content-details">
                             <div
                                 className={`modal-container-content-details-img ${modalData.item.url ? 'link-working' : ''}`}

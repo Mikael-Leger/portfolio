@@ -20,6 +20,7 @@ export default function Stack({ groupsOfItems }: StackProps) {
         }
         window.open(url, '_blank');
     }
+
     return (
         <div className="stack">
             {groupsOfItems.map(groupOfItems => {

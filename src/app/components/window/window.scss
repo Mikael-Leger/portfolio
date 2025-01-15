@@ -1,3 +1,5 @@
+$breakpoint-mobile: 768px;
+
 .window {
     display: flex;
     align-items: center;
@@ -13,13 +15,17 @@
     border: 1px solid black;
 
     &-browser {
-
-        // height: 69vh;
         .window-content {
             height: 100%;
 
-            >* {
-                padding-bottom: 200px;
+            &.default-tab {
+                @media (max-width: $breakpoint-mobile) {
+                    padding-bottom: 150px;
+                }
+
+                >* {
+                    padding-bottom: 200px;
+                }
             }
         }
     }

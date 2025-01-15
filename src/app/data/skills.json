@@ -9,13 +9,13 @@
             "en": "French"
         },
         "text": {
-            "baguette": "Natif",
+            "baguette": "Langue maternelle",
             "en": "Native"
         }
     },
     {
         "type": {
-            "baguette": "langues",
+            "baguette": "Langues",
             "en": "Natural languages"
         },
         "name": {

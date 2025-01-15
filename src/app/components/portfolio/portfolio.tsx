@@ -36,6 +36,10 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
         return text;
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     textIndex.current = 0;
 
     const mainSections = [
@@ -67,9 +71,20 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
 
     return (
         <div className="portfolio" ref={portfolioRef}>
-            <Parallax firstText="Mikaël Léger" secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
+            <Parallax firstText={`Mikaël Léger - ${getText()}`} secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
             <div className="portfolio-header">
                 <Title text={getText()} size={isMobile ? "small" : "medium"} futurist />
+            </div>
+            <div className="portfolio-scroll">
+                <div className="portfolio-scroll-down">
+                    <img className="logo-icon invert" src="/icons/scroll.png" />
+                    {getText()}
+                    <img className="logo-icon invert" src="/icons/scroll.png" />
+                </div>
+                <div className="portfolio-scroll-up" onClick={scrollToTop}>
+                    <img className="logo-icon invert" src="/icons/backtop.png" />
+                    {getText()}
+                </div>
             </div>
             <div id="rocket" className="rocket-ship">
                 <img src="parallax/rocket.png" />
@@ -134,16 +149,12 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
                             key={section.name}>
                             <div className="portfolio-content-sections-section-border">
                                 <div className="portfolio-content-sections-section-border-container">
-                                    <div className="portfolio-content-sections-section-border-container-icon">
+                                    <div className="portfolio-content-sections-section-border-container-title">
+                                        {section.name}
                                         <img className="logo-icon" src={section.logoPath} />
                                     </div>
-                                    <div className="portfolio-content-sections-section-border-container-content">
-                                        <div className="portfolio-content-sections-section-border-container-content-title">
-                                            {section.name}
-                                        </div>
-                                        <div className="portfolio-content-sections-section-border-container-content-description">
-                                            {section.description}
-                                        </div>
+                                    <div className="portfolio-content-sections-section-border-container-description">
+                                        {section.description}
                                     </div>
                                 </div>
                             </div>

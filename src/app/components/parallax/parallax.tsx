@@ -24,7 +24,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
 
     const parallaxRef = useRef(null);
     const firstTextRef = useRef(null);
-    const secondTextRef = useRef(null);
     const shootingStar = useRef<SVGLineElement | null>(null);
     const shootingStar2 = useRef<SVGLineElement | null>(null);
     const earth = useRef(null);
@@ -64,12 +63,44 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                     const endParallax = isMobile ? "1600" : "2000";
 
                     if (imagesLoaded.current === images.length) {
+                        gsap.to(".portfolio-scroll", {
+                            zIndex: -1,
+                            scrollTrigger: {
+                                start: "140% 40%",
+                                end: "140% 40%",
+                                toggleActions: "restart none reverse none"
+                            }
+                        });
+                        gsap.to(".portfolio-scroll-down", {
+                            opacity: 0,
+                            scrollTrigger: {
+                                start: "120% 40%",
+                                end: "120% 40%",
+                                toggleActions: "restart none reverse none"
+                            }
+                        });
+                        gsap.to(".portfolio-scroll", {
+                            zIndex: 10,
+                            scrollTrigger: {
+                                start: "620% 40%",
+                                end: "620% 40%",
+                                toggleActions: "restart none reverse none"
+                            }
+                        });
+                        gsap.to(".portfolio-scroll-up", {
+                            opacity: 1,
+                            scrollTrigger: {
+                                start: "640% 40%",
+                                end: "640% 40%",
+                                toggleActions: "restart none reverse none"
+                            }
+                        });
                         const timeline = gsap.timeline({
                             defaults: { duration: 1 },
                             scrollTrigger: {
                                 trigger: parallaxRef.current,
                                 start: "top top",
-                                end: `${endParallax} bottom`,
+                                end: `${endParallax} 140%`,
                                 scrub: true,
                                 pin: true,
                                 onUpdate: (self) => {
@@ -93,11 +124,12 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             {
                                 strokeDasharray: 200,
                                 strokeDashoffset: 500
-                            })
+                            },
+                            0
+                        );
                         timeline.to(
                             shootingStar.current,
                             {
-                                duration: 2,
                                 ease: "power2.out"
                             },
                             0
@@ -155,7 +187,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         const rocketTimeline = gsap.timeline();
                         let tmpY = 0;
                         let tmpY2 = -50;
-                        let tmpY3 = 210;
+                        let tmpY3 = 160;
+                        let tmpY4 = 320;
                         let tmpGap = isMobile ? 200 : 0;
                         // First details
                         rocketTimeline.fromTo(
@@ -177,7 +210,8 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 motionPath: {
                                     path: [
                                         { x: 200, y: tmpY2 },
-                                        { x: 285, y: tmpY3 }
+                                        { x: 285, y: tmpY3 },
+                                        { x: 285, y: tmpY4 }
                                     ],
                                     curviness: 1.5,
                                 },
@@ -185,7 +219,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 opacity: 1
                             }
                         );
-                        tmpY = tmpY3;
+                        tmpY = tmpY4;
                         tmpY2 = tmpY + 210;
                         tmpY3 = tmpY2 + 880 - tmpGap;
                         let tmpX = isMobile ? -40 : 100;
@@ -216,7 +250,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             }
                         );
                         tmpY = tmpY3;
-                        let tmpY4 = tmpY + tmpGap;
+                        tmpY4 = tmpY + tmpGap;
                         tmpY2 = tmpY4 + 100;
                         tmpY3 = tmpY2 + 300;
                         // Moon below
@@ -347,32 +381,30 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             "#me",
                             {
                                 opacity: 0,
-                                y: 300
+                                clipPath: "inset(0 0 0 100%)"
                             },
                             {
                                 scrollTrigger: {
                                     trigger: ".portfolio-header",
-                                    start: `300% center`,
-                                    end: `500% center`,
+                                    start: `320% center`,
+                                    end: `550% center`,
                                     toggleActions: "restart none reverse none",
                                     scrub: true,
                                 },
                                 opacity: .7,
-                                y: 0
+                                clipPath: "inset(0 0 0 0%)"
                             }
                         );
 
-                        animateTexts(2, 1, 150, 100, {
-                            x: 300,
-                            opacity: 0
+                        animateTexts(2, 1, 50, 100, {
+                            clipPath: isMobile ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)"
                         });
 
-                        animateTexts(3, 3, 700, 100, {
-                            x: 300,
-                            opacity: 0
+                        animateTexts(3, 3, 500, 100, {
+                            clipPath: "inset(0 0 0 100%)"
                         });
 
-                        animateTexts(4, 6, 1400, 85, {
+                        animateTexts(4, 6, 1380, 85, {
                             y: 100,
                             clipPath: "inset(100% 0 0 0)",
                             opacity: 0
@@ -395,19 +427,35 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                 newFrom.x = -from.x;
             }
 
+            const animation = gsap.timeline({
+                paused: true,
+                defaults: { duration: 1.2 },
+            });
+
+            animation.to(elem, {
+                y: 0,
+                clipPath: "inset(0% 0% 0% 0%)",
+                opacity: 1
+            });
+
+            const where = base + (i * gap);
+
             gsap.fromTo(elem,
                 newFrom,
                 {
                     scrollTrigger: {
                         trigger: ".portfolio-header",
-                        start: `${base + (i * gap)}% center`,
-                        end: `${base + gap + (i * gap)}% center`,
-                        toggleActions: "restart none reverse none"
+                        start: `${where}% center`,
+                        end: `${where}% center`,
+                        toggleActions: "restart none reverse none",
+                        onUpdate: (self) => {
+                            if (self.direction > 0) {
+                                animation.timeScale(1).play();
+                            } else {
+                                animation.timeScale(2).reverse();
+                            }
+                        }
                     },
-                    y: 0,
-                    x: 0,
-                    clipPath: "inset(-50% -50px -50px -50px)",
-                    opacity: 1
                 }
             );
         });

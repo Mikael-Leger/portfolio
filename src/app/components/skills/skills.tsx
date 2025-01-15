@@ -147,25 +147,6 @@ export default function Skills({ }: SkillsProps) {
             stagger: .2,
             ease: "power1.inOut"
         })
-        const duration = timeline.totalDuration();
-        gsap.fromTo(".skills-content-search-input", {
-            x: -100,
-            opacity: 0
-        }, {
-            delay: duration,
-            duration: .4,
-            x: 0,
-            opacity: 1
-        })
-        gsap.fromTo(".skills-content-search-icon", {
-            x: 100,
-            opacity: 0
-        }, {
-            delay: duration,
-            duration: .4,
-            x: 0,
-            opacity: 1
-        })
 
         const groups = Array.from(document.getElementsByClassName("skills-content-groups-group")).reverse();
 
@@ -322,9 +303,13 @@ export default function Skills({ }: SkillsProps) {
                         placeholder={getText()}
                         value={searchFilter}
                         onChange={(e) => setSearchFilter(e.target.value)} />
-                    <div className="skills-content-search-icon" onClick={resetFilter}>
-                        <img src="/icons/refresh.png" />
-                    </div>
+                    {
+                        searchFilter != "" && (
+                            <div className="skills-content-search-icon" onClick={resetFilter}>
+                                <img src="/icons/close_small.png" />
+                            </div>
+                        )
+                    }
                 </div>
                 <div className="skills-content-groups">
                     {skillsGroups && Object.keys(skillsGroups).map(key => (
@@ -344,7 +329,7 @@ export default function Skills({ }: SkillsProps) {
                                         <div className={`skills-content-groups-group-container-skill skill-${formatteString(skillName)}`} key={skillName}>
                                             <div className="skills-content-groups-group-container-skill-name">
                                                 {skill.favorite && (
-                                                    <img className="logo-icon" src="icons/star.png" />
+                                                    <img className="logo-icon" src="icons/heart.png" />
                                                 )}
                                                 {highlightText(skillName)}
                                             </div>

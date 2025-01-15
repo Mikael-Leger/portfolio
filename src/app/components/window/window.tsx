@@ -531,6 +531,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		browserLogic.switchTab?.(index)
 	}
 
+	const getBrowserClass = () => {
+		if (tabs == null || browserLogic.activeTab == null) return "";
+		return tabs[browserLogic.activeTab].defaultTab ? "default-tab" : "";
+	}
+
 	return (
 		<WindowDiv
 			className={`window window-${type} window-${type}-${window_id}`}
@@ -643,7 +648,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			</div>
 			{
 				!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && browserLogic.isCurrentTabPortfolio && tabs[browserLogic.activeTab] && (
-					<div className={`window-content browser-content ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''}`}>
+					<div className={`window-content browser-content ${browserLogic.isCurrentTabPortfolio() ? "special-bg" : ''} ${getBrowserClass()}`}>
 						{tabs[browserLogic.activeTab].content}
 					</div>
 				)
