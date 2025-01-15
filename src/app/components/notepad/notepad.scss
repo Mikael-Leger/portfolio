@@ -22,8 +22,12 @@ $breakpoint-mobile: 768px;
         flex-direction: column;
         align-self: start;
 
-        a::before {
-            content: "• ";
+        button {
+            text-align: start;
+
+            &:before {
+                content: "• ";
+            }
         }
     }
 
