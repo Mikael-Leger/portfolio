@@ -78,7 +78,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [windowDetails, setWindowDetails] = useState<WindowDetails>({
 		width: '60vw',
-		height: '60vh',
+		height: type === "browser" ? '48vh' : '60vh',
 		offsetX: 250,
 		offsetY: 250,
 		cursorStartX: 0,
@@ -362,7 +362,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				left: newLeft,
 				top: newTop,
 				width: isMaximized ? '' : '60vw',
-				minHeight: isMaximized ? '' : '60vh',
+				minHeight: isMaximized ? '' : type === "browser" ? '48vh' : '60vh',
 				ease: "sine.in"
 			});
 
@@ -496,18 +496,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 
 	const actionsList = [
 		{
-			name: "reduce",
-			onClick: () => {
-				setIsReducing(true)
-			},
-			hide: !portfolioLogic.isNotPortfolio
-		},
-		{
 			name: "minimize",
 			onClick: () => {
 				setIsMaximized(false)
 			},
-			hide: isMobile || !isMaximized || !portfolioLogic.isNotPortfolio || !pdfLogic.isNotPdf
+			hide: isMobile || !isMaximized || !portfolioLogic.isNotPortfolio
 		},
 		{
 			name: "maximize",
