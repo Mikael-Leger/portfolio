@@ -37,8 +37,11 @@ $breakpoint-mobile: 768px;
                 color: var(--black);
                 resize: none;
 
-                &:focus {
-                    outline-width: 0;
+                &:focus,
+                &:focus-visible {
+                    appearance: none;
+                    border-style: solid;
+                    outline: none;
                 }
             }
         }
@@ -105,6 +108,13 @@ $breakpoint-mobile: 768px;
                 user-select: none;
             }
         }
+    }
+
+    &-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     &-message {

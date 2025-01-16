@@ -368,6 +368,8 @@ export default function Home() {
             if (tabsLocalStr) {
                 const tabsLocal = JSON.parse(tabsLocalStr) as TabInterface[];
 
+                let tabsLocalError = false;
+
                 const tabsLocalWithContent = tabsLocal.map(tabLocal => {
                     if (tabLocal.defaultTab) {
                         const defaultTabs = getDefaultTabs();
@@ -375,11 +377,18 @@ export default function Home() {
                         const defaultTabFound = defaultTabs.find(defaultTab => defaultTab.title === tabLocal.title);
 
                         if (defaultTabFound) return defaultTabFound;
+                        tabsLocalError = true;
                     }
                     return getNewTab(tabLocal);
                 });
 
-                setTabs(tabsLocalWithContent);
+                if (!tabsLocalError) {
+                    setTabs(tabsLocalWithContent);
+
+                } else {
+                    localStorage.setItem("active-tab", "0");
+                    setTabs(getDefaultTabs());
+                }
             }
 
             const timeline = gsap.timeline();
@@ -398,8 +407,6 @@ export default function Home() {
 
     useEffect(() => {
         if (isBooted) {
-            initializeTabs();
-
             const firstAnimation = localStorage.getItem("first-animation");
             if (!firstAnimation) {
                 setTimeout(() => {
@@ -451,14 +458,6 @@ export default function Home() {
             )
         }
     ])
-
-    const initializeTabs = () => {
-        const defaultTabs = getDefaultTabs();
-        const tabsLocalStr = localStorage.getItem("tabs");
-        if (!tabsLocalStr) {
-            setTabs(defaultTabs);
-        }
-    }
 
     const getNewTab = (tabData: TabInterface): TabInterface => {
         return {

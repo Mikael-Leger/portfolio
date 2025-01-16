@@ -123,8 +123,6 @@ export default function Mail({ onAction }: MailProps) {
                 setMailStatus({ status: "error" });
 
             }
-
-            await new Promise(r => setTimeout(r, 400));
         } catch (e) {
             console.error("Error while sending email");
 
@@ -184,10 +182,12 @@ export default function Mail({ onAction }: MailProps) {
                     </button>
                 </div>
             </form>
-            <div className="mail-message" style={{ width: mailStatus != null ? "100%" : 0 }}>
-                {isLoading && (
+            {isLoading && (
+                <div className="mail-loading">
                     <Loading />
-                )}
+                </div>
+            )}
+            <div className="mail-message" style={{ display: mailStatus != null ? "flex" : "none" }}>
                 {mailStatus?.status != null && (
                     <div className="mail-message-container">
                         <div className="mail-message-container-text">

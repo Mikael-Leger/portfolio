@@ -18,6 +18,16 @@ $breakpoint-xl: 1200px;
         .earth {
             filter: drop-shadow(0 0 10px rgba(0, 0, 0, .5));
         }
+
+        .jupiter,
+        .uranus {
+            filter: blur(2px) brightness(50%);
+        }
+
+        .mars,
+        .pluto {
+            filter: blur(1px) brightness(80%);
+        }
     }
 
     &-outer {
