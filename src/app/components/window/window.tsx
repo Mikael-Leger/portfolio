@@ -60,6 +60,9 @@ const WindowDiv = styled.div<WindowDivProps>`
   z-index: ${props => props.$zIndex}
 `;
 
+const WINDOW_ANIMATION_DURATION = .2;
+const WINDOW_ANIMATION_EASE = "power4.out";
+
 let idCounter = 0;
 
 export default function Window({ window_id, type, zIndex, tabs, lines, onFinish, removeTab, onAction, windowRefs, setWindowRef, getDefaultTabs, desktopOpenActions, isLocallyReduced = false, isLocallyMaximized = true, hide = false }: WindowProps) {
@@ -116,10 +119,10 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				display: 'none',
 				opacity: 0
 			}, {
-				duration: .7,
+				duration: WINDOW_ANIMATION_DURATION,
 				display: 'flex',
 				opacity: 1,
-				ease: "sine.in"
+				ease: WINDOW_ANIMATION_EASE
 			});
 
 		} else {
@@ -130,13 +133,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				y: '40vh',
 				x: '40vw'
 			}, {
-				duration: .7,
+				duration: WINDOW_ANIMATION_DURATION,
 				display: 'flex',
 				opacity: 1,
 				scale: 1,
 				y: 0,
 				x: 0,
-				ease: "sine.in"
+				ease: WINDOW_ANIMATION_EASE
 			});
 
 		}
@@ -319,13 +322,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			const newLeft = -28 + (window_id * 16) + 'vw';
 
 			timeline.to(document.querySelector(`.window-${type}-${window_id}`), {
-				duration: .7,
+				duration: WINDOW_ANIMATION_DURATION,
 				scale: 0.1,
 				left: newLeft,
 				top: '40vh',
 				width: isMaximized ? '' : '100vw',
 				minHeight: isMaximized ? '' : '100vh',
-				ease: "sine.in"
+				ease: WINDOW_ANIMATION_EASE
 			});
 			timeline.to(document.querySelector(`.window-${type}-${window_id} .window-reduced-logo`), {
 				duration: .2,
@@ -357,13 +360,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 				left: oldLeft,
 				top: "40vh",
 			}, {
-				duration: .7,
+				duration: WINDOW_ANIMATION_DURATION,
 				scale: 1,
 				left: newLeft,
 				top: newTop,
 				width: isMaximized ? '' : '60vw',
 				minHeight: isMaximized ? '' : type === "browser" ? '48vh' : '60vh',
-				ease: "sine.in"
+				ease: WINDOW_ANIMATION_EASE
 			});
 
 			const totalDuration = timeline.totalDuration();
