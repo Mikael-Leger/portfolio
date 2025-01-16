@@ -55,19 +55,19 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Skills" })
         },
         {
-            title: "CV",
+            title: getText(2),
             iconPath: "/icons/pdf.png",
             position: { top: isMobile ? 50 : 100, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 2 })
         },
         {
-            title: "Portfolio",
+            title: getText(3),
             iconPath: "/icons/portfolio.png",
             position: { top: isMobile ? 300 : 300, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 4 })
         },
         {
-            title: getText(2),
+            title: getText(4),
             iconPath: "/icons/mail.png",
             position: { top: isMobile ? 425 : 500, right: isMobile ? 50 : 300 },
             onClick: () => desktopOpenActions("openWindow", { id: 3 })

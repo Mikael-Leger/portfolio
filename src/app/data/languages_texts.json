@@ -7,6 +7,10 @@
                 "en": "Projects"
             },
             {
+                "baguette": "CV",
+                "en": "Resume"
+            },
+            {
                 "baguette": "Découvrez mon travail et mes expériences",
                 "en": "Discover my work and expertise"
             },
@@ -94,6 +98,14 @@
             {
                 "baguette": "Compétences",
                 "en": "Skills"
+            },
+            {
+                "baguette": "CV",
+                "en": "Resume"
+            },
+            {
+                "baguette": "XXX",
+                "en": "XXX"
             },
             {
                 "baguette": "Me contacter",
@@ -293,6 +305,23 @@
             {
                 "baguette": "Plusieurs",
                 "en": "Multiple"
+            }
+        ]
+    },
+    {
+        "component": "window",
+        "texts": [
+            {
+                "baguette": "CV",
+                "en": "Resume"
+            },
+            {
+                "baguette": "Votre navigateur a du mal à visualiser ce PDF",
+                "en": "Your browser has some issues to visualize this PDF"
+            },
+            {
+                "baguette": "Téléchargez mon CV ici",
+                "en": "Download my Resume here"
             }
         ]
     }

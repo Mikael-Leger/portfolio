@@ -24,6 +24,8 @@ import Mail from "../mail/mail";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 import PortfolioMainPage from "../portfolio/portfolio";
 import Notepad from "../notepad/notepad";
+import { useLanguage } from "@/app/contexts/language-context";
+import { TextByLanguage } from "@/app/types/language";
 
 import "./window.scss";
 
@@ -64,6 +66,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
+	const { language, getTextsByComponent } = useLanguage();
 
 	// const [window_id, setId] = useState<number>();
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
@@ -83,6 +86,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		initialOffsetX: 0,
 		initialOffsetY: 0
 	});
+	const [texts, setTexts] = useState<TextByLanguage[]>([]);
+
 	const { addToList, removeFromList } = useIsAnyReduced();
 	const { isMobile } = useIsMobile();
 
@@ -94,6 +99,15 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			desktopOpenActions?.("reduce", window_id);
 		}
 	}, [isReduced]);
+
+	const getTexts = () => {
+		const texts = getTextsByComponent("window");
+		setTexts(texts);
+	}
+
+	useEffect(() => {
+		getTexts();
+	}, []);
 
 	const animateCreateWindow = () => {
 		const timeline = gsap.timeline();
@@ -509,6 +523,11 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		}
 	];
 
+	const getText = (index: number) => {
+		return texts[index][language];
+	}
+
+
 	if ((type == "browser" && (!tabs || tabs.length == 0)) || preferences == null || !browserLogic || !commandLogic || !pdfLogic) {
 		return <></>;
 	}
@@ -665,15 +684,13 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			{
 				!pdfLogic.isNotPdf && (
 					<div className="window-content pdf-content">
-						<object data="/pdf/CV_LEGER_Mikael.pdf" type="application/pdf">
+						<object data={`/pdf/${getText(0)}_LEGER_Mikael.pdf`} type="application/pdf">
 							<div className="pdf-content-error">
 								<div className="pdf-content-error-text">
-									{/* TODO: lang */}
-									Your browser has some issues to visualize this PDF
+									{getText(1)}
 								</div>
 								<div className="pdf-content-error-text">
-									{/* TODO: lang */}
-									<a className="pdf-content-error-text-link" href="/pdf/CV_LEGER_Mikael.pdf" download="CV_LEGER_Mikael.pdf">Download my CV here</a>
+									<a className="pdf-content-error-text-link" href={`/pdf/${getText(0)}_LEGER_Mikael.pdf`} download={`${getText(0)}_LEGER_Mikael.pdf`}>{getText(2)}</a>
 								</div>
 							</div>
 						</object>

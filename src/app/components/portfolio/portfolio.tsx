@@ -50,7 +50,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             logoPath: "/icons/projects.png"
         },
         {
-            name: "CV",
+            name: getText(),
             description: getText(),
             onClick: () => { desktopOpenActions?.("openWindow", { id: 2 }) },
             logoPath: "/icons/pdf.png"
