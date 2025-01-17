@@ -388,7 +388,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                     trigger: ".portfolio-header",
                                     start: `320% center`,
                                     end: `550% center`,
-                                    toggleActions: "restart none none none",
                                     scrub: true,
                                 },
                                 opacity: .7,
@@ -400,7 +399,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                             clipPath: isMobile ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)"
                         });
 
-                        animateTexts(3, 3, 500, 100, {
+                        animateTexts(3, 3, isMobile ? 500 : 700, 100, {
                             clipPath: "inset(0 0 0 100%)"
                         });
 
@@ -447,7 +446,6 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         trigger: ".portfolio-header",
                         start: `${where}% center`,
                         end: `${where}% center`,
-                        toggleActions: "restart none none none",
                         onUpdate: (self) => {
                             if (self.direction > 0) {
                                 animation.timeScale(1).play();
