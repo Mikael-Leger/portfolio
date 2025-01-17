@@ -114,7 +114,6 @@ export default function Home() {
         localStorage.setItem("tabs", tabsLocalStr);
 
         if (usedDefaultTabs.current) {
-            console.log("???");
             setWindows(prevWindows => {
                 let updatedWindows = [...prevWindows];
 
@@ -125,8 +124,6 @@ export default function Home() {
             });
 
         } else {
-            console.log("setup default windows");
-
             const defaultWindows: WindowProps[] = [
                 createDefaultWindow(0, "browser"),
                 createDefaultWindow(2, "pdf"),
@@ -564,13 +561,9 @@ export default function Home() {
     }
 
     const openWindow = (window_id: number, tabName: string | null = null) => {
-        console.log("openWindow: ", window_id);
-
-
         lastOpenedWindowRef.current = { id: window_id };
 
         setWindows(prevWindows => {
-            console.log(prevWindows);
             const updatedWindows = [...prevWindows];
 
             const windowFound = updatedWindows.find(window => window.window_id == window_id);
