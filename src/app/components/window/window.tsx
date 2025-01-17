@@ -656,7 +656,9 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 					!browserLogic.isNotBrowser && tabs && browserLogic.activeTab != null && tabs[browserLogic.activeTab] && (
 						<>
 							<Bar preferences={preferences} tabs={tabs} activeTab={browserLogic.activeTab} />
-							<Favorites preferences={preferences} getDefaultTabs={getDefaultTabs} onAction={onAction} />
+							{!isMobile && (
+								<Favorites preferences={preferences} getDefaultTabs={getDefaultTabs} onAction={onAction} />
+							)}
 						</>
 					)
 				}

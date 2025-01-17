@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import Parallax from "../parallax/parallax";
 import Title from "../title/title";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 import { useLanguage } from "@/app/contexts/language-context";
+import { TextByLanguage } from "@/app/types/language";
 
 import "./portfolio.scss";
 
@@ -14,56 +15,66 @@ type PortfolioMainPageProps = {
 
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
     const { isMobile } = useIsMobile();
-    const { getTextByComponent } = useLanguage();
+    const { language, getTextsByComponent } = useLanguage();
+
+    const [texts, setTexts] = useState<TextByLanguage[]>([]);
 
     const portfolioRef = useRef(null);
     const moon = useRef(null);
-    const textIndex = useRef(0);
 
     const handleSectionClick = (e: React.MouseEvent<HTMLDivElement>, callback: () => void) => {
         callback();
     }
+
+    useEffect(() => {
+        getTexts();
+    }, []);
+
+    const getTexts = () => {
+        const texts = getTextsByComponent("portfolio");
+        setTexts(texts);
+    }
+
+    const getText = (index: number) => {
+        return texts[index][language];
+    }
+
 
     const getMoonWidth = () => {
         const value = isMobile ? 300 : 500;
         return `${value}px`;
     }
 
-    const getText = () => {
-        const text = getTextByComponent("portfolio", textIndex.current);
-        textIndex.current++;
-
-        return text;
-    }
-
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    textIndex.current = 0;
+    if (texts.length === 0) {
+        return;
+    }
 
     const mainSections = [
         {
-            name: getText(),
-            description: getText(),
+            name: getText(0),
+            description: getText(1),
             onClick: () => { desktopOpenActions?.("openWindow", { id: 0 }) },
             logoPath: "/icons/projects.png"
         },
         {
-            name: getText(),
-            description: getText(),
+            name: getText(2),
+            description: getText(3),
             onClick: () => { desktopOpenActions?.("openWindow", { id: 2 }) },
             logoPath: "/icons/pdf.png"
         },
         {
-            name: "Contact",
-            description: getText(),
+            name: getText(4),
+            description: getText(5),
             onClick: () => { desktopOpenActions?.("openWindow", { id: 3 }) },
             logoPath: "/icons/mail.png"
         },
         {
             name: "LinkedIn",
-            description: getText(),
+            description: getText(6),
             onClick: () => { window.open("https://www.linkedin.com/in/mika%C3%ABl-l%C3%A9ger-6934a3165/", '_blank') },
             logoPath: "/icons/linkedin.png"
         },
@@ -71,19 +82,19 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
 
     return (
         <div className="portfolio" ref={portfolioRef}>
-            <Parallax firstText={`Mikaël Léger - ${getText()}`} secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
+            <Parallax firstText={`Mikaël Léger`} secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
             <div className="portfolio-header">
-                <Title text={getText()} size={isMobile ? "small" : "medium"} futurist />
+                <Title text={getText(7)} size={isMobile ? "small" : "medium"} futurist />
             </div>
             <div className="portfolio-scroll">
                 <div className="portfolio-scroll-down">
                     <img className="logo-icon invert" src="/icons/scroll.png" />
-                    {getText()}
+                    {getText(8)}
                     <img className="logo-icon invert" src="/icons/scroll.png" />
                 </div>
                 <div className="portfolio-scroll-up" onClick={scrollToTop}>
                     <img className="logo-icon invert" src="/icons/backtop.png" />
-                    {getText()}
+                    {getText(9)}
                 </div>
             </div>
             <div id="rocket" className="rocket-ship">
@@ -92,27 +103,27 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             <div className="portfolio-content first-content">
                 <div className="portfolio-content-text" style={{ marginTop: isMobile ? "-180px" : "0" }}>
                     <div className={`portfolio-content-text-1 ${isMobile ? "text-reversed" : ""}`}>
-                        {getText()}<img className="logo-icon" src="/icons/baguette.png" />
+                        {getText(10)}<img className="logo-icon" src="/icons/baguette.png" />
                     </div>
                     <div className={`portfolio-content-text-2 ${isMobile ? "text-reversed" : ""}`}>
-                        {getText()}<img className="logo-icon" src="/icons/fries.png" />
+                        {getText(11)}<img className="logo-icon" src="/icons/fries.png" />
                     </div>
                 </div>
                 <div className="portfolio-content-me">
                     <img id="me" className='me' src="/parallax/me.png" />
                     <div className="portfolio-content-me-quote">
-                        ({getText()})
+                        ({getText(12)})
                     </div>
                 </div>
                 <div className="portfolio-content-text">
                     <div className="portfolio-content-text-3">
-                        {getText()}<img className="logo-icon" src="/icons/degree.png" />
+                        {getText(13)}<img className="logo-icon" src="/icons/degree.png" />
                     </div>
                     <div className="portfolio-content-text-4">
-                        {getText()}<img className="logo-icon" src="/icons/webdev.png" />
+                        {getText(14)}<img className="logo-icon" src="/icons/webdev.png" />
                     </div>
                     <div className="portfolio-content-text-5">
-                        {getText()}<img className="logo-icon" src="/icons/creativity.png" />
+                        {getText(15)}<img className="logo-icon" src="/icons/creativity.png" />
                     </div>
                 </div>
                 <div className="portfolio-content-moon" style={{ width: getMoonWidth() }}>
@@ -122,21 +133,21 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
             <div className="portfolio-content second-content">
                 <div className="portfolio-content-text">
                     <div className={`portfolio-content-text-6`}>
-                        {getText()}
+                        {getText(16)}
                     </div>
                     <div className={`portfolio-content-text-7`}>
-                        {getText()}
+                        {getText(17)}
                     </div>
                     <div className={`portfolio-content-text-8`}>
-                        {getText()}
+                        {getText(18)}
                     </div>
                     <div className={`portfolio-content-text-9`}>
-                        {getText()}
+                        {getText(19)}
                     </div>
                 </div>
                 <div className="portfolio-content-linear" >
                     <div className="portfolio-content-linear-text">
-                        <Title text={getText()} futurist />
+                        <Title text={getText(20)} futurist />
                     </div>
                 </div>
             </div>

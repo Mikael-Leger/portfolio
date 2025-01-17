@@ -32,6 +32,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     const [language, setLanguage] = useState<LanguageType>("en");
 
     useEffect(() => {
+        const navigatorLanguage = navigator.language;
+        if (navigatorLanguage != null && navigatorLanguage.includes("fr")) {
+            setLanguage("baguette");
+            return;
+        }
+
         const localLanguage = localStorage.getItem("lang") as LanguageType;
         if (localLanguage != null) {
             setLanguage(localLanguage);

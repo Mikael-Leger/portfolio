@@ -388,7 +388,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                     trigger: ".portfolio-header",
                                     start: `320% center`,
                                     end: `550% center`,
-                                    toggleActions: "restart none reverse none",
+                                    toggleActions: "restart none none none",
                                     scrub: true,
                                 },
                                 opacity: .7,
@@ -447,7 +447,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         trigger: ".portfolio-header",
                         start: `${where}% center`,
                         end: `${where}% center`,
-                        toggleActions: "restart none reverse none",
+                        toggleActions: "restart none none none",
                         onUpdate: (self) => {
                             if (self.direction > 0) {
                                 animation.timeScale(1).play();

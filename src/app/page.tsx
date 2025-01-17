@@ -114,6 +114,7 @@ export default function Home() {
         localStorage.setItem("tabs", tabsLocalStr);
 
         if (usedDefaultTabs.current) {
+            console.log("???");
             setWindows(prevWindows => {
                 let updatedWindows = [...prevWindows];
 
@@ -124,6 +125,8 @@ export default function Home() {
             });
 
         } else {
+            console.log("setup default windows");
+
             const defaultWindows: WindowProps[] = [
                 createDefaultWindow(0, "browser"),
                 createDefaultWindow(2, "pdf"),
@@ -212,7 +215,9 @@ export default function Home() {
     }
 
     useEffect(() => {
-        setWindowsToLocal();
+        if (isBooted) {
+            setWindowsToLocal();
+        }
         setWindowsOrder();
 
         if (windows[0]) {
@@ -300,17 +305,16 @@ export default function Home() {
             let currentWindows = [...prevWindows];
 
             const windowIndex = currentWindows.findIndex(window => window.window_id == id);
-            const tmpZIndex = currentWindows[windowIndex].zIndex;
-
-            const updatedWindows = currentWindows.map(item =>
-                ({ ...item, zIndex: item.zIndex <= tmpZIndex ? item.zIndex : Math.max(item.zIndex - 100, 0) })
-            );
-
             if (windowIndex != -1) {
+                const tmpZIndex = currentWindows[windowIndex].zIndex;
+                const updatedWindows = currentWindows.map(item =>
+                    ({ ...item, zIndex: item.zIndex <= tmpZIndex ? item.zIndex : Math.max(item.zIndex - 100, 0) })
+                );
                 updatedWindows[windowIndex].zIndex = 500;
+                return updatedWindows;
             }
 
-            return updatedWindows;
+            return prevWindows;
         });
     }
 
@@ -364,6 +368,21 @@ export default function Home() {
 
     useEffect(() => {
         if (currentLocation && !isBooting) {
+            const timeline = gsap.timeline();
+            const startingDuration = BASE_TIME_STARTING / 1000;
+            const beforeHome = CSSRulePlugin.getRule(".home::before");
+
+            const firstAnimation = localStorage.getItem("first-animation");
+            if (firstAnimation) {
+                showDesktopAnimation(beforeHome, timeline);
+            } else {
+                showDesktopAnimation(beforeHome, timeline, startingDuration, .2);
+            }
+        }
+    }, [currentLocation, isBooting]);
+
+    useEffect(() => {
+        if (isBooted) {
             const tabsLocalStr = localStorage.getItem("tabs");
             if (tabsLocalStr) {
                 const tabsLocal = JSON.parse(tabsLocalStr) as TabInterface[];
@@ -384,29 +403,15 @@ export default function Home() {
 
                 if (!tabsLocalError) {
                     setTabs(tabsLocalWithContent);
-
                 } else {
                     localStorage.setItem("active-tab", "0");
                     setTabs(getDefaultTabs());
                 }
+            } else {
+                localStorage.setItem("active-tab", "0");
+                setTabs(getDefaultTabs());
             }
 
-            const timeline = gsap.timeline();
-            const startingDuration = BASE_TIME_STARTING / 1000;
-            const beforeHome = CSSRulePlugin.getRule(".home::before");
-
-            const firstAnimation = localStorage.getItem("first-animation");
-            if (firstAnimation) {
-                showDesktopAnimation(beforeHome, timeline);
-                return;
-            };
-
-            showDesktopAnimation(beforeHome, timeline, startingDuration, .2);
-        }
-    }, [currentLocation, isBooting]);
-
-    useEffect(() => {
-        if (isBooted) {
             const firstAnimation = localStorage.getItem("first-animation");
             if (!firstAnimation) {
                 setTimeout(() => {
@@ -555,17 +560,23 @@ export default function Home() {
 
     const onFirstAnimationFinish = () => {
         openWindow(4);
+        closeWindow(1);
     }
 
     const openWindow = (window_id: number, tabName: string | null = null) => {
+        console.log("openWindow: ", window_id);
+
+
         lastOpenedWindowRef.current = { id: window_id };
 
         setWindows(prevWindows => {
+            console.log(prevWindows);
             const updatedWindows = [...prevWindows];
 
             const windowFound = updatedWindows.find(window => window.window_id == window_id);
 
             if (windowFound) {
+
                 windowFound.hide = false;
 
                 if (tabName != null) {
@@ -666,15 +677,12 @@ export default function Home() {
         return (
             <div className="home">
                 {isBooted ? (
-                    <>
-                        <Dekstop
-                            windows={windows}
-                            setWindowRef={setWindowRef}
-                            windowRefs={windowRefs}
-                            getDefaultTabs={getDefaultTabs}
-                            desktopOpenActions={desktopOpenActions} />
-                        <Language />
-                    </>
+                    <Dekstop
+                        windows={windows}
+                        setWindowRef={setWindowRef}
+                        windowRefs={windowRefs}
+                        getDefaultTabs={getDefaultTabs}
+                        desktopOpenActions={desktopOpenActions} />
                 ) : (
                     <div className="home-session">
                         <UserSession />

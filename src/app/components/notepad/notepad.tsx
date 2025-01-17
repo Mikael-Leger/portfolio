@@ -59,13 +59,14 @@ export default function Notepad({ }: NotepadProps) {
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/pdf")} title="pdf icons">Pdf {getText(0)} Dimitry Miroliubov - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/earth")} title="earth icons">Earth {getText(0)} Freepik - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/creativity")} title="creativity icons">Creativity {getText(0)} Freepik - Flaticon</button>
-                <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/email")} title="email icons">Email {getText(0)} ChilliColor - Flaticon</button>
+                <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/email")} title="email icons">Email {getText(0)} Pixel perfect - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/tree")} title="tree icons">Tree {getText(0)} Freepik - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/project")} title="project icons">Project {getText(0)} afitrose - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/france")} title="france icons">France {getText(0)} Sudowoodo - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/belgium")} title="belgium icons">Belgium {getText(0)} Waveshade_Studios - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/uk-flag")} title="uk flag icons">Uk flag {getText(0)} Freepik - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/degree")} title="degree icons">Degree {getText(0)} Smashicons - Flaticon</button>
+                <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/web-development")} title="web development icons">Web development {getText(0)} surang - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/code")} title="code icons">Code {getText(0)} Royyan Wijaya - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/linkedin")} title="linkedin icons">Linkedin {getText(0)} riajulislam - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/notepad")} title="notepad icons">Notepad {getText(0)} Freepik - Flaticon</button>
@@ -73,6 +74,7 @@ export default function Notepad({ }: NotepadProps) {
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/arrows")} title="arrows icons">Arrows {getText(0)} Lagot Design - Flaticon</button>
                 <button onClick={() => openNewPage("https://www.flaticon.com/free-icons/heart")} title="heart icons">Heart {getText(0)} Vlad Szirka - Flaticon</button>
                 <button onClick={() => openNewPage("https://fr.freepik.com/search?format=search&last_filter=query&last_value=treenode&query=treenode")} title="Freepik">Treenode image {getText(1)} Freepik</button>
+                <button onClick={() => openNewPage("https://fr.freepik.com/search?format=search&last_filter=query&last_value=unicorn&query=unicorn")} title="Freepik">Unicorn image {getText(1)} Freepik</button>
                 <button onClick={() => openNewPage("https://pixabay.com/")} title="planet images">Planet images {getText(1)} Pixabay</button>
             </div>
             <div className="notepad-copyright">

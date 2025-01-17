@@ -7,6 +7,7 @@ import Shortcut from "../shortcut/shortcut";
 import { useIsMobile } from "@/app/contexts/mobile-context";
 import { useLanguage } from "@/app/contexts/language-context";
 import { TextByLanguage } from "@/app/types/language";
+import Language from "../language/language";
 
 import "./dekstop.scss";
 
@@ -62,7 +63,7 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
         },
         {
             title: getText(3),
-            iconPath: "/icons/portfolio.png",
+            iconPath: "/icons/me.png",
             position: { top: isMobile ? 300 : 300, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 4 })
         },
@@ -96,6 +97,7 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
                     getDefaultTabs={getDefaultTabs}
                     desktopOpenActions={desktopOpenActions} />
             ))}
+            <Language />
         </div>
     );
 }

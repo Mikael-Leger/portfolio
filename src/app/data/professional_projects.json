@@ -28,7 +28,7 @@
             },
             {
                 "name": "Serveur interne",
-                "groupName": "deploy"
+                "groupName": "deployment"
             },
             {
                 "name": "Extracteur interne",

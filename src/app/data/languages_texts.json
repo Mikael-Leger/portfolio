@@ -7,16 +7,20 @@
                 "en": "Projects"
             },
             {
-                "baguette": "CV",
-                "en": "Resume"
-            },
-            {
                 "baguette": "Découvrez mon travail et mes expériences",
                 "en": "Discover my work and expertise"
             },
             {
+                "baguette": "CV",
+                "en": "Resume"
+            },
+            {
                 "baguette": "Si vous préférez en version PDF",
                 "en": "If you prefer it in PDF"
+            },
+            {
+                "baguette": "Contact",
+                "en": "Contact"
             },
             {
                 "baguette": "Envoyez-moi un mail venant de l'espace",
@@ -25,10 +29,6 @@
             {
                 "baguette": "Regardez mon profil sur LinkedIn",
                 "en": "View my profile on LinkedIn"
-            },
-            {
-                "baguette": "Qui suis-je ?",
-                "en": "Who am I?"
             },
             {
                 "baguette": "Bienvenue sur mon portfolio !",
@@ -75,16 +75,16 @@
                 "en": "Likes acquiring new knowledge"
             },
             {
-                "baguette": "Apprend très vite",
+                "baguette": "Apprentissage efficace et rapide",
                 "en": "Fast-learner"
             },
             {
-                "baguette": "Aime aider les autres",
-                "en": "Altruist"
+                "baguette": "Esprit d'équipe développé",
+                "en": "Team-oriented mindset"
             },
             {
-                "baguette": "Découvrez mon parcours professionnel et prenez contact",
-                "en": "Discover my professional journey and get in touch"
+                "baguette": "Parcours, réalisations et contact",
+                "en": "Journey, Achievements, and Contact"
             }
         ]
     },
@@ -104,8 +104,8 @@
                 "en": "Resume"
             },
             {
-                "baguette": "XXX",
-                "en": "XXX"
+                "baguette": "Qui suis-je ?",
+                "en": "Who am I?"
             },
             {
                 "baguette": "Me contacter",

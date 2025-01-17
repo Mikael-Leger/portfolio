@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-
 import ProjectTechno from "@/app/interfaces/project-techno.interface";
 import { useIsAnyReduced } from "@/app/contexts/is-reduced";
-import { useIsMobile } from "@/app/contexts/mobile-context";
 
 import "./stack.scss";
 
@@ -12,13 +9,12 @@ type StackProps = {
 
 export default function Stack({ groupsOfItems }: StackProps) {
     const { isAnyReduced } = useIsAnyReduced();
-    const { isMobile } = useIsMobile();
 
-    const openTab = (url: string) => {
-        if (isAnyReduced) {
-            return;
+    const getContentStyle = (groupOfItems: ProjectTechno[]) => {
+        if (groupOfItems.length > 1) {
+            return {};
         }
-        window.open(url, '_blank');
+        return (groupOfItems[0].version != null) ? {} : { marginTop: "-25px" };
     }
 
     return (
@@ -32,19 +28,13 @@ export default function Stack({ groupsOfItems }: StackProps) {
                         <div className="stack-group-name">
                             {groupName}
                         </div>
-                        <div className="stack-group-content">
+                        <div className="stack-group-content" style={getContentStyle(groupOfItems)}>
                             {groupOfItems.map(item => {
                                 return (
                                     <div className="stack-group-content-item" key={item.name}>
-                                        {item.url ? (
-                                            <div className="stack-group-content-item-url" onClick={() => openTab(item.url as string)}>
-                                                {item.name}
-                                            </div>
-                                        ) : (
-                                            <div className="stack-group-content-item-name">
-                                                {item.name}
-                                            </div>
-                                        )}
+                                        <div className="stack-group-content-item-name">
+                                            {item.name}
+                                        </div>
                                         {item.version && (
                                             <div className="stack-group-content-item-version">
                                                 {item.version}

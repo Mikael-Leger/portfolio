@@ -40,7 +40,7 @@
             },
             {
                 "name": "Vercel",
-                "groupName": "deploy",
+                "groupName": "deployment",
                 "url": "https://vercel.com/"
             },
             {
@@ -84,12 +84,12 @@
             },
             {
                 "name": "Vercel",
-                "groupName": "deploy",
+                "groupName": "deployment",
                 "url": "https://vercel.com/"
             },
             {
                 "name": "AWS EC2",
-                "groupName": "deploy",
+                "groupName": "deployment",
                 "url": "https://aws.amazon.com/fr/ec2/"
             },
             {
@@ -109,8 +109,8 @@
         "img": "/projects/portfolio.png",
         "logo": "/logo_portfolio.png",
         "description": {
-            "baguette": "Un portfolio unique et interactif conçu sous la forme d'une reproduction d'une interface informatique. Le système virtuel démarre avec un lancement de type Windows, offrant une expérience immersive et engageante. Plusieurs fenêtres s'ouvrent, chacune dévoilant des informations détaillées sur mes compétences, mes projets et mon expérience. Cette présentation créative et dynamique permet aux visiteurs d'explorer mon travail à travers une interface intuitive et un design réfléchi, mettant en valeur mon parcours professionnel.",
-            "en": "A unique and interactive portfolio designed as a reproduction of a computer interface. The virtual system boots up with a Windows-style startup, providing an engaging and immersive experience. Multiple windows open, each revealing detailed information about my skills, projects, and experience. This creative and dynamic presentation allows visitors to explore my work through an intuitive interface and design for my professional background."
+            "baguette": "Découvrez un portfolio unique et interactif, conçu comme une reproduction d’une interface informatique. Nous avons imaginé un système virtuel qui démarre avec un lancement de type Windows, créant une expérience immersive et engageante. Plusieurs fenêtres s’ouvrent pour révéler, de manière claire et détaillée, nos compétences, nos projets et notre expérience. Cette présentation créative et dynamique invite les visiteurs à explorer notre travail à travers une interface intuitive et un design soigné, mettant en lumière notre parcours professionnel.",
+            "en": "I invite you to explore a unique and interactive portfolio, crafted as a reproduction of a computer interface. Our virtual system begins with a Windows-style startup, offering an immersive and engaging experience. Multiple windows open seamlessly, unveiling detailed insights into our skills, projects, and professional journey. This creative and dynamic presentation provides visitors with an intuitive interface and thoughtful design, showcasing our work in an innovative way."
         },
         "stack": [
             {
@@ -196,8 +196,8 @@
         "img": "/projects/monostock.png",
         "logo": "/logo_monostock.png",
         "description": {
-            "baguette": "Solution de gestion des stocks efficace conçue pour les employés en libre-service dans les supermarchés. Cette application simplifie le suivi des inventaires, garantissant des mises à jour en temps réel sur les niveaux de stock, la disponibilité des produits et les besoins de réapprovisionnement. Grâce à une interface intuitive, les employés peuvent rapidement gérer les données produits, suivre les mouvements de stock et effectuer des contrôles d'inventaire, optimisant ainsi les opérations du supermarché et assurant que les clients ont toujours accès aux produits dont ils ont besoin.",
-            "en": "Efficient stock management solution designed for self-service employees in supermarkets. This application streamlines inventory tracking, ensuring real-time updates on stock levels, product availability, and restocking needs. With an intuitive interface, employees can quickly manage product data, monitor stock movement, and perform inventory checks, ultimately optimizing the supermarket’s operations and ensuring customers always have access to the products they need."
+            "baguette": "Vous êtes employé en libre-service ? Gerez vos stocks efficacement grâce à cette application qui simplifie le suivi des inventaires en offrant des mises à jour en temps réel sur les niveaux de votre stock, la disponibilité des produits et les besoins de réapprovisionnement. Grâce à une interface intuitive, nous permettons aux employés de gérer rapidement les données produits, de suivre les mouvements de stock et de réaliser des contrôles d’inventaire. Cette solution optimise les opérations du supermarché et garantit que les clients ont toujours accès aux produits dont ils ont besoin.",
+            "en": "Are you a self-service employee? Manage your inventory efficiently with this application, which simplifies stock tracking by providing real-time updates on your stock levels, product availability, and restocking needs. With an intuitive interface, we enable employees to quickly manage product data, track stock movements, and perform inventory checks. This solution optimizes supermarket operations and ensures that customers always have access to the products they need."
         },
         "stack": [
             {
@@ -249,12 +249,12 @@
             },
             {
                 "name": "Vercel",
-                "groupName": "deploy",
+                "groupName": "deployment",
                 "url": "https://vercel.com/"
             },
             {
                 "name": "Heroku",
-                "groupName": "deploy",
+                "groupName": "deployment",
                 "url": "https://www.heroku.com/"
             }
         ],

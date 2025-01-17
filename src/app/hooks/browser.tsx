@@ -11,18 +11,18 @@ export default function useBrowser(animateCreateWindow: () => number, type: stri
     const isBrowserOpen = useRef<boolean>(false);
 
     const getBrowserIconPath = () => {
-        const userAgent = navigator.userAgent;
+        const userAgent = navigator.userAgent.toLowerCase();
 
         const basePath = "/browsers";
         const extension = ".png";
 
-        if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) return `${basePath}/chrome${extension}`;
-        if (userAgent.includes("Firefox")) return `${basePath}/firefox${extension}`;
-        if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) return `${basePath}/safari${extension}`;
-        if (userAgent.includes("Edg")) return `${basePath}/edge${extension}`;
-        if (userAgent.includes("Opera") || userAgent.includes("OPR")) return `${basePath}/opera${extension}`;
+        if ((userAgent.includes("chrome") || userAgent.includes("crios")) && !userAgent.includes("edg")) return `${basePath}/chrome${extension}`;
+        if (userAgent.includes("firefox")) return `${basePath}/firefox${extension}`;
+        if (userAgent.includes("safari") && !userAgent.includes("chrome") && !userAgent.includes("crios")) return `${basePath}/safari${extension}`;
+        if (userAgent.includes("edg")) return `${basePath}/edge${extension}`;
+        if (userAgent.includes("opera") || userAgent.includes("opr")) return `${basePath}/opera${extension}`;
 
-        return `${basePath}/edge${extension}`;
+        return `${basePath}/chrome${extension}`;
     };
 
     useEffect(() => {
