@@ -12,6 +12,11 @@ import Body from "./components/body/body";
 
 import "./styles/globals.scss";
 
+export const metadata: Metadata = {
+	title: "Mikaël LÉGER - Full-Stack Developer",
+	description: "This is my interactive Portfolio."
+};
+
 export default function RootLayout({
 	children,
 }: Readonly<{
