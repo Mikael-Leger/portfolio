@@ -98,6 +98,11 @@
                     z-index: 1;
                 }
 
+                &.group-last {
+                    background-image: var(--background-node-trunk);
+                    border: 2px solid var(--background-node-trunk-border);
+                }
+
                 &-title {
                     @include flexAlignedAndCentered;
 

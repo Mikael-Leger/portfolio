@@ -1,12 +1,12 @@
-projects moving bg
-
-skills last one brown
-
 skills bg remove on hover
+
+title of main tab
 
 fix scroll normalize on macos maybe?
 
 vise => something else 
+
+projects moving bg
 
 BRING BACK LINTER PLZ
 

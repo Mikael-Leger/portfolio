@@ -306,6 +306,42 @@ export default function Skills({ }: SkillsProps) {
         })
     }
 
+    const skillsGroupsWithoutLastOne = () => {
+        if (!skillsGroups) return [];
+
+        const groupsAsArray = Object.keys(skillsGroups);
+        groupsAsArray.pop();
+
+        return groupsAsArray;
+    }
+
+    const renderLastGroup = () => {
+        if (!skillsGroups) return;
+
+        const groupsAsArray = Object.keys(skillsGroups);
+        return renderGroup(groupsAsArray[groupsAsArray.length - 1], true);
+    }
+
+    const renderGroup = (key: string, last: boolean = false) => {
+        if (!skillsGroups) return;
+
+        return (
+            <div className={`skills-content-groups-group group-${formatteString(key)} ${last ? "group-last" : ""}`} key={key}>
+                <div className="skills-content-groups-group-title">
+                    {highlightText(skillsGroups[key][0].type[language], true)}
+                </div>
+                <div className="skills-content-groups-group-container">
+                    <div className="skills-content-groups-group-container-left">
+                        {getSkillsByPanel("left", skillsGroups, key)}
+                    </div>
+                    <div className="skills-content-groups-group-container-right">
+                        {getSkillsByPanel("right", skillsGroups, key)}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="skills">
             <div className="skills-content">
@@ -325,21 +361,14 @@ export default function Skills({ }: SkillsProps) {
                     }
                 </div>
                 <div className="skills-content-groups">
-                    {skillsGroups && Object.keys(skillsGroups).map(key => (
-                        <div className={`skills-content-groups-group group-${formatteString(key)}`} key={key}>
-                            <div className="skills-content-groups-group-title">
-                                {highlightText(skillsGroups[key][0].type[language], true)}
-                            </div>
-                            <div className="skills-content-groups-group-container">
-                                <div className="skills-content-groups-group-container-left">
-                                    {getSkillsByPanel("left", skillsGroups, key)}
-                                </div>
-                                <div className="skills-content-groups-group-container-right">
-                                    {getSkillsByPanel("right", skillsGroups, key)}
-                                </div>
-                            </div>
-                        </div>
+                    {skillsGroups && skillsGroupsWithoutLastOne().map(key => (
+                        renderGroup(key)
                     ))}
+                </div>
+                <div className="skills-content-groups">
+                    {
+                        skillsGroups && renderLastGroup()
+                    }
                 </div>
                 <div className="skills-content-details" ref={mobileTooltipRef}>
                     <div className="skills-content-details-content">
