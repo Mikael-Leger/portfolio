@@ -1,5 +1,3 @@
-fix scroll normalize on macos maybe?
-
 vise => something else 
 
 projects moving bg

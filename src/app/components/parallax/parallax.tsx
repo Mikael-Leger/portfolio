@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, RefObject } from "react";
+import { useRef, useEffect, useState, RefObject, useContext } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { TextPlugin } from "gsap/dist/TextPlugin";
@@ -6,6 +6,8 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import Title from "../title/title";
 import { Breakpoint, useIsMobile } from "@/app/contexts/mobile-context";
 import { PlanetBaseStyle, Planets } from "@/app/interfaces/planet.interface";
+import PreferencesContext from "@/app/contexts/preferences-context";
+import Preferences from "@/app/interfaces/preferences.interface";
 
 import "./parallax.scss";
 
@@ -17,6 +19,7 @@ type ParallaxProps = {
 };
 
 function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) {
+    const preferences = useContext(PreferencesContext) as Preferences;
     const { isMobile, getBreakpointValue } = useIsMobile();
 
     const [background, setBackground] = useState(20);
@@ -51,18 +54,19 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
             images?.forEach((img) => {
                 img.onload = () => {
                     imagesLoaded.current++;
-                    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin);
-                    if (isMobile) {
-                        ScrollTrigger.normalizeScroll({
-                            allowNestedScroll: true,
-                            lockAxis: false,
-                            type: "touch,wheel,pointer",
-                        });
-                    }
-
-                    const endParallax = isMobile ? "1600" : "2000";
 
                     if (imagesLoaded.current === images.length) {
+                        gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin);
+                        if (isMobile || preferences.os === "macos") {
+                            ScrollTrigger.normalizeScroll({
+                                allowNestedScroll: true,
+                                lockAxis: false,
+                                type: "touch,wheel,pointer",
+                            });
+                        }
+
+                        const endParallax = isMobile ? "1600" : "2000";
+
                         gsap.to(".portfolio-scroll", {
                             zIndex: -1,
                             scrollTrigger: {

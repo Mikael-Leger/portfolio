@@ -4,4 +4,5 @@ export default interface Preferences {
     theme: string;
     color: CustomColor | undefined;
     browser: string;
+    os: string;
 }

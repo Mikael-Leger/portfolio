@@ -17,7 +17,8 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
     useEffect(() => {
         const theme = getPreferredTheme();
         const browser = getBrowserIconPath()
-        getPreferredColor(theme, browser);
+        const os = getOs();
+        getPreferredColor(theme, browser, os);
     }, []);
 
     const getPreferredTheme = () => {
@@ -29,7 +30,7 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
         return "no-preference";
     };
 
-    const getPreferredColor = async (theme: string, browser: string) => {
+    const getPreferredColor = async (theme: string, browser: string, os: string) => {
         let r, g, b;
         let rShaded, gShaded, bShaded;
         if (theme == "light") {
@@ -54,7 +55,8 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
                 textColor: theme == "dark" ? "white" : "black",
                 backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
             },
-            browser
+            browser,
+            os
         });
     };
 
@@ -72,6 +74,18 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
 
         return `${basePath}/chrome${extension}`;
     };
+
+    const getOs = () => {
+        const userAgent = window.navigator.userAgent;
+
+        if (userAgent.includes("Win")) {
+            return "windows";
+        } else if (userAgent.includes("Mac")) {
+            return "macos";
+        } else {
+            return "other";
+        }
+    }
 
     return (
         <PreferencesContext.Provider value={preferences}>
