@@ -12,8 +12,7 @@ type MailProps = {
 };
 
 export default function Mail({ onAction }: MailProps) {
-    const { language, getTextsByComponent } = useLanguage();
-
+    const { getText } = useLanguage("mail");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [mailStatus, setMailStatus] = useState<{ status: string } | null>(null);
     const [formData, setFormData] = useState<FormContact>({
@@ -27,20 +26,6 @@ export default function Mail({ onAction }: MailProps) {
         email: '',
         message: '',
     });
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
-
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("mail");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
 
     useEffect(() => {
         if (mailStatus?.status != null) {
@@ -132,10 +117,6 @@ export default function Mail({ onAction }: MailProps) {
     const closeMail = () => {
         onAction("closeWindow");
         setMailStatus(null)
-    }
-
-    if (texts.length === 0) {
-        return;
     }
 
     return (

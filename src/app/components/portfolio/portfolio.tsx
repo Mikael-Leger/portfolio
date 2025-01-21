@@ -15,9 +15,7 @@ type PortfolioMainPageProps = {
 
 export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainPageProps) {
     const { isMobile } = useIsMobile();
-    const { language, getTextsByComponent } = useLanguage();
-
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
+    const { getText } = useLanguage("portfolio");
 
     const portfolioRef = useRef(null);
     const moon = useRef(null);
@@ -26,20 +24,6 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
         callback();
     }
 
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("portfolio");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
-
-
     const getMoonWidth = () => {
         const value = isMobile ? 300 : 500;
         return `${value}px`;
@@ -47,10 +31,6 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    if (texts.length === 0) {
-        return;
     }
 
     const mainSections = [

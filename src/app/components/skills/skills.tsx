@@ -17,7 +17,7 @@ type GroupedSkills = {
 };
 
 export default function Skills({ }: SkillsProps) {
-    const { language, getTextByComponent } = useLanguage();
+    const { language, getText } = useLanguage("skills");
 
     const [skillsGroups, setSkillsGroups] = useState<GroupedSkills>();
     const [skillsGroupsFiltered, setSkillsGroupsFiltered] = useState<GroupedSkills>();
@@ -137,20 +137,9 @@ export default function Skills({ }: SkillsProps) {
 
     const animateTree = () => {
         const timeline = gsap.timeline();
-        timeline.fromTo(".skills-header", {
-            clipPath: "inset(100% 0 0 0)",
-            y: 100,
-        }, {
-            duration: .4,
-            clipPath: "inset(0% 0 0 0)",
-            y: 0,
-            stagger: .2,
-            ease: "power1.inOut"
-        })
-
         const groups = Array.from(document.getElementsByClassName("skills-content-groups-group")).reverse();
 
-        gsap.to(groups, {
+        timeline.to(groups, {
             duration: .2,
             opacity: 1,
             scale: 1,
@@ -221,13 +210,6 @@ export default function Skills({ }: SkillsProps) {
         setSearchFilter("");
     }
 
-    const getText = () => {
-        const text = getTextByComponent("skills", textIndex.current);
-        textIndex.current++;
-
-        return text;
-    }
-
     const setMobileTooltipData = (data: any) => {
         const timeline = gsap.timeline();
         if (mobileTooltip != null) {
@@ -292,15 +274,12 @@ export default function Skills({ }: SkillsProps) {
 
     return (
         <div className="skills">
-            <div className="skills-header">
-                <Title text={getText()} size="big" transform="upper" effect="shadow" />
-            </div>
             <div className="skills-content">
                 <div className="skills-content-search">
                     <input
                         className="skills-content-search-input"
                         type="text"
-                        placeholder={getText()}
+                        placeholder={getText(0)}
                         value={searchFilter}
                         onChange={(e) => setSearchFilter(e.target.value)} />
                     {

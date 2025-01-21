@@ -21,26 +21,7 @@ type DekstopProps = {
 
 export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultTabs, desktopOpenActions }: DekstopProps) {
     const { isMobile } = useIsMobile();
-    const { language, getTextsByComponent } = useLanguage();
-
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
-
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("desktop");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
-
-    if (texts.length === 0) {
-        return;
-    }
+    const { getText } = useLanguage("desktop");
 
     const shortcuts = [
         {
@@ -74,7 +55,7 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
             onClick: () => desktopOpenActions("openWindow", { id: 3 })
         },
         {
-            title: "Licenses.txt",
+            title: `${getText(5)}.txt`,
             iconPath: "/icons/notepad.png",
             position: { top: isMobile ? 425 : 500, left: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 5 })

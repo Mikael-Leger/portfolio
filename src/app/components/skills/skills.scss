@@ -43,7 +43,7 @@
 
     &-content {
         @include flexAlignedAndCenteredByColumn;
-        gap: 30px;
+        gap: 50px;
 
         &-search {
             @include flexAlignedAndCentered;

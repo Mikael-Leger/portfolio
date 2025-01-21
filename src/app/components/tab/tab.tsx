@@ -30,22 +30,8 @@ const TabDiv = styled.div<TabDivProps>`
 
 export default function Tab({ preferences, logoPath, title, active, index, isMaximized, isIncreasing, onClick, onAction }: Tabprops) {
     const { isMobile } = useIsMobile();
-    const { language, getTextsByComponent } = useLanguage();
 
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
-
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("page");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
+    const { getText } = useLanguage("page");
 
     const removeTabWithoutPropagation = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
         event.stopPropagation();
@@ -60,10 +46,6 @@ export default function Tab({ preferences, logoPath, title, active, index, isMax
             return getText(1);
         }
         return value;
-    }
-
-    if (texts.length === 0) {
-        return;
     }
 
     return (

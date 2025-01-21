@@ -14,23 +14,9 @@ type TooltipProps = {
 };
 
 export default function Tooltip({ text, context, setMobileTooltipData, clickedOnTooltip }: TooltipProps) {
-    const { language, getTextsByComponent } = useLanguage();
     const { isMobile } = useIsMobile();
 
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
-
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("tooltip");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
+    const { getText } = useLanguage("tooltip");
 
     const getTranslatedText = (text: string) => {
         switch (text) {
@@ -93,7 +79,7 @@ export default function Tooltip({ text, context, setMobileTooltipData, clickedOn
         setMobileTooltipData(getData());
     }
 
-    if ((text == null && context == null) || texts.length === 0) {
+    if (text == null && context == null) {
         return;
     }
 

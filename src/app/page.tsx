@@ -81,15 +81,15 @@ export default function Home() {
                 default:
                     break;
             }
-        } else {
-            console.warn(`No ref found for window ${id}`);
         }
     }, []);
 
     useEffect(() => {
         const windowsLocalStr = localStorage.getItem("windows");
         if (windowsLocalStr) {
-            setWindowsLocal(JSON.parse(windowsLocalStr));
+            const windowsLocal: Partial<WindowProps[]> = JSON.parse(windowsLocalStr);
+
+            setWindowsLocal(windowsLocal);
         }
 
         const firstAnimation = localStorage.getItem("first-animation");
@@ -100,7 +100,10 @@ export default function Home() {
 
     useEffect(() => {
         if (windowsLocal != null) {
-            setCurrentLocation(window.location.href);
+            const locationWithoutHash = window.location.href.split("#")[0];
+            const newLocation = locationWithoutHash.slice(0, -1) + "#";
+
+            setCurrentLocation(newLocation);
         }
     }, [windowsLocal]);
 
@@ -206,8 +209,6 @@ export default function Home() {
                     }
                     return windowLogic[actionLogic];
             }
-        } else {
-            console.warn(`No ref found for window 0`);
         }
     }
 
@@ -415,10 +416,22 @@ export default function Home() {
                     showCommand();
                 }, 1000);
             } else {
-                if (windowsLocal != null) return;
-                setTimeout(() => {
-                    openWindow(4);
-                }, 1000);
+                const hash = window.location.hash.slice(1);
+                if (hash != "") {
+                    setTimeout(() => {
+                        openWindow(0);
+                        const newTabIndexFound = getDefaultTabs().findIndex(tab => tab.title.toLowerCase() == hash);
+
+                        if (newTabIndexFound != -1) {
+                            handleWindowAction(0, "switchTab", "browser", newTabIndexFound);
+                        }
+                    }, 1000);
+                } else {
+                    if (windowsLocal != null) return;
+                    setTimeout(() => {
+                        openWindow(4);
+                    }, 1000);
+                }
             }
         }
 

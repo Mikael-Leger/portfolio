@@ -14,22 +14,7 @@ type FavoritesProps = {
 };
 
 export default function Favorites({ preferences, getDefaultTabs, onAction }: FavoritesProps) {
-    const { language, getTextsByComponent } = useLanguage();
-
-    const [texts, setTexts] = useState<TextByLanguage[]>([]);
-
-    useEffect(() => {
-        getTexts();
-    }, []);
-
-    const getTexts = () => {
-        const texts = getTextsByComponent("page");
-        setTexts(texts);
-    }
-
-    const getText = (index: number) => {
-        return texts[index][language];
-    }
+    const { getText } = useLanguage("favorites");
 
     const translateTitle = (value: string) => {
         if (value === "Projects") {
@@ -41,7 +26,7 @@ export default function Favorites({ preferences, getDefaultTabs, onAction }: Fav
         return value;
     }
 
-    if (!getDefaultTabs || texts.length === 0) {
+    if (!getDefaultTabs) {
         return;
     }
 

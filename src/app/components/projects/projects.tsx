@@ -22,13 +22,12 @@ type ProjectsProps = {
 
 export default function Projects({ addTab }: ProjectsProps) {
     const { isAnyReduced } = useIsAnyReduced();
-    const { getTextByComponent } = useLanguage();
+    const { getText } = useLanguage();
+
 
     const [modalData, setModalData] = useState<ProjectModal>({
         isVisible: false
     });
-
-    const textIndex = useRef(0);
 
     const projectsRef = useRef(null);
     const modalRef = useRef(null);
@@ -72,6 +71,10 @@ export default function Projects({ addTab }: ProjectsProps) {
         };
     }, [projectsRef, modalRef, modalData.isVisible])
 
+    const getTextByComponent = (index: number) => {
+        return getText("projects", index);
+    }
+
     const showModal = async (show: boolean) => {
         if (isAnyReduced) {
             return;
@@ -105,26 +108,17 @@ export default function Projects({ addTab }: ProjectsProps) {
         });
     };
 
-    const getText = () => {
-        const text = getTextByComponent("projects", textIndex.current);
-        textIndex.current++;
-
-        return text;
-    }
-
-    textIndex.current = 0;
-
     const groupsOfProjects = [
         {
-            title: getText(),
+            title: getTextByComponent(0),
             projects: personalProjects
         },
         {
-            title: getText(),
+            title: getTextByComponent(1),
             projects: professionalProjects
         },
         {
-            title: getText(),
+            title: getTextByComponent(2),
             projects: schoolProjects
         },
     ];
@@ -135,7 +129,7 @@ export default function Projects({ addTab }: ProjectsProps) {
                 {groupsOfProjects.map(groupOfProjects => (
                     <div className="projects-container-group" key={groupOfProjects.title}>
                         <div className="projects-container-group-title">
-                            <Title text={groupOfProjects.title} effect="shadow" color="purple" />
+                            <Title text={groupOfProjects.title} effect="shadow" color="purple" transform="upper" />
                         </div>
                         <div className="projects-container-group-projects">
                             {groupOfProjects.projects.map(project => (

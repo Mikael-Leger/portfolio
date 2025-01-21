@@ -9,9 +9,8 @@ type TaskBarProps = {
 
 export default function TaskBar({ }: TaskBarProps) {
     const { isMobile } = useIsMobile();
-    const { getTextByComponent } = useLanguage();
 
-    const textIndex = useRef(0);
+    const { getText } = useLanguage("task-bar");
 
     const restartWebsiteAnimations = () => {
         localStorage.removeItem('first-animation');
@@ -21,22 +20,13 @@ export default function TaskBar({ }: TaskBarProps) {
         window.location.reload();
     }
 
-    const getText = () => {
-        const text = getTextByComponent("task-bar", textIndex.current);
-        textIndex.current++;
-
-        return text;
-    }
-
-    textIndex.current = 0;
-
     return (
         <div className="task-bar" style={{ padding: isMobile ? "0 20px" : "0 40px" }}>
             <div className="task-bar-restart" onClick={restartWebsiteAnimations}>
                 <img className="task-bar-restart-img" src="/icons/restart.png" />
                 {!isMobile && (
                     <div className="task-bar-restart-button">
-                        {getText()}
+                        {getText(0)}
                     </div>
                 )}
             </div>

@@ -70,6 +70,8 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
 
     const modalTemplate = () => {
         if (modalData.item) {
+            const img = modalData.item.name === "MFC" ? `/projects/mfc_${language}.png` : modalData.item.img;
+
             return (
                 <div
                     className="modal-container"
@@ -86,7 +88,7 @@ export default function Modal({ modalData, addTab, showModal, ref }: ModalProps)
                             <div
                                 className={`modal-container-content-details-img ${modalData.item.url ? 'link-working' : ''}`}
                                 onClick={() => addTabFromitem(modalData.item as ProjectInterface)}>
-                                <img src={modalData.item.img} onError={(e) => {
+                                <img src={img} onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     target.onerror = null;
                                     target.src = "/projects/not_found.png";

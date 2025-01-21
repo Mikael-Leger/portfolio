@@ -1,6 +1,8 @@
 "use client"
 
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useRef } from 'react';
+
+import { useLanguage } from './language-context';
 
 type UsernameContextType = string | null;
 
@@ -14,7 +16,7 @@ export const UsernameProvider: React.FC<UsernameProviderProps> = ({ children }) 
 	const [username, setUsername] = useState<UsernameContextType>(null);
 
 	useEffect(() => {
-		setUsername("dev-user");
+		setUsername("unicorn-love");
 	}, []);
 
 	return (

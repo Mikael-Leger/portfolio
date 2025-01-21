@@ -55,24 +55,24 @@
                 "en": "Keep scrolling to help me climb!"
             },
             {
-                "baguette": "Master Développeur en Informatique",
-                "en": "Master degree in Sofwtare Engineering"
+                "baguette": "Titulaire d'un Master en Informatique",
+                "en": "Holding a Master's degree in Software"
             },
             {
                 "baguette": "Passionné par le développement web",
                 "en": "Passionate about web development"
             },
             {
-                "baguette": "Adore la créativité",
-                "en": "Loves creativity"
+                "baguette": "Animé par un esprit créatif",
+                "en": "Enthusiastic about creativity"
             },
             {
-                "baguette": "Vise toujours la lune !",
-                "en": "Always aims for the moon!"
+                "baguette": "Ambitieux et vise toujours la lune !",
+                "en": "Ambitious and always aiming for the moon!"
             },
             {
-                "baguette": "Aime assimiler de nouvelles connaissances",
-                "en": "Likes acquiring new knowledge"
+                "baguette": "Désireux d'assimiler de nouvelles connaissances",
+                "en": "Eager to acquire new knowledge"
             },
             {
                 "baguette": "Apprentissage efficace et rapide",
@@ -80,7 +80,7 @@
             },
             {
                 "baguette": "Esprit d'équipe développé",
-                "en": "Team-oriented mindset"
+                "en": "Team-oriented"
             },
             {
                 "baguette": "Parcours, réalisations et contact",
@@ -110,6 +110,10 @@
             {
                 "baguette": "Me contacter",
                 "en": "Contact me"
+            },
+            {
+                "baguette": "Licences",
+                "en": "Licenses"
             }
         ]
     },
@@ -215,16 +219,16 @@
         "component": "projects",
         "texts": [
             {
-                "baguette": "Projets personnels",
-                "en": "Personal projects"
+                "baguette": "Personnels",
+                "en": "Personal"
             },
             {
-                "baguette": "Projets professionnels",
-                "en": "Professional projects"
+                "baguette": "Professionnels",
+                "en": "Professional"
             },
             {
-                "baguette": "Projets scolaires",
-                "en": "Academic projects"
+                "baguette": "Scolaires",
+                "en": "Academic"
             }
         ]
     },
@@ -244,10 +248,6 @@
     {
         "component": "skills",
         "texts": [
-            {
-                "baguette": "Arbre des compétences",
-                "en": "Tree skills"
-            },
             {
                 "baguette": "Rechercher une compétence",
                 "en": "Search any skill"
@@ -322,6 +322,23 @@
             {
                 "baguette": "Téléchargez mon CV ici",
                 "en": "Download my Resume here"
+            },
+            {
+                "baguette": "Qui suis-je ?",
+                "en": "Who am I?"
+            },
+            {
+                "baguette": "Licences",
+                "en": "Licenses"
+            }
+        ]
+    },
+    {
+        "component": "easter",
+        "texts": [
+            {
+                "baguette": "Si vous me contactez en précisant \"LICORNE\", je ramène des croissants pour le premier entretien avec vous !",
+                "en": "If you contact me mentioning \"UNICORN\", I will gladly bring chocolate croissants for the first interview with you!"
             }
         ]
     }

@@ -3,7 +3,7 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 
 import languagesTexts from "@/app/data/languages_texts.json";
-import { TextByLanguage } from '../types/language';
+import LanguageText from '../interfaces/language-text.interface';
 
 export type LanguageType = "en" | "baguette";
 
@@ -11,15 +11,20 @@ interface LanguageContextType {
     language: LanguageType;
     setLanguage: (value: LanguageType) => void;
     getTextByComponent: (component: string, index: number) => string;
-    getTextsByComponent: (component: string) => TextByLanguage[];
+    getText: (index: number) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const useLanguage = (): LanguageContextType => {
+export const useLanguage = (component?: string): LanguageContextType => {
     const context = useContext(LanguageContext);
     if (!context) {
         throw new Error('useLanguage must be used within a LanguageProvider');
+    }
+    if (component == null) return context;
+
+    context.getText = (index: number) => {
+        return context.getTextByComponent(component, index);
     }
     return context;
 };
@@ -30,46 +35,40 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
     const [language, setLanguage] = useState<LanguageType>("en");
+    const [texts, setTexts] = useState<LanguageText[]>([]);
 
     useEffect(() => {
+        setTexts(languagesTexts);
+
+        const localLanguage = localStorage.getItem("lang") as LanguageType;
+        if (localLanguage != null) {
+            setLanguage(localLanguage);
+            return;
+        }
+
         const navigatorLanguage = navigator.language;
         if (navigatorLanguage != null && navigatorLanguage.includes("fr")) {
             setLanguage("baguette");
             return;
         }
-
-        const localLanguage = localStorage.getItem("lang") as LanguageType;
-        if (localLanguage != null) {
-            setLanguage(localLanguage);
-        }
     }, []);
+
+    const getTextByComponent = (component: string, index: number) => {
+        return texts.find(text => text.component === component)?.texts[index][language] ?? "";
+    }
+
+    useEffect(() => {
+        if (texts.length === 0) return;
+        console.log(getTextByComponent("easter", 0));
+    }, [texts]);
+
 
     useEffect(() => {
         localStorage.setItem("lang", language);
     }, [language]);
 
-    const getTextByComponent = (component: string, index: number) => {
-        const textsByComponent = languagesTexts.find(languagesText => languagesText.component === component);
-        if (!textsByComponent) {
-            return "";
-        }
-
-        const text = textsByComponent.texts[index][language];
-        index++;
-        return text;
-    }
-
-    const getTextsByComponent = (component: string) => {
-        const textsByComponent = languagesTexts.find(languagesText => languagesText.component === component);
-        if (!textsByComponent) {
-            return [];
-        }
-
-        return textsByComponent.texts;
-    }
-
     return (
-        <LanguageContext.Provider value={{ language, setLanguage, getTextByComponent, getTextsByComponent }}>
+        <LanguageContext.Provider value={{ language, setLanguage, getTextByComponent, getText: (index: number) => "" }}>
             {children}
         </LanguageContext.Provider>
     );

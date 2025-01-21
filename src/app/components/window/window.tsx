@@ -69,7 +69,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 	const preferences = useContext(PreferencesContext) as Preferences;
 	const ip = useContext(IPContext) as string;
 	const username = useContext(UsernameContext) as string;
-	const { language, getTextsByComponent } = useLanguage();
+	const { getText } = useLanguage("window");
 
 	// const [window_id, setId] = useState<number>();
 	const [windowIconPath, setWindowIconPath] = useState<string>("");
@@ -102,15 +102,6 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			desktopOpenActions?.("reduce", window_id);
 		}
 	}, [isReduced]);
-
-	const getTexts = () => {
-		const texts = getTextsByComponent("window");
-		setTexts(texts);
-	}
-
-	useEffect(() => {
-		getTexts();
-	}, []);
 
 	const animateCreateWindow = () => {
 		const timeline = gsap.timeline();
@@ -519,11 +510,6 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 		}
 	];
 
-	const getText = (index: number) => {
-		return texts[index][language];
-	}
-
-
 	if ((type == "browser" && (!tabs || tabs.length == 0)) || preferences == null || !browserLogic || !commandLogic || !pdfLogic) {
 		return <></>;
 	}
@@ -619,7 +605,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 							<>
 								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
 								<div className="window-header-head-left-text" >
-									Mikaël LÉGER
+									{getText(3)}
 								</div>
 							</>
 						)}
@@ -627,7 +613,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 							<>
 								<img className="window-header-head-left-logo logo-icon" src={windowIconPath} />
 								<div className="window-header-head-left-text" >
-									Licenses
+									{getText(4)}
 								</div>
 							</>
 						)}
@@ -688,7 +674,10 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 									{getText(1)}
 								</div>
 								<div className="pdf-content-error-text">
-									<a className="pdf-content-error-text-link" href={`/pdf/${getText(0)}_LEGER_Mikael.pdf`} download={`${getText(0)}_LEGER_Mikael.pdf`}>{getText(2)}</a>
+									<a
+										className="pdf-content-error-text-link"
+										href={`/pdf/${getText(0)}_LEGER_Mikael.pdf`}
+										download={`${getText(0)}_LEGER_Mikael.pdf`}>{getText(2)}</a>
 								</div>
 							</div>
 						</object>

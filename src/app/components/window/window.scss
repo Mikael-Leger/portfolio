@@ -246,7 +246,7 @@ $breakpoint-mobile: 768px;
             color: var(--color);
 
             position: relative;
-            // overflow: hidden;
+            padding: 50px 0;
 
             &.special-bg {
                 &:before {
