@@ -2,7 +2,6 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import Preferences from '../interfaces/preferences.interface';
-import CustomColor from '../interfaces/custom-color.interface';
 
 type PreferencesContextType = Preferences | null;
 
@@ -17,7 +16,8 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
 
     useEffect(() => {
         const theme = getPreferredTheme();
-        getPreferredColor(theme);
+        const browser = getBrowserIconPath()
+        getPreferredColor(theme, browser);
     }, []);
 
     const getPreferredTheme = () => {
@@ -29,7 +29,7 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
         return "no-preference";
     };
 
-    const getPreferredColor = async (theme: string) => {
+    const getPreferredColor = async (theme: string, browser: string) => {
         let r, g, b;
         let rShaded, gShaded, bShaded;
         if (theme == "light") {
@@ -53,8 +53,24 @@ export const PreferencesProvider: React.FC<PreferencesProviderProps> = ({ childr
                 backgroundColor: `rgb(${r}, ${g}, ${b})`,
                 textColor: theme == "dark" ? "white" : "black",
                 backgroundShadedColor: `rgb(${rShaded}, ${gShaded}, ${bShaded})`
-            }
+            },
+            browser
         });
+    };
+
+    const getBrowserIconPath = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+
+        const basePath = "/browsers";
+        const extension = ".png";
+
+        if ((userAgent.includes("chrome") || userAgent.includes("crios")) && !userAgent.includes("edg")) return `${basePath}/chrome${extension}`;
+        if (userAgent.includes("firefox")) return `${basePath}/firefox${extension}`;
+        if (userAgent.includes("safari") && !userAgent.includes("chrome") && !userAgent.includes("crios")) return `${basePath}/safari${extension}`;
+        if (userAgent.includes("edg")) return `${basePath}/edge${extension}`;
+        if (userAgent.includes("opera") || userAgent.includes("opr")) return `${basePath}/opera${extension}`;
+
+        return `${basePath}/chrome${extension}`;
     };
 
     return (

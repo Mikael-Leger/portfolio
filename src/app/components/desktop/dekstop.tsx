@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 
 import Window, { WindowProps } from "../window/window";
 import WindowRef from "@/app/interfaces/window-ref.interface";
@@ -8,6 +8,8 @@ import { useIsMobile } from "@/app/contexts/mobile-context";
 import { useLanguage } from "@/app/contexts/language-context";
 import { TextByLanguage } from "@/app/types/language";
 import Language from "../language/language";
+import PreferencesContext from "@/app/contexts/preferences-context";
+import Preferences from "@/app/interfaces/preferences.interface";
 
 import "./dekstop.scss";
 
@@ -23,16 +25,20 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
     const { isMobile } = useIsMobile();
     const { getText } = useLanguage("desktop");
 
+    const preferences = useContext(PreferencesContext) as Preferences;
+
+    if (preferences == null) return;
+
     const shortcuts = [
         {
             title: getText(0),
             position: { top: isMobile ? 100 : 150, left: isMobile ? 50 : 200 },
-            iconPath: "/browsers/edge.png",
+            iconPath: preferences.browser,
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Projects" })
         },
         {
             title: getText(1),
-            iconPath: "/browsers/edge.png",
+            iconPath: preferences.browser,
             position: { top: isMobile ? 225 : 150, left: isMobile ? 50 : 350 },
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Skills" })
         },
