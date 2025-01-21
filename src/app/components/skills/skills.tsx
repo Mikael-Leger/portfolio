@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Title from "../title/title";
 
@@ -6,6 +6,8 @@ import skillsData from "@/app/data/skills.json";
 import SkillInterface, { Context } from "@/app/interfaces/skill.interface";
 import Tooltip from "../tooltip/tooltip";
 import { useLanguage } from "@/app/contexts/language-context";
+import PreferencesContext from "@/app/contexts/preferences-context";
+import Preferences from "@/app/interfaces/preferences.interface";
 
 import "./skills.scss";
 
@@ -17,6 +19,8 @@ type GroupedSkills = {
 };
 
 export default function Skills({ }: SkillsProps) {
+    const preferences = useContext(PreferencesContext) as Preferences;
+
     const { language, getText } = useLanguage("skills");
 
     const [skillsGroups, setSkillsGroups] = useState<GroupedSkills>();
@@ -28,6 +32,19 @@ export default function Skills({ }: SkillsProps) {
     const mobileTooltipRef = useRef<HTMLDivElement | null>(null);
 
     const clickedOnTooltip = useRef<boolean>(false);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            if (preferences.os === "macos") {
+                ScrollTrigger.normalizeScroll({
+                    allowNestedScroll: true,
+                    lockAxis: false,
+                    type: "touch,wheel,pointer",
+                });
+            }
+        });
+        return ctx.revert();
+    }, []);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideMobileTooltip);

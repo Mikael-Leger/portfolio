@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import Project from "../project/project";
@@ -13,6 +13,8 @@ import professionalProjects from "@/app/data/professional_projects.json";
 import schoolProjects from "@/app/data/school_projects.json";
 import TabInterface from "@/app/interfaces/tab.interface";
 import { useLanguage } from "@/app/contexts/language-context";
+import PreferencesContext from "@/app/contexts/preferences-context";
+import Preferences from "@/app/interfaces/preferences.interface";
 
 import "./projects.scss";
 
@@ -21,6 +23,8 @@ type ProjectsProps = {
 };
 
 export default function Projects({ addTab }: ProjectsProps) {
+    const preferences = useContext(PreferencesContext) as Preferences;
+
     const { isAnyReduced } = useIsAnyReduced();
     const { getText } = useLanguage("projects");
 
@@ -30,6 +34,19 @@ export default function Projects({ addTab }: ProjectsProps) {
 
     const projectsRef = useRef(null);
     const modalRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            if (preferences.os === "macos") {
+                ScrollTrigger.normalizeScroll({
+                    allowNestedScroll: true,
+                    lockAxis: false,
+                    type: "touch,wheel,pointer",
+                });
+            }
+        });
+        return ctx.revert();
+    }, []);
 
     useEffect(() => {
         if (modalData.isVisible) {
