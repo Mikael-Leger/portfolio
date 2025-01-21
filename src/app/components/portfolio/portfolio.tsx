@@ -62,7 +62,7 @@ export default function PortfolioMainPage({ desktopOpenActions }: PortfolioMainP
 
     return (
         <div className="portfolio" ref={portfolioRef}>
-            <Parallax firstText={`Mikaël Léger`} secondText="Full - Stack Developer Junior" moon={moon} portfolioRef={portfolioRef} />
+            <Parallax moon={moon} portfolioRef={portfolioRef} />
             <div className="portfolio-header">
                 <Title text={getText(7)} size={isMobile ? "small" : "medium"} futurist />
             </div>

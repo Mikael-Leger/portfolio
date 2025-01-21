@@ -12,13 +12,11 @@ import Preferences from "@/app/interfaces/preferences.interface";
 import "./parallax.scss";
 
 type ParallaxProps = {
-    firstText?: string;
-    secondText?: string;
     moon: RefObject<null>;
     portfolioRef: RefObject<null>;
 };
 
-function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) {
+function Parallax({ portfolioRef, moon }: ParallaxProps) {
     const preferences = useContext(PreferencesContext) as Preferences;
     const { isMobile, getBreakpointValue } = useIsMobile();
 
@@ -26,7 +24,7 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
     const [shootingStarOffset, setShootingStarLength] = useState(-500);
 
     const parallaxRef = useRef(null);
-    const firstTextRef = useRef(null);
+    const textsRef = useRef(null);
     const shootingStar = useRef<SVGLineElement | null>(null);
     const shootingStar2 = useRef<SVGLineElement | null>(null);
     const earth = useRef(null);
@@ -113,16 +111,23 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                                 },
                             },
                         });
-                        if (firstTextRef.current != null) {
-                            const titleText = (firstTextRef.current as HTMLDivElement).getElementsByClassName("title")[0];
+                        if (textsRef.current != null) {
+                            const titles = (textsRef.current as HTMLDivElement).getElementsByClassName("title");
                             timeline.to(
-                                titleText,
+                                titles[0],
                                 {
-                                    text: secondText
+                                    text: "Full - Stack"
                                 },
                                 0
                             );
-                        }
+                            timeline.to(
+                                titles[1],
+                                {
+                                    text: "Developer Junior"
+                                },
+                                0
+                            );
+                        };
                         timeline.set(
                             shootingStar.current,
                             {
@@ -635,11 +640,10 @@ function Parallax({ firstText, secondText, portfolioRef, moon }: ParallaxProps) 
                         x2="60%" y2="0"
                         style={{ stroke: "white", strokeWidth: 2, strokeDasharray: "200, 3000", strokeDashoffset: `${shootingStarOffset * 1.2}px` }} />
                 </svg>
-                {firstText && (
-                    <div className="parallax-text-first" ref={firstTextRef}>
-                        <Title text={firstText} size="big" transform="upper" effect="shadow" futurist />
-                    </div>
-                )}
+                <div className="parallax-text-first" ref={textsRef}>
+                    <Title text={"Mikaël Léger"} size="big" transform="upper" effect="shadow" futurist />
+                    <Title text={""} size="big" transform="upper" effect="shadow" futurist />
+                </div>
                 <div className="planet-container">
                     {getPlanets()}
                 </div>

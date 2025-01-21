@@ -1,5 +1,3 @@
-vise => something else 
-
 projects moving bg
 
 BRING BACK LINTER PLZ
