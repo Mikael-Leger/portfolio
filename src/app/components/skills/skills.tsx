@@ -25,7 +25,6 @@ export default function Skills({ }: SkillsProps) {
     const [mobileTooltip, setMobileTooltip] = useState(null);
 
     const groupsAdded = useRef<string[]>([]);
-    const textIndex = useRef(0);
     const mobileTooltipRef = useRef<HTMLDivElement | null>(null);
 
     const clickedOnTooltip = useRef<boolean>(false);
@@ -270,7 +269,42 @@ export default function Skills({ }: SkillsProps) {
         }
     };
 
-    textIndex.current = 0;
+    const getSkillsByPanel = (panel: string, skillsGroups: GroupedSkills, key: string) => {
+        let skillsGroupsArr: SkillInterface[] = [];
+        if (panel === "left") {
+            skillsGroupsArr = skillsGroups[key].filter((_, index) => index % 2 === 0);
+        } else if (panel === "right") {
+            skillsGroupsArr = skillsGroups[key].filter((_, index) => index % 2 !== 0);
+        }
+
+        return skillsGroupsArr.map(skill => {
+            let skillName = skill.name as string;
+            if (typeof skill.name === "object") {
+                skillName = skill.name[language];
+            }
+            const skillText = skill.text ? skill.text[language] : "";
+            const skillContext = skill.context as Context;
+            return (
+                <div className={`skills-content-groups-group-container-skill skill-${formatteString(skillName)}`} key={skillName}>
+                    <div className="skills-content-groups-group-container-skill-name">
+                        {skill.favorite && (
+                            <img className="logo-icon" src="icons/heart.png" />
+                        )}
+                        {highlightText(skillName)}
+                    </div>
+                    {
+                        (skillText != "" || skillContext != null) && (
+                            <Tooltip
+                                text={skillText}
+                                context={skillContext}
+                                setMobileTooltipData={setMobileTooltipData}
+                                clickedOnTooltip={clickedOnTooltip} />
+                        )
+                    }
+                </div>
+            )
+        })
+    }
 
     return (
         <div className="skills">
@@ -297,33 +331,12 @@ export default function Skills({ }: SkillsProps) {
                                 {highlightText(skillsGroups[key][0].type[language], true)}
                             </div>
                             <div className="skills-content-groups-group-container">
-                                {skillsGroups[key].map(skill => {
-                                    let skillName = skill.name as string;
-                                    if (typeof skill.name === "object") {
-                                        skillName = skill.name[language];
-                                    }
-                                    const skillText = skill.text ? skill.text[language] : "";
-                                    const skillContext = skill.context as Context;
-                                    return (
-                                        <div className={`skills-content-groups-group-container-skill skill-${formatteString(skillName)}`} key={skillName}>
-                                            <div className="skills-content-groups-group-container-skill-name">
-                                                {skill.favorite && (
-                                                    <img className="logo-icon" src="icons/heart.png" />
-                                                )}
-                                                {highlightText(skillName)}
-                                            </div>
-                                            {
-                                                (skillText != "" || skillContext != null) && (
-                                                    <Tooltip
-                                                        text={skillText}
-                                                        context={skillContext}
-                                                        setMobileTooltipData={setMobileTooltipData}
-                                                        clickedOnTooltip={clickedOnTooltip} />
-                                                )
-                                            }
-                                        </div>
-                                    )
-                                })}
+                                <div className="skills-content-groups-group-container-left">
+                                    {getSkillsByPanel("left", skillsGroups, key)}
+                                </div>
+                                <div className="skills-content-groups-group-container-right">
+                                    {getSkillsByPanel("right", skillsGroups, key)}
+                                </div>
                             </div>
                         </div>
                     ))}

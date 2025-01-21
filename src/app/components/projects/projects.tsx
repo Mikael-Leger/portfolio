@@ -22,8 +22,7 @@ type ProjectsProps = {
 
 export default function Projects({ addTab }: ProjectsProps) {
     const { isAnyReduced } = useIsAnyReduced();
-    const { getText } = useLanguage();
-
+    const { getText } = useLanguage("projects");
 
     const [modalData, setModalData] = useState<ProjectModal>({
         isVisible: false
@@ -71,10 +70,6 @@ export default function Projects({ addTab }: ProjectsProps) {
         };
     }, [projectsRef, modalRef, modalData.isVisible])
 
-    const getTextByComponent = (index: number) => {
-        return getText("projects", index);
-    }
-
     const showModal = async (show: boolean) => {
         if (isAnyReduced) {
             return;
@@ -110,15 +105,15 @@ export default function Projects({ addTab }: ProjectsProps) {
 
     const groupsOfProjects = [
         {
-            title: getTextByComponent(0),
+            title: getText(0),
             projects: personalProjects
         },
         {
-            title: getTextByComponent(1),
+            title: getText(1),
             projects: professionalProjects
         },
         {
-            title: getTextByComponent(2),
+            title: getText(2),
             projects: schoolProjects
         },
     ];

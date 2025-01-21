@@ -14,7 +14,7 @@ type FavoritesProps = {
 };
 
 export default function Favorites({ preferences, getDefaultTabs, onAction }: FavoritesProps) {
-    const { getText } = useLanguage("favorites");
+    const { getText } = useLanguage("page");
 
     const translateTitle = (value: string) => {
         if (value === "Projects") {
