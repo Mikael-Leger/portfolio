@@ -1,5 +1,3 @@
-dark on notepad and mail
-
 reduce border radius => 5px
 
 browser in context

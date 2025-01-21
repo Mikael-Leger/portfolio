@@ -8,9 +8,8 @@ $breakpoint-mobile: 768px;
     gap: 30px;
 
     padding: 20px 10px;
-    color: black;
-    border: 1px solid #ccc;
-    background-color: #f4f4f4;
+    color: var(--color);
+    background-color: var(--background);
     font-family: 'Courier New', monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -31,11 +30,8 @@ $breakpoint-mobile: 768px;
     }
 
     &-copyright {
-        // font-size: 1.2em;
-
         @media (max-width: $breakpoint-mobile) {
             margin-bottom: 150px;
         }
-
     }
 }
