@@ -1,12 +1,16 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
+import { useIsMobile } from "@/app/contexts/mobile-context";
+
 import "./background-animation.scss";
 
 type BackgroundAnimationProps = {
 };
 
 export default function BackgroundAnimation({ }: BackgroundAnimationProps) {
+    const { isMobile } = useIsMobile();
+
     const [circles, setCircles] = useState<{ index: number, size: number, color: string, scale: number }[]>([]);
 
     const circlesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -47,8 +51,8 @@ export default function BackgroundAnimation({ }: BackgroundAnimationProps) {
     }
 
     const getRandomSize = () => {
-        const minWidth = 150;
-        const maxWidth = 200;
+        const minWidth = isMobile ? 50 : 150;
+        const maxWidth = isMobile ? 100 : 200;
         return Math.random() * (maxWidth - minWidth) + minWidth;
     };
 
