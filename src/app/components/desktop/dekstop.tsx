@@ -26,38 +26,38 @@ export default function Dekstop({ windows, setWindowRef, windowRefs, getDefaultT
     const shortcuts = [
         {
             title: getText(0),
-            position: { top: isMobile ? 50 : 200, left: isMobile ? 50 : 200 },
+            position: { top: isMobile ? 100 : 150, left: isMobile ? 50 : 200 },
             iconPath: "/browsers/edge.png",
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Projects" })
         },
         {
             title: getText(1),
             iconPath: "/browsers/edge.png",
-            position: { top: isMobile ? 175 : 200, left: isMobile ? 50 : 350 },
+            position: { top: isMobile ? 225 : 150, left: isMobile ? 50 : 350 },
             onClick: () => desktopOpenActions("openWindow", { id: 0, name: "Skills" })
         },
         {
             title: getText(2),
             iconPath: "/icons/pdf.png",
-            position: { top: isMobile ? 50 : 100, right: isMobile ? 50 : 200 },
+            position: { top: isMobile ? 100 : 150, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 2 })
         },
         {
             title: getText(3),
             iconPath: "/icons/me.png",
-            position: { top: isMobile ? 300 : 300, right: isMobile ? 50 : 200 },
+            position: { top: isMobile ? 225 : 300, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 4 })
         },
         {
             title: getText(4),
             iconPath: "/icons/mail.png",
-            position: { top: isMobile ? 425 : 500, right: isMobile ? 50 : 300 },
+            position: { top: isMobile ? 550 : 550, right: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 3 })
         },
         {
-            title: `${getText(5)}.txt`,
+            title: getText(5),
             iconPath: "/icons/notepad.png",
-            position: { top: isMobile ? 425 : 500, left: isMobile ? 50 : 200 },
+            position: { top: isMobile ? 550 : 550, left: isMobile ? 50 : 200 },
             onClick: () => desktopOpenActions("openWindow", { id: 5 })
         }
     ];

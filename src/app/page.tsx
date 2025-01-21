@@ -26,6 +26,7 @@ import { useLanguage } from "./contexts/language-context";
 import { TextByLanguage } from "./types/language";
 
 import "./home.scss";
+import BackgroundAnimation from "./components/background-animation/background-animation";
 
 gsap.registerPlugin(CSSRulePlugin);
 
@@ -88,7 +89,6 @@ export default function Home() {
         const windowsLocalStr = localStorage.getItem("windows");
         if (windowsLocalStr) {
             const windowsLocal: Partial<WindowProps[]> = JSON.parse(windowsLocalStr);
-
             setWindowsLocal(windowsLocal);
         }
 
@@ -683,12 +683,17 @@ export default function Home() {
         return (
             <div className="home">
                 {isBooted ? (
-                    <Dekstop
-                        windows={windows}
-                        setWindowRef={setWindowRef}
-                        windowRefs={windowRefs}
-                        getDefaultTabs={getDefaultTabs}
-                        desktopOpenActions={desktopOpenActions} />
+                    <>
+                        <div className="home-container">
+                            <Dekstop
+                                windows={windows}
+                                setWindowRef={setWindowRef}
+                                windowRefs={windowRefs}
+                                getDefaultTabs={getDefaultTabs}
+                                desktopOpenActions={desktopOpenActions} />
+                        </div>
+                        <BackgroundAnimation />
+                    </>
                 ) : (
                     <div className="home-session">
                         <UserSession />

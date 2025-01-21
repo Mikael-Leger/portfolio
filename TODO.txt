@@ -1,0 +1,52 @@
+dark on notepad and mail
+
+reduce border radius => 5px
+
+browser in context
+
+projects moving bg
+
+skills last one brown
+
+skills bg remove on hover
+
+fix scroll normalize on macos maybe?
+
+vise => something else 
+
+BRING BACK LINTER PLZ
+
+
+==> Backlog
+
+set browser icon in a context
+
+change theme color
+
+Show why app is ok or ko => remove it
+
+Use cmd
+
+refactor div to *
+
+
+
+=> EC2:
+ec2-user
+tmux ls
+tmux attach -t mysession
+git pull
+npm run prod
+
+
+
+
+
+=> App:
+Use actuality APIs
+Choose if show on computer start 
+
+
+
+Techno watch:
+Have a look at gsap.context() and context.revert()

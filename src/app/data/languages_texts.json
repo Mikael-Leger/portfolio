@@ -210,8 +210,8 @@
                 "en": "provided by"
             },
             {
-                "baguette": "Tous droits réservés.",
-                "en": "All rights reserved."
+                "baguette": "Tous droits réservés, sauf pour les attributions mentionnées ci-dessus.",
+                "en": "All rights reserved except for the attributions mentioned above."
             }
         ]
     },
@@ -316,8 +316,8 @@
                 "en": "Resume"
             },
             {
-                "baguette": "Votre navigateur a du mal à visualiser ce PDF",
-                "en": "Your browser has some issues to visualize this PDF"
+                "baguette": "Oups... Il semblerait qu'il y ait eu une erreur avec mon CV.",
+                "en": "Oops... It seems there was a mistake with my resume."
             },
             {
                 "baguette": "Téléchargez mon CV ici",

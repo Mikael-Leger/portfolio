@@ -4,7 +4,7 @@ $breakpoint-mobile: 768px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     gap: 30px;
 
     padding: 20px 10px;
@@ -20,7 +20,6 @@ $breakpoint-mobile: 768px;
         display: flex;
         justify-content: start;
         flex-direction: column;
-        align-self: start;
 
         a {
             text-align: start;
@@ -32,7 +31,7 @@ $breakpoint-mobile: 768px;
     }
 
     &-copyright {
-        font-size: 1.2em;
+        // font-size: 1.2em;
 
         @media (max-width: $breakpoint-mobile) {
             margin-bottom: 150px;

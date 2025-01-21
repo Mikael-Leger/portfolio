@@ -21,17 +21,15 @@ export default function TaskBar({ }: TaskBarProps) {
     }
 
     return (
-        <div className="task-bar" style={{ padding: isMobile ? "0 20px" : "0 40px" }}>
-            <div className="task-bar-restart" onClick={restartWebsiteAnimations}>
-                <img className="task-bar-restart-img" src="/icons/restart.png" />
-                {!isMobile && (
-                    <div className="task-bar-restart-button">
-                        {getText(0)}
-                    </div>
-                )}
-            </div>
-            <div className="task-bar-tabs">
-            </div>
+        <div className="task-bar-restart"
+            style={{ padding: isMobile ? "5px" : "5px 10px" }}
+            onClick={restartWebsiteAnimations}>
+            <img className="task-bar-restart-img" src="/icons/restart.png" />
+            {!isMobile && (
+                <div className="task-bar-restart-button">
+                    {getText(0)}
+                </div>
+            )}
         </div>
     );
 }

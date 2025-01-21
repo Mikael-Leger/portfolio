@@ -1,0 +1,5 @@
+close modal when reduced
+
+rename interfaces
+
+fix scss mixins

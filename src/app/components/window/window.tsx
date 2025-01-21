@@ -442,7 +442,7 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			setWindowIconPath("/icons/mail.png");
 
 		} else if (portfolioLogic && !portfolioLogic.isNotPortfolio) {
-			setWindowIconPath("/icons/portfolio.png");
+			setWindowIconPath("/icons/me.png");
 
 		} else if (notepadLogic && !notepadLogic.isNotNotepad) {
 			setWindowIconPath("/icons/notepad.png");
@@ -506,7 +506,8 @@ export default function Window({ window_id, type, zIndex, tabs, lines, onFinish,
 			onClick: () => {
 				desktopOpenActions?.("closeWindow", window_id);
 				removeFromList(window_id);
-			}
+			},
+			hide: !commandLogic?.isNotCommand
 		}
 	];
 
