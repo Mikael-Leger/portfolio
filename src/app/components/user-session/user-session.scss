@@ -15,7 +15,7 @@
         width: 70px;
         height: 70px;
         background-color: var(--white);
-        border-radius: 5px;
+        border-radius: var(--border-radius);
 
         &-img {
             padding: 6px;

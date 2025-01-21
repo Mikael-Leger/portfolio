@@ -31,14 +31,14 @@
         width: 200px;
         height: 20px;
         background-color: #585858;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         overflow: hidden;
 
         &-bar {
             width: 0;
             height: 100%;
             background-color: #fff;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             transition: width 0.3s ease;
         }
     }

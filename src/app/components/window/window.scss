@@ -122,7 +122,7 @@ $breakpoint-mobile: 768px;
                         align-items: center;
 
                         position: relative;
-                        border-radius: 10px;
+                        border-radius: var(--border-radius);
                         width: 230px;
                         padding: 5px 10px;
 
